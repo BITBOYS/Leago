@@ -5,19 +5,6 @@
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
     
-    <servlet>
-        <servlet-name>Login</servlet-name>
-        <jsp-file>/WEB-INF/frame.jsp</jsp-file>
-        <init-param>
-            <param-name>page</param-name>
-            <param-value>login</param-value>
-        </init-param>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Login</servlet-name>
-        <url-pattern>/euh</url-pattern>
-    </servlet-mapping>
-    
     <!-- L O G I N -->
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
@@ -26,6 +13,26 @@
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    
+    <!-- A U T H E N T I C A T E -->
+    <servlet>
+        <servlet-name>AuthenticateServlet</servlet-name>
+        <servlet-class>leago.controller.AuthenticateServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AuthenticateServlet</servlet-name>
+        <url-pattern>/authenticate</url-pattern>
+    </servlet-mapping>
+    
+    <!-- U P D A T E # U S E R -->
+    <servlet>
+        <servlet-name>UpdateUserServlet</servlet-name>
+        <servlet-class>leago.controller.UpdateUserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateUserServlet</servlet-name>
+        <url-pattern>/updateuser</url-pattern>
     </servlet-mapping>
     
     <!-- L O G O U T -->
@@ -41,7 +48,7 @@
     <!-- U S E R # P R O F I L E -->
     <servlet>
         <servlet-name>ProfilServlet</servlet-name>
-        <servlet-class>leago.controller.ProfilServlet</servlet-class>
+        <servlet-class>leago.controller.ProfileServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ProfilServlet</servlet-name>
@@ -54,4 +61,6 @@
             30
         </session-timeout>
     </session-config>
+    
+     !
     </web-app>

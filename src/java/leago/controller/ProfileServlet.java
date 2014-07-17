@@ -7,18 +7,21 @@
 package leago.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import leago.error.exceptions.DatabaseConnectionException;
+import leago.helper.UserHelper;
 import leago.models.User;
 
 /**
  *
  * @author v094702
  */
-public class ProfilServlet extends HttpServlet {
+public class ProfileServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,11 +33,30 @@ public class ProfilServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+            throws ServletException, IOException {   
+        try { 
+            response.setContentType("text/html;charset=UTF-8");
+            
+            // P A R A M E T E R S
+            String name = (String) request.getParameter("profile");
         
-        String name = (String) request.getParameter("profile");
-        request.setAttribute("profileuser", new User(name, "email", "password"));
+            // O P E R A T I O N
+            UserHelper userHelper = new UserHelper();
+            User user = userHelper.getUser(name);
+            
+            // R E S U L T # H A N D L I N G
+            request.setAttribute("profileuser", user);
+            
+        } catch (DatabaseConnectionException ex) {
+            
+            // E R R O R # L O G G I N G
+            Logger.getLogger(ProfileServlet.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("message", ex);   
+
+            // F O R W A R D I N G
+            request.setAttribute("page", "login");
+            request.getRequestDispatcher("/WEB-INF/frame.jsp").forward(request, response);
+        }
         
         // F O R W A R D I N G
         request.setAttribute("page", "user/profile");

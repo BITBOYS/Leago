@@ -4,16 +4,19 @@
  * and open the template in the editor.
  */
 
-package leago.error;
+package leago.error.exceptions;
+
+import leago.error.MyException;
 
 /**
  *
  * @author v094702
  */
-public class AuthenticationException extends MyException {
-    
-    public AuthenticationException(String message, String status) {
+public class DatabaseConnectionException extends MyException {
+
+    public DatabaseConnectionException(String message, String status) {
         super(message, status);
     }
+    
     
 }

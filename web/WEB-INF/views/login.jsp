@@ -5,9 +5,9 @@
     </div>
 
     <div align="center" class="col-sm-6 col-md-4 col-md-offset-4 well">  
-        <form class="form" action="${pageContext.request.contextPath}/login" method="post" role="form">
+        <form class="form" action="${pageContext.request.contextPath}/authenticate" method="post" role="form">
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Username" name="name" required autofocus>
+                <input type="text" class="form-control" placeholder="Username" name="id" required autofocus>
             </div>
             <div class="form-group">
                 <input type="password" class="form-control" placeholder="Password" name="password" required>

@@ -7,7 +7,9 @@
 package leago.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author v094702
  */
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "UpdateUserServlet", urlPatterns = {"/updateuser"})
+public class UpdateUserServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,10 +32,7 @@ public class LoginServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-         // F O R W A R D I N G
-        request.setAttribute("page", "login");
-        request.getRequestDispatcher("/WEB-INF/frame.jsp").forward(request, response);  
+
         
     }
 
