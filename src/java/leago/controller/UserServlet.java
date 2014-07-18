@@ -13,8 +13,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import leago.error.MyException;
 import leago.error.exceptions.DatabaseConnectionException;
+import leago.error.exceptions.UserCreationException;
 import leago.error.exceptions.UserNotExistingException;
+import leago.error.success.UserCreationSuccessful;
 import leago.helper.UserHelper;
 import leago.models.User;
 
@@ -44,15 +47,15 @@ public class UserServlet extends HttpServlet {
         this.response = response;
         
         String servletPath = request.getServletPath().substring(1);
-        String id = (request.getPathInfo() == null)? null : request.getPathInfo().substring(1);
+        String id = (request.getPathInfo() == null)? "" : request.getPathInfo().substring(1).split("/")[0];
         String action = request.getParameter("action");
-        System.out.println(servletPath + " - " + action);
+        System.out.println(request.getServletPath() + " - " + id);
         
-        if (servletPath.equals("register") && action != null && action.equals("do"))
+        if (servletPath.equals("register") && id.equals("create"))
             _create();
         else if (servletPath.equals("register"))
             _new();
-        else if(id != null)
+        else if(!id.trim().equals(""))
             _show(id);
         else 
             path = "/index.jsp";        
@@ -94,12 +97,33 @@ public class UserServlet extends HttpServlet {
         forward();
     }
     
-    private void _create() {
-        page = "profile";
+    private void _create() throws IOException, ServletException {
+        page = "login";
+        
+        // P A R A M E T E R S
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        String reenter_password = request.getParameter("reenter_password");
+        
+        try {
+            // O P E R A T I O N
+            UserHelper userHelper = new UserHelper();
+            userHelper.createUser(name, email, password, reenter_password);
+
+        } catch (UserCreationException | DatabaseConnectionException ex) {
+            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("message", ex);
+            page = "register";
+        } catch (UserCreationSuccessful ex) {
+            request.setAttribute("message", ex); 
+        }
+        
+        forward();
     }
     
     private void _update() {
-        page = "profile";
+        page = "";
     }
     
     private void _destroy() {

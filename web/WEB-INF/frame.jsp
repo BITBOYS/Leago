@@ -9,9 +9,11 @@
     <body style="padding-top: 60px;">
         <div class="container">
             <%@include file="snipplets/error.jspf" %>
+            <div style="margin-top: -30px;">
             <jsp:include page="views/${page}.jsp" flush="true">
                 <jsp:param name="user" value="${user}"/>
             </jsp:include>
+            <div>
         </div>
     </body>
     

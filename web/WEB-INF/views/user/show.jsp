@@ -81,7 +81,7 @@
                     <div class="col-lg-4 col-md-4 hero-feature">
                         <div class="thumbnail">
                             <div class="caption">
-                                <h3>${team.name} <small> Leader: <a href="${pageContext.request.contextPath}/user?profile=${team.leader.name}">${team.leader.name}</a></small></h3>
+                                <h3>${team.name} <small> Leader: <a href="${pageContext.request.contextPath}/user/${team.leader.name}">${team.leader.name}</a></small></h3>
                             </div>
                             <div class="caption">
                                 <div class="panel panel-default">
@@ -114,7 +114,7 @@
                                     </div>
                                 </div>  
                                 <p>
-                                    <a href="${pageContext.request.contextPath}/team?profile=${team.name}" class="btn btn-primary">Zum Teamprofil <i class="fa fa-angle-right"></i></a>
+                                    <a href="${pageContext.request.contextPath}/team/${team.name}" class="btn btn-primary">Zum Teamprofil <i class="fa fa-angle-right"></i></a>
                                     <a onclick="" class="btn btn-danger">Team verlassen <i class="fa fa-angle-right"></i></a>
                                 </p>
                             </div>
@@ -138,7 +138,7 @@
                     <div class="col-lg-4 col-md-4 hero-feature">
                         <div class="thumbnail">
                             <div class="caption">
-                                <h3>${tournament.name} <small> Leader: <a href="${pageContext.request.contextPath}/tournament?profile=${tournament.leader.name}">${tournament.leader.name}</a></small></h3>
+                                <h3>${tournament.name} <small> Leader: <a href="${pageContext.request.contextPath}/user/${tournament.leader.name}">${tournament.leader.name}</a></small></h3>
                             </div>
                             <div class="caption">
                                 <p>${tournament.description}</p>
@@ -172,7 +172,7 @@
                                         </table>  
                                     </div>
                                 </div>  
-                                <p><a href="${pageContext.request.contextPath}/tournament?profile=${tournament.name}" class="btn btn-primary">Zum Turnierprofil <i class="fa fa-angle-right"></i></a></p>
+                                <p><a href="${pageContext.request.contextPath}/tournament/${tournament.name}" class="btn btn-primary">Zum Turnierprofil <i class="fa fa-angle-right"></i></a></p>
                             </div>
                         </div> <!-- /.thumbnail -->
                         <br>
@@ -190,16 +190,22 @@
             <div class="row">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac habitasse platea dictumst. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam placerat nunc ut tellus tristique, non posuere neque iaculis. Fusce aliquet dui ut felis rhoncus, vitae molestie mauris auctor. Donec pellentesque feugiat leo a adipiscing. Pellentesque quis tristique eros, sed rutrum mauris.</p>
                 <div class="col-lg-12">
-                    <form class="form-horizontal" role="form" name="profile_form" action="${pageContext.request.contextPath}/updateuser" method="POST">
+                    <form class="form-horizontal" role="form" name="profile_form" action="${pageContext.request.contextPath}/user/${user.name}" method="POST">
                         
                         
                         <h2 class="page-header">E-Mail &auml;ndern</h2>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">E-Mail</label>
                             <div class="col-sm-6">
-                                <input type="email" class="form-control" name="input_email_old" placeholder="alte E-Mail" required>
-                                <input type="email" class="form-control" name="input_email_new1" placeholder="neue E-Mail" required>
-                                <input type="email" class="form-control" name="input_email_new2" placeholder="neue E-Mail" required>
+                                <div class="form-group">
+                                    <input type="email" class="form-control" name="input_email_old" placeholder="alte E-Mail" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control" name="input_email_new1" placeholder="neue E-Mail" required>
+                                </div>
+                                <div class="form-group">
+                                 <input type="email" class="form-control" name="input_email_new2" placeholder="neue E-Mail" required>
+                                </div>
                             </div>
                         </div>
                         
@@ -208,11 +214,15 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Name</label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" name="input_name_old" placeholder="alter Name">
-                            </div>
-                            <div class="col-sm-6 col-md-offset-2">
-                                <input type="text" class="form-control" name="input_name_new1" placeholder="neuer Name">
-                                <input type="text" class="form-control" name="input_name_new2" placeholder="neuer Name">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="input_name_old" placeholder="alter Name">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="input_name_new1" placeholder="neuer Name">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="input_name_new2" placeholder="neuer Name">
+                                </div>
                             </div>
                         </div>
                         
@@ -221,11 +231,15 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Passwort</label>
                             <div class="col-sm-6">
-                                <input type="password" class="form-control" name="input_password_old" placeholder="altes Passwort">
-                            </div>
-                            <div class="col-sm-6 col-md-offset-2">
-                                <input type="password" class="form-control" name="input_password_new1" placeholder="neues Passwort">
-                                <input type="password" class="form-control" name="input_password_new2" placeholder="neues Passwort">
+                                <div class="form-group">
+                                    <input type="password" class="form-control" name="input_password_old" placeholder="altes Passwort">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" name="input_password_new1" placeholder="neues Passwort">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" name="input_password_new2" placeholder="neues Passwort">
+                                </div>
                             </div>
                         </div>
                         

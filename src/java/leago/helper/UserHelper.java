@@ -6,6 +6,7 @@
 
 package leago.helper;
 
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,7 +18,9 @@ import java.util.logging.Logger;
 import leago.error.MyException;
 import leago.error.exceptions.AuthenticationException;
 import leago.error.exceptions.DatabaseConnectionException;
+import leago.error.exceptions.UserCreationException;
 import leago.error.exceptions.UserNotExistingException;
+import leago.error.success.UserCreationSuccessful;
 import leago.models.Statistics;
 import leago.models.Team;
 import leago.models.Tournament;
@@ -31,6 +34,68 @@ public class UserHelper {
     
     public UserHelper() {
         
+    }
+    
+    public void createUser(String name, String email, String password, String reenter_password) throws DatabaseConnectionException, UserCreationException, UserCreationSuccessful {
+        
+        try {
+            if(password.equals(reenter_password)) {
+                if(isNameAlreadyTaken(name)) {
+                    if(isEmailAlreadyTaken(email)) {
+
+                            Connection con = DatabaseHelper.connect();
+                            Statement statement = con.createStatement();
+
+                            statement.execute("insert into user"
+                                    + " (username, password, email)"
+                                    + " VALUES ('" + name + "','" + password + "','" + email + "')");
+
+                        // SIGN UP successful
+                        throw new UserCreationSuccessful("Sign Up successful. You can now sign in.", MyException.SUCCESS);
+                    // Username is already taken
+                    } else {
+                        throw new UserCreationException("Email already taken", MyException.ERROR);
+                    }
+                // Email address is already taken
+                } else {
+                    throw new UserCreationException("Username already taken", MyException.ERROR);
+                }
+            // passwords aren't equal
+            } else {
+                throw new UserCreationException("The passwords aren't matching", MyException.ERROR);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserHelper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new UserCreationException("User creation failed unexpectedly with an SQL error " + ex.getSQLState(), MyException.ERROR);
+        }
+    }
+    
+    private boolean isNameAlreadyTaken(String name) throws DatabaseConnectionException, SQLException {
+        boolean result = false;
+             
+        Connection con = DatabaseHelper.connect();
+        Statement statement = con.createStatement();         
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM user WHERE username = '" + name + "'");
+
+        if(!resultSet.isBeforeFirst()) {
+            result = true;
+        }
+        
+        return result;
+    }
+    
+    private boolean isEmailAlreadyTaken(String email) throws DatabaseConnectionException, SQLException {
+        boolean result = false;
+     
+        Connection con = DatabaseHelper.connect();
+        Statement statement = con.createStatement();         
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM user WHERE email = '" + email + "'");
+
+        if(!resultSet.isBeforeFirst()) {
+            result = true;
+        }
+        
+        return result;
     }
     
     public boolean authenticate(String id, String password) throws AuthenticationException, DatabaseConnectionException {

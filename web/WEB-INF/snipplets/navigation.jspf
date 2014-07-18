@@ -24,12 +24,12 @@
                 </li>
                 <c:choose>
                     <c:when test="${user != null}">
-                        <li><a href="${pageContext.request.contextPath}/user?profile=${user.name}">${user.name}</a></li> 
+                        <li><a href="${pageContext.request.contextPath}/user/${user.name}">${user.name}</a></li> 
                         <li><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
                         </c:when>
                         <c:when test="${user == null}">
-                        <li><a href="${pageContext.request.contextPath}/login">Login</a></li>
-                        <li><a href="${pageContext.request.contextPath}/register">Register</a></li>
+                        <li><a href="${pageContext.request.contextPath}/login">Sign In</a></li>
+                        <li><a href="${pageContext.request.contextPath}/register">Sign Up</a></li>
                         </c:when>
                     </c:choose>
             </ul>
