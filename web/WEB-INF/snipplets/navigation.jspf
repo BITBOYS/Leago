@@ -21,7 +21,7 @@
                     </c:when>
                     <c:when test="${user == null}">
                         <li><a href="${pageContext.request.contextPath}/login">Login</a></li>
-                        <li><a href="#">Register</a></li>
+                        <li><a href="${pageContext.request.contextPath}/register">Register</a></li>
                     </c:when>
                 </c:choose>
             </ul>

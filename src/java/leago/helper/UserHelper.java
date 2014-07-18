@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import leago.error.MyException;
 import leago.error.exceptions.AuthenticationException;
 import leago.error.exceptions.DatabaseConnectionException;
+import leago.error.exceptions.UserNotExistingException;
 import leago.models.Statistics;
 import leago.models.Team;
 import leago.models.Tournament;
@@ -63,9 +64,10 @@ public class UserHelper {
    /**
     * @param id Id of the user
     * @return user - User object filled with the information from the database.
-    * @throws DatabaseConnectionException 
+    * @throws DatabaseConnectionException
+    * @throws leago.error.exceptions.UserNotExistingException
     */
-   public User getUser(String id) throws DatabaseConnectionException {
+   public User getUser(String id) throws DatabaseConnectionException, UserNotExistingException {
        
        User user = new User();
        
@@ -73,21 +75,26 @@ public class UserHelper {
             Connection con = DatabaseHelper.connect();
             Statement statement = con.createStatement();
             ResultSet resultSet = statement.executeQuery("select * from user where username='" + id + "' OR email='" + id + "'");
-            resultSet.first();
             
-            Statistics statistics = new Statistics(resultSet.getInt("goals"),
-                    resultSet.getInt("goals_conceded"),
-                    resultSet.getInt("wins"),
-                    resultSet.getInt("defeats"),
-                    resultSet.getInt("tournament_wins"),
-                    resultSet.getInt("tournament_participations"));
-             
-            user.setName(resultSet.getString("username"));
-            user.setEmail(resultSet.getString("email"));
-            user.setPassword(resultSet.getString("password"));
-            user.setStatistics(statistics);
-            user.setTeams(getTeams(user.getName()));
-            user.setTournaments(getTournaments(user.getName()));
+             if(!resultSet.isBeforeFirst()) {
+                throw new UserNotExistingException("There is no user with this name", MyException.INFO);
+            } else {
+                resultSet.first();
+            
+                Statistics statistics = new Statistics(resultSet.getInt("goals"),
+                        resultSet.getInt("goals_conceded"),
+                        resultSet.getInt("wins"),
+                        resultSet.getInt("defeats"),
+                        resultSet.getInt("tournament_wins"),
+                        resultSet.getInt("tournament_participations"));
+
+                user.setName(resultSet.getString("username"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPassword(resultSet.getString("password"));
+                user.setStatistics(statistics);
+                user.setTeams(getTeams(user.getName()));
+                user.setTournaments(getTournaments(user.getName()));
+            }
             
         } catch (SQLException ex) {
             Logger.getLogger(UserHelper.class.getName()).log(Level.SEVERE, null, ex);
