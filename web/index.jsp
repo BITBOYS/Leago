@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="${language}">
 
 <head>        
     <% String content = "views/" + ((String) request.getAttribute("page")) + ".jsp"; %>
@@ -34,7 +34,7 @@
                 <div class="col-lg-12">
                     <div class="intro-message">
                         <h1>Leago</h1>
-                        <h3>Your Turnament Management Tool</h3>
+                        <h3><fmt:message key="index.h3.info"/></h3>
                         <hr class="intro-divider">
                         <ul class="list-inline intro-social-buttons">
                             <li><a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg"><i class="fa fa-facebook fa-fw"></i> <span class="network-name">Facebook</span></a>
