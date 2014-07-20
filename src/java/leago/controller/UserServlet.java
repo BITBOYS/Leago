@@ -13,11 +13,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import leago.error.MyException;
 import leago.error.exceptions.DatabaseConnectionException;
 import leago.error.exceptions.UserCreationException;
 import leago.error.exceptions.UserNotExistingException;
-import leago.error.success.UserCreationSuccessful;
+import leago.error.exceptions.UserUpdateException;
+import leago.error.success.UserCreationSuccess;
+import leago.error.success.UserUpdateSuccess;
 import leago.helper.UserHelper;
 import leago.models.User;
 
@@ -47,18 +48,27 @@ public class UserServlet extends HttpServlet {
         this.response = response;
         
         String servletPath = request.getServletPath().substring(1);
-        String id = (request.getPathInfo() == null)? "" : request.getPathInfo().substring(1).split("/")[0];
-        String action = request.getParameter("action");
-        System.out.println(request.getServletPath() + " - " + id);
+        String[] pathinfo = (request.getPathInfo() == null)? new String[0] : request.getPathInfo().substring(1).split("/");
+        String id = "";
+        
+        for(int idx = 0; idx < pathinfo.length; idx++) {
+            
+            switch(idx) {
+                case 0: id = pathinfo[idx]; break;
+                default: break;
+            }
+        }
         
         if (servletPath.equals("register") && id.equals("create"))
             _create();
         else if (servletPath.equals("register"))
             _new();
+        else if (servletPath.equals("settings") && !id.trim().equals(""))
+            _update(id);
+        else if (servletPath.equals("settings"))
+            _change();
         else if(!id.trim().equals(""))
             _show(id);
-        else 
-            path = "/index.jsp";        
     }
     
     private void _show(String id) throws ServletException, IOException {
@@ -93,7 +103,7 @@ public class UserServlet extends HttpServlet {
     }
     
     private void _new() throws IOException, ServletException {
-        page = "register";
+        page = "user/create";
         forward();
     }
     
@@ -114,27 +124,113 @@ public class UserServlet extends HttpServlet {
         } catch (UserCreationException | DatabaseConnectionException ex) {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("message", ex);
-            page = "register";
-        } catch (UserCreationSuccessful ex) {
+            page = "user/create";
+        } catch (UserCreationSuccess ex) {
             request.setAttribute("message", ex); 
         }
         
         forward();
     }
     
-    private void _update() {
-        page = "";
+    private void _change() throws IOException, ServletException {
+        page = "user/update";
+        forward();
+    }
+    
+    private void _update(String id) throws ServletException, IOException {
+        try {
+            page = "user/update";
+            
+            switch(id) {
+                case "email": updateEmail(); break;
+                case "name": updateName(); break;
+                case "password": updatePassword(); break;
+                default: break;
+            }
+            
+            forward();
+        } catch (DatabaseConnectionException ex) {
+            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("message", ex);
+        }
+        
     }
     
     private void _destroy() {
        path = "/index.jsp";
     }
     
+    
+    
+    
+    
+    
+    private void updateName() throws DatabaseConnectionException {
+        
+        // P A R A M E T E R S
+        String input_name_new1 = request.getParameter("input_name_new1");
+        String input_name_new2 = request.getParameter("input_name_new2");
+        User user = (User) request.getSession().getAttribute("user");
+        
+        // O P E R A T I O N
+        UserHelper userHelper = new UserHelper();
+        try {
+            userHelper.updateName(user.getName(), input_name_new1, input_name_new2);
+        } catch (UserUpdateException ex) {
+            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("message", ex);
+        } catch (UserUpdateSuccess ex) {
+            request.setAttribute("message", ex);
+            user.setName(input_name_new1);
+            request.getSession().setAttribute("user", user);
+        }
+        
+    }
+    
+    private void updateEmail() throws DatabaseConnectionException {
+        
+        // P A R A M E T E R S
+        String input_email_new1 = request.getParameter("input_email_new1");
+        String input_email_new2 = request.getParameter("input_email_new2");
+        String user = ((User) request.getSession().getAttribute("user")).getName();
+        
+        // O P E R A T I O N
+        UserHelper userHelper = new UserHelper();
+        try {
+            userHelper.updateEmail(user, input_email_new1, input_email_new2);
+        } catch (UserUpdateException ex) {
+            Logger.getLogger(UserServlet.class.getName()).log(Level.INFO, null, ex);
+            request.setAttribute("message", ex);
+        } catch (UserUpdateSuccess ex) {
+            request.setAttribute("message", ex);
+        }
+    }
+    
+    private void updatePassword() throws DatabaseConnectionException {
+            
+        // P A R A M E T E R S
+        String input_password_new1 = request.getParameter("input_password_new1");
+        String input_password_new2 = request.getParameter("input_password_new2");
+        String input_password_old = request.getParameter("input_password_old");
+        User user = (User) request.getSession().getAttribute("user");
+        
+        // O P E R A T I O N
+        UserHelper userHelper = new UserHelper();
+        try {
+            userHelper.updatePassword(user, input_password_new1, input_password_new2, input_password_old);
+        } catch (UserUpdateException ex) {
+            Logger.getLogger(UserServlet.class.getName()).log(Level.INFO, null, ex);
+            request.setAttribute("message", ex);
+        } catch (UserUpdateSuccess ex) {
+            request.setAttribute("message", ex);
+        }
+    }
+    
     private void forward() throws ServletException, IOException {
         
         // F O R W A R D I N G
-        request.setAttribute("page", this.page);
-        request.getRequestDispatcher(this.path).forward(request, response);
+        request.setAttribute("page", page);
+        request.getRequestDispatcher(path).forward(request, response);
     }
     
     private void forward(String page, String path) throws ServletException, IOException {

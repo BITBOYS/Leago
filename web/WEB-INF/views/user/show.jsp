@@ -16,12 +16,8 @@
             <li class="active"><a href="#statistics" data-toggle="tab">Statistik</a></li>
             <li><a href="#teams" data-toggle="tab">Teams</a></li>
             <li><a href="#tournaments" data-toggle="tab">Turniere</a></li>
-            <c:if test="${user.name == profileuser.name}">
-                <li><a href="#account" data-toggle="tab">Accounteinstellungen</a></li>
-            </c:if>
         </ul>
         <div id="myTabContent" class="tab-content">
-            
             
             
         <div class="tab-pane fade in active" id="statistics">
@@ -75,7 +71,12 @@
             <div class="row">  
                 <div class="col-lg-12">
                     <h2 class="page-header">${profileuser.name}s Teams</h2>
+                    
+                    <c:if test="${empty profileuser.teams}">
+                        ${profileuser.name} ist in keinem Team.
+                    </c:if>
                 </div>
+                    
                 <!-- Schleife zum Anzeigen aller Teams in denen man sich befindet -->
                 <c:forEach var="team" items="${profileuser.teams}">
                     <div class="col-lg-4 col-md-4 hero-feature">
@@ -133,6 +134,9 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h2 class="page-header">${profileuser.name}s Turniere</h2>
+                    <c:if test="${empty profileuser.tournaments}">
+                        ${profileuser.name} ist in keinem Turnier.
+                    </c:if>
                 </div>
                 <c:forEach var="tournament" items="${profileuser.tournaments}">
                     <div class="col-lg-4 col-md-4 hero-feature">
@@ -180,79 +184,6 @@
                 </c:forEach> <!-- /.forEach teams -->
             </div> <!-- /.row -->
         </div> <!-- /.tab tournament -->       
-        
-        
-        
-        
-        <div class="tab-pane fade" id="account">
-            <i class="fa fa-gear pull-left fa-4x"></i>
-
-            <div class="row">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac habitasse platea dictumst. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam placerat nunc ut tellus tristique, non posuere neque iaculis. Fusce aliquet dui ut felis rhoncus, vitae molestie mauris auctor. Donec pellentesque feugiat leo a adipiscing. Pellentesque quis tristique eros, sed rutrum mauris.</p>
-                <div class="col-lg-12">
-                    <form class="form-horizontal" role="form" name="profile_form" action="${pageContext.request.contextPath}/user/${user.name}" method="POST">
-                        
-                        
-                        <h2 class="page-header">E-Mail &auml;ndern</h2>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">E-Mail</label>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <input type="email" class="form-control" name="input_email_old" placeholder="alte E-Mail" required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="email" class="form-control" name="input_email_new1" placeholder="neue E-Mail" required>
-                                </div>
-                                <div class="form-group">
-                                 <input type="email" class="form-control" name="input_email_new2" placeholder="neue E-Mail" required>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        
-                        <h2 class="page-header">Name &auml;ndern</h2>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Name</label>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="input_name_old" placeholder="alter Name">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="input_name_new1" placeholder="neuer Name">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="input_name_new2" placeholder="neuer Name">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        
-                        <h2 class="page-header">Passwort &auml;ndern</h2>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Passwort</label>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <input type="password" class="form-control" name="input_password_old" placeholder="altes Passwort">
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" class="form-control" name="input_password_new1" placeholder="neues Passwort">
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" class="form-control" name="input_password_new2" placeholder="neues Passwort">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button class="btn btn-primary btn-default" type="submit">
-                                    Speichern <i class="fa fa-angle-right"></i></button>
-                            </div>
-                        </div>
-                    </form>
-                </div> <!-- /.col-lg-12 --> 
-            </div> <!-- /.row -->
-        </div> <!-- /.tab account -->
+                      
     </div>
 </div>

@@ -6,7 +6,6 @@
 
 package leago.helper;
 
-import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,7 +19,9 @@ import leago.error.exceptions.AuthenticationException;
 import leago.error.exceptions.DatabaseConnectionException;
 import leago.error.exceptions.UserCreationException;
 import leago.error.exceptions.UserNotExistingException;
-import leago.error.success.UserCreationSuccessful;
+import leago.error.exceptions.UserUpdateException;
+import leago.error.success.UserCreationSuccess;
+import leago.error.success.UserUpdateSuccess;
 import leago.models.Statistics;
 import leago.models.Team;
 import leago.models.Tournament;
@@ -36,7 +37,7 @@ public class UserHelper {
         
     }
     
-    public void createUser(String name, String email, String password, String reenter_password) throws DatabaseConnectionException, UserCreationException, UserCreationSuccessful {
+    public void createUser(String name, String email, String password, String reenter_password) throws DatabaseConnectionException, UserCreationException, UserCreationSuccess {
         
         try {
             if(password.equals(reenter_password)) {
@@ -51,7 +52,7 @@ public class UserHelper {
                                     + " VALUES ('" + name + "','" + password + "','" + email + "')");
 
                         // SIGN UP successful
-                        throw new UserCreationSuccessful("Sign Up successful. You can now sign in.", MyException.SUCCESS);
+                        throw new UserCreationSuccess("Sign Up successful. You can now sign in.", MyException.SUCCESS);
                     // Username is already taken
                     } else {
                         throw new UserCreationException("Email already taken", MyException.ERROR);
@@ -189,9 +190,7 @@ public class UserHelper {
                                             + " FROM  team, user_team"
                                             + " WHERE user = '" + username + "'"
                                             + "   AND team = name" );
-            resultSet.first();
-            
-            while(!resultSet.isAfterLast()) {
+            while(resultSet.next()) {
                 teams.add(new Team(resultSet.getString("name"), 
                                    resultSet.getString("tag"),
                                    resultSet.getString("password"), 
@@ -231,11 +230,9 @@ public class UserHelper {
                                             + "   AND te.name = ut.team" 
                                             + "   AND ut.user = u.username" 
                                             + "   AND username = '" + username + "'"
-                                            + " ORDER BY tou.name, tou.start_date, tou.start_time");
-            resultSet.first();
+                                            + " ORDER BY tou.name, tou.start_date, tou.start_time");            
             
-            
-            while(!resultSet.isAfterLast()) {
+            while(resultSet.next()) {
                 tournaments.add(new Tournament(resultSet.getString("tou.name"),         resultSet.getString("tou.password"), resultSet.getString("description"), 
                                       new User(resultSet.getString("tou.leader")),      resultSet.getDate("tou.start_date"), resultSet.getTime("tou.start_time"),
                                                resultSet.getDate("tou.end_date"),       resultSet.getTime("tou.end_time"), resultSet.getDate("tou.create_date"), 
@@ -248,6 +245,81 @@ public class UserHelper {
         }
         
         return tournaments;
+    }
+   
+    public void updateName(String user, String name1, String name2) throws DatabaseConnectionException, UserUpdateException, UserUpdateSuccess {
+        try {
+            int result;
+            
+            if(name1.equals(name2)) {
+                Connection con = DatabaseHelper.connect();
+                Statement statement = con.createStatement();
+                result = statement.executeUpdate("update user set username='" + name1 + "' where username = '" + user + "'"); 
+
+                if(result > 0) {
+                    throw new UserUpdateSuccess("Username update successful", MyException.SUCCESS); 
+                } else {
+                    throw new UserUpdateException("An error occured while updating the username", MyException.ERROR);
+                }
+            } else {
+                throw new UserUpdateException("The names aren't matching", MyException.ERROR);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(UserHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+   
+    public void updateEmail(String user, String email1, String email2) throws DatabaseConnectionException, UserUpdateException, UserUpdateSuccess {
+        try {
+            int result;
+            
+            if(email1.equals(email2)) {
+                Connection con = DatabaseHelper.connect();
+                Statement statement = con.createStatement();
+                result = statement.executeUpdate("update user set email='" + email1 + "' where username = '" + user + "'"); 
+
+                if(result > 0) {
+                    throw new UserUpdateSuccess("Email update successful", MyException.SUCCESS); 
+                } else {
+                    throw new UserUpdateException("An error occured while updating the email address", MyException.ERROR);
+                }
+            } else {
+                throw new UserUpdateException("The emails aren't matching", MyException.ERROR);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(UserHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+   
+    public void updatePassword(User user, String password1, String password2, String passwordOld) throws DatabaseConnectionException, UserUpdateException, UserUpdateSuccess {
+        try {
+            int result;
+            
+            if(user.getPassword().equals(passwordOld)) {
+                
+                if(password1.equals(password2)) {
+                    Connection con = DatabaseHelper.connect();
+                    Statement statement = con.createStatement();
+                    result = statement.executeUpdate("update user set password='" + password1 + "' where username = '" + user.getName() + "'"); 
+
+                    if(result > 0) {
+                        throw new UserUpdateSuccess("Password update successful", MyException.SUCCESS); 
+                    } else {
+                        throw new UserUpdateException("An error occured while updating the password", MyException.ERROR);
+                    }
+                } else {
+                    throw new UserUpdateException("The passwords aren't matching", MyException.ERROR);
+                }
+                
+            } else {
+                throw new UserUpdateException("The password is wrong", MyException.ERROR);
+            } 
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(UserHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }
