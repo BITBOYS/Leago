@@ -53,7 +53,7 @@
         </session-timeout>
     </session-config>
     
-    <!-- T I M E O U T -->  
+    <!-- E R R O R -->  
     <error-page>
         <location>/error.jsp</location>
     </error-page>

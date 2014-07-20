@@ -45,12 +45,12 @@ public class TournamentServlet extends HttpServlet {
         this.request = request;
         this.response = response;
 
-        //String servletPath = request.getServletPath().substring(1);
-        String id = (request.getPathInfo() == null)? null : request.getPathInfo().substring(1);
-        //String action = request.getParameter("action");
-        //System.out.println(servletPath + " - " + action);
+        String servletPath = request.getServletPath().substring(1);
+        String id = (request.getPathInfo() == null)? "" : request.getPathInfo().substring(1).split("/")[0];
+        String action = request.getParameter("action");
+        System.out.println(request.getServletPath() + " - " + id + " - " + action);
         
-        if(id != null)
+        if(!id.trim().equals(""))
             _show(id);
         else 
             path = "/index.jsp";
