@@ -3,7 +3,7 @@ package leago.models;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.sql.Time; 
+import java.sql.Time;
 
 /**
  * @author Malte
@@ -152,21 +152,19 @@ public class Tournament {
     }
 
     public String getStart_time() {
-       String startTime = "--:--";
-       if(start_time != null){
+        String startTime = "--:--";
+        if (start_time != null) {
             startTime = new SimpleDateFormat("HH:mm").format(start_time.getTime());
-       }
-        System.out.print("TOURNAMENT-OBJECT - startTime: " + startTime);
+        }
         return startTime;
     }
 
     public String getEnd_time() {
-       String endTime = "--:--";
-       if(end_time != null)
-        endTime = new SimpleDateFormat("HH:mm").format(end_time.getTime());
-       
-       System.out.print("TOURNAMENT-OBJECT - endTime: " + endTime);
-       return endTime;
+        String endTime = "--:--";
+        if (end_time != null) {
+            endTime = new SimpleDateFormat("HH:mm").format(end_time.getTime());
+        }
+        return endTime;
     }
 
     public void setStart_time(Time start_time) {

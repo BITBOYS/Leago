@@ -17,7 +17,7 @@
                 <a href="#" class="pull-right need-help">Passwort vergessen? </a><span class="clearfix"></span>
             </div>
             <div class="form-group">
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Log me in!</button>
+                <button class="btn btn-lg btn-success btn-block" type="submit">Log me in!</button>
             </div>
         </form>
         <a href="#" class="pull-right need-help">Brauchst du Hilfe? </a><span class="clearfix"></span>
