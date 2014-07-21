@@ -7,6 +7,7 @@
 package leago.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -17,7 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 import leago.error.exceptions.DatabaseConnectionException;
 import leago.error.exceptions.TournamentNotExistingException;
 import leago.helper.TournamentHelper;
+import leago.models.Team;
 import leago.models.Tournament;
+import leago.models.User;
 
 /**
  *
@@ -46,14 +49,24 @@ public class TournamentServlet extends HttpServlet {
         this.response = response;
 
         String servletPath = request.getServletPath().substring(1);
-        String id = (request.getPathInfo() == null)? "" : request.getPathInfo().substring(1).split("/")[0];
-        String action = request.getParameter("action");
-        System.out.println(request.getServletPath() + " - " + id + " - " + action);
+        String[] pathinfo = (request.getPathInfo() == null)? new String[0] : request.getPathInfo().substring(1).split("/");
+        String id = "";
+        
+        for(int idx = 0; idx < pathinfo.length; idx++) {
+            
+            switch(idx) {
+                case 0: id = pathinfo[idx]; break;
+                default: break;
+            }
+        }
         
         if(!id.trim().equals(""))
             _show(id);
-        else 
-            path = "/index.jsp";
+//        else if (servletPath.equals("register") && id.equals("create"))
+//            _create();
+//        else if (servletPath.equals("register"))
+//            _new();
+    
     }
     
     private void _show(String id) throws ServletException, IOException {
@@ -64,9 +77,13 @@ public class TournamentServlet extends HttpServlet {
             // O P E R A T I O N
             TournamentHelper tournamentHelper = new TournamentHelper();
             Tournament tournament = tournamentHelper.getTournament(id);
+            ArrayList<Team> teams = tournamentHelper.getTeamsByTournament(id);
+            ArrayList<User> member = tournamentHelper.getTournamentMember(id);
             
             // R E S U L T # H A N D L I N G
             request.setAttribute("tournament", tournament);
+            request.setAttribute("teams", teams);
+            request.setAttribute("member", member);
             forward();
             
         } catch (DatabaseConnectionException ex) {

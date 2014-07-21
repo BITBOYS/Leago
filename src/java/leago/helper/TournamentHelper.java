@@ -11,11 +11,13 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import leago.error.MyException;
 import leago.error.exceptions.DatabaseConnectionException;
 import leago.error.exceptions.TournamentNotExistingException;
+import leago.models.Team;
 import leago.models.Tournament;
 import leago.models.User;
 
@@ -63,4 +65,11 @@ public class TournamentHelper {
         return tournament;
     }    
     
+    public ArrayList<Team> getTeamsByTournament(String tournament_name) throws DatabaseConnectionException, TournamentNotExistingException {
+        return null;
+    }
+    
+    public ArrayList<User> getTournamentMember(String tournament_name) throws DatabaseConnectionException, TournamentNotExistingException {
+        return null;
+    }
 }
