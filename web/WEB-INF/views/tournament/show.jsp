@@ -27,7 +27,7 @@
                 <p>${tournament.description}</p>
                 <div class="row">
                     <div class="col-lg-5">
-                        <p>Leader: <b><a href="${pageContext.request.contextPath}/user?user=${tournament.leader.name}"> ${tournament.leader.name} </a></b></p>
+                        <p>Leader: <b><a href="${pageContext.request.contextPath}/user/${tournament.leader.name}"> ${tournament.leader.name} </a></b></p>
                         <p>Zeitraum: <b> ${tournament.start_date} ${tournament.start_time}</b> bis <b>${tournament.end_date} ${tournament.end_time}</b></p>
                         <p>Anmeldefrist: 
                             <c:choose>

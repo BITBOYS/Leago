@@ -59,6 +59,7 @@ public class TournamentServlet extends HttpServlet {
                 default: break;
             }
         }
+        System.out.print(id);
         
         if(!id.trim().equals(""))
             _show(id);
@@ -78,7 +79,7 @@ public class TournamentServlet extends HttpServlet {
             TournamentHelper tournamentHelper = new TournamentHelper();
             Tournament tournament = tournamentHelper.getTournament(id);
             ArrayList<Team> teams = tournamentHelper.getTeamsByTournament(id);
-            ArrayList<User> member = tournamentHelper.getTournamentMember(id);
+            ArrayList<User> member = tournamentHelper.getMemberByTournament(id);
             
             // R E S U L T # H A N D L I N G
             request.setAttribute("tournament", tournament);

@@ -24,6 +24,14 @@ public class User {
         super();
         setName(name);
     }
+    
+    public User(String name, String email, String password, Statistics statistics, Date create_date) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.statistics = statistics;
+        this.create_date = create_date;
+    }
 
     public String getName() {
         return name;
