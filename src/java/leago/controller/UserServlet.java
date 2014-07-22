@@ -63,6 +63,8 @@ public class UserServlet extends HttpServlet {
             _create();
         else if (servletPath.equals("register"))
             _new();
+        else if (servletPath.equals("settings") && id.trim().equals("delete"))
+            _destroy();
         else if (servletPath.equals("settings") && !id.trim().equals(""))
             _update(id);
         else if (servletPath.equals("settings"))
@@ -108,7 +110,7 @@ public class UserServlet extends HttpServlet {
     }
     
     private void _create() throws IOException, ServletException {
-        page = "login";
+        page = "/login";
         
         // P A R A M E T E R S
         String name = request.getParameter("name");
@@ -124,11 +126,12 @@ public class UserServlet extends HttpServlet {
         } catch (UserCreationException | DatabaseConnectionException ex) {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("message", ex);
-            page = "user/create";
+            page = "/user/create";
+            
         } catch (UserCreationSuccess ex) {
-            request.setAttribute("message", ex); 
+            request.setAttribute("message", ex);
         }
-        
+     
         forward();
     }
     
@@ -156,8 +159,22 @@ public class UserServlet extends HttpServlet {
         
     }
     
-    private void _destroy() {
-       path = "/index.jsp";
+    private void _destroy() throws ServletException, IOException {
+        page = "user/destroy";
+        
+        // O P E R A T I O N
+        UserHelper userHelper = new UserHelper();
+        try {
+            userHelper.deleteUser((User) request.getSession().getAttribute("user"));
+        } catch (UserUpdateException | DatabaseConnectionException ex) {
+            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("message", ex);
+        } catch (UserUpdateSuccess ex) {
+            request.getSession().invalidate();
+        }
+        
+        // R E D I R E C T I N G
+        forward();
     }
     
     
