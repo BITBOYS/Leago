@@ -7,7 +7,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/img/favicon.ico">
-        <title>Leago - About</title>
+        <title>Leago - About Page</title>
 
         <!-- Bootstrap core CSS -->
         <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
