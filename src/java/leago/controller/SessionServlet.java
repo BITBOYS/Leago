@@ -76,6 +76,7 @@ public class SessionServlet extends HttpServlet {
             // R E S U L T # H A N D L I N G
             if(result) {
                 User user = userHelper.getUser(id);
+                System.out.println(user.getTeams());
                 request.getSession().setAttribute("user", user);
 
                 // R E D I R E C T I N G
