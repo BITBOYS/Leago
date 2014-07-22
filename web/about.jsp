@@ -24,12 +24,9 @@
 
     <body style="padding-top: 60px;">
         <div class="container">
-            <div class="col-lg-12">
+            
+            <div class="col-md-12">
                 <h1 class="page-header">About Us <small>Das sind wir!</small></h1>
-                <ol class="breadcrumb">
-                    <li><a href="${pageContext.request.contextPath}">Home</a></li>
-                    <li class="active">About Us</li>
-                </ol>
             </div>
 
 
@@ -60,9 +57,8 @@
                     <p>Maik mag Kappies.</p>
                     <ul class="list-unstyled list-inline list-social-icons">
                         <li class="tooltip-social"><a href="#xing-profile" data-toggle="tooltip" target="blank" data-placement="bottom" title="Xing"><i class="fa fa-xing fa-2x"></i></a></li>
-                        <li class="tooltip-social linkedin-link"><a href="#linkedin-profile" target="blank" data-toggle="tooltip" data-placement="bottom" title="LinkedIn"><i class="fa fa-linkedin-square fa-2x"></i></a></li>
-                        <li class="tooltip-social facebook-link"><a href="#facebook-profile" target="blank" data-toggle="tooltip" data-placement="bottom" title="Facebook"><i class="fa fa-facebook-square fa-2x"></i></a></li>
-                        <li class="tooltip-social google-plus-link"><a href="#google-plus-profile" target="blank" data-toggle="tooltip" data-placement="bottom" title="Google+"><i class="fa fa-google-plus-square fa-2x"></i></a></li>
+                        <li class="tooltip-social"><a href="#github-profile" target="blank" data-toggle="tooltip" data-placement="bottom" title="GitHub"><i class="fa fa-github fa-2x"></i></i></a></li>
+                        <li class="tooltip-social facebook-link"><a href="#facebook-profile" target="blank" data-toggle="tooltip" data-placement="bottom" title="Facebook"><i class="fa fa-facebook-square fa-2x"></i></a></li>                       
                     </ul>
                 </div>
 

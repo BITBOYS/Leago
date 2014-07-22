@@ -30,17 +30,13 @@
 
                 <div class="col-lg-12">
                     <h1 class="page-header">Impressum</h1>
-                    <ol class="breadcrumb">
-                        <li><a href="${pageContext.request.contextPath}">Home</a></li>
-                        <li class="active">Impressum</li>
-                    </ol>
                 </div>
 
             </div><!-- /.row -->
 
             <div class="well col-sm-12">
                 <h3>Betreiber dieser Webseite</h3>
-                <p><b>B1tb0ys</b><br>Hamburg<br>Germany</p>
+                <p><b>B1TB0YS</b><br>Hamburg<br>Germany</p>
                 <p>E-Mail: <a href="mailto:dede@kms.de">leago@bitboys.de</a></p>
                 <hr>
 
