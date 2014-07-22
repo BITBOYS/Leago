@@ -23,6 +23,8 @@ public class Tournament {
     private String venue;
     private Date term_of_application;
     private List<Table> table;
+    private List<Team> teams;
+    private List<User> member;
 
     public Tournament() {
         super();
@@ -175,6 +177,22 @@ public class Tournament {
         this.end_time = end_time;
     }
 
+    public List<Team> getTeams() {
+        return teams;
+    }
+
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
+    }
+
+    public List<User> getMember() {
+        return member;
+    }
+
+    public void setMember(List<User> member) {
+        this.member = member;
+    }
+
     public String getCountdown() {
         java.util.Date today = new java.util.Date();
         long diff = term_of_application.getTime() - today.getTime();
@@ -194,7 +212,7 @@ public class Tournament {
 
     @Override
     public String toString() {
-        return "Tournament{" + "name=" + name + ", password=" + password + ", description=" + description + ", leader=" + leader + ", start_date=" + start_date + ", start_time=" + start_time + ", end_date=" + end_date + ", end_time=" + end_time + ", create_date=" + create_date + ", nr_matchdays=" + nr_matchdays + ", venue=" + venue + ", term_of_application=" + term_of_application + ", table=" + table + '}';
+        return "Tournament{" + "name=" + name + ", password=" + password + ", description=" + description + ", leader=" + leader + ", start_date=" + start_date + ", start_time=" + start_time + ", end_date=" + end_date + ", end_time=" + end_time + ", create_date=" + create_date + ", nr_matchdays=" + nr_matchdays + ", venue=" + venue + ", term_of_application=" + term_of_application + ", table=" + table + ", teams=" + teams + ", member=" + member + '}';
     }
 
 }

@@ -16,9 +16,6 @@
             <li class="active"><a href="#news" data-toggle="tab">Aktuelles</a></li>
             <li><a href="#table" data-toggle="tab">Tabelle</a></li>
             <li><a href="#user" data-toggle="tab">Spielerstatistiken</a></li>
-                <c:if test="${user.name == profileuser.name}">
-                <li><a href="#account" data-toggle="tab">Turniereinstellungen</a></li>
-                </c:if>
         </ul>
         <div id="myTabContent" class="tab-content">
 
@@ -115,7 +112,7 @@
                                     <tbody>  
                                         <c:forEach items="${tournament.table}" var="placement" varStatus="status">
                                             <tr>  
-                                                <td>#<c:out value="${status.count}" />.</td> 
+                                                <td>#<c:out value="${status.count}" /></td> 
                                                 <td><a href="${pageContext.request.contextPath}/team?team=${placement.team}">${placement.team}</a></td>  
                                                 <td>${placement.tournament_team_matches}</td>  
                                                 <td>${placement.tournament_team_winrate}</td>  
@@ -159,11 +156,11 @@
                                         </tr>  
                                     </thead>  
                                     <tbody>  
-                                        <c:forEach items="${member}" var="user">
+                                        <c:forEach items="${tournament.member}" var="user">
                                             <tr>  
                                                 <td>.</td>  
                                                 <td>${user.name}</td>  
-                                                <td>${user.statics.wins}</td> 
+                                                <td>${user.statistics.wins}</td> 
                                                 <td>${user.statistics.goals}</td>  
                                                 <td>kp</td> 
                                             </tr> 
@@ -199,7 +196,7 @@
                                 <!-- Table -->
                                 <table class="table">
                                     <tbody>
-                                        <c:forEach items="${teams}" var="team">
+                                        <c:forEach items="${tournament.teams}" var="team">
                                             <tr>
                                                 <td>
                                                     <div class="col-md-9">
@@ -217,7 +214,7 @@
                                                 </td> 
                                             </tr>  
                                         </c:forEach>
-                                        <c:if test="${empty teams}">
+                                        <c:if test="${empty tournament.teams}">
                                             <tr>
                                         <p>
                                             Kein Teams im Turnier
