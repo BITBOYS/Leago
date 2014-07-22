@@ -55,13 +55,12 @@ public class SessionServlet extends HttpServlet {
             _create();
         else if(action.equals("logout")) 
             _destroy();
-        else 
-            path = "/index.jsp";
         
     }
     
     private void _new() throws ServletException, IOException {
-        forward("login", null);
+        page = "login";
+        forward();
     }
     
     private void _create() throws IOException, ServletException {
@@ -89,26 +88,21 @@ public class SessionServlet extends HttpServlet {
             request.setAttribute("message", ex);   
 
             // F O R W A R D I N G
-            forward("login", null);
+            page = "login";
+            forward();
         }
     }
     
     private void _destroy() throws ServletException, IOException {
         request.getSession().invalidate();
-        forward(null, "/index.jsp");
+        String pageToForward = request.getContextPath();
+        response.sendRedirect(pageToForward);
     }    
     
-    private void forward(String page, String path) throws ServletException, IOException {
-        
-        if(page != null && !page.trim().equals(""))
-            this.page = page;
-        
-        if(path != null && !path.trim().equals(""))
-            this.path = path;
-        
+    private void forward() throws ServletException, IOException {        
         // F O R W A R D I N G
-        request.setAttribute("page", this.page);
-        request.getRequestDispatcher(this.path).forward(request, response);
+        request.setAttribute("page", page);
+        request.getRequestDispatcher(path).forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

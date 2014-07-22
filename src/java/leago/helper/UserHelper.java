@@ -322,4 +322,23 @@ public class UserHelper {
         }
     }
     
+    public void deleteUser(User user) throws DatabaseConnectionException, UserUpdateException, UserUpdateSuccess {
+        try {
+            int result;
+
+            Connection con = DatabaseHelper.connect();
+            Statement statement = con.createStatement();
+            result = statement.executeUpdate("DELETE FROM user WHERE username = '" + user.getName() + "'"); 
+
+            if(result > 0) {
+                throw new UserUpdateSuccess("Account succesfully deleted", MyException.SUCCESS); 
+            } else {
+                throw new UserUpdateException("An error occured while deleting the account", MyException.ERROR);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(UserHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 }
