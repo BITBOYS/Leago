@@ -37,12 +37,12 @@ public class TournamentHelper {
      * @throws DatabaseConnectionException
      * @throws TournamentNotExistingException
      */
-    public static Tournament getTournament(String tournament_name) throws DatabaseConnectionException, TournamentNotExistingException {
-        Tournament tournament = null;
+    public Tournament getTournament(String tournament_name) throws DatabaseConnectionException, TournamentNotExistingException {
+        Tournament tournament = new Tournament();
         try {
             Connection con = DatabaseHelper.connect();
             Statement statement = con.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT name, leader, start_date, end_date, create_date, password, description, nr_of_matchdays, venue, term_of_application, start_time, end_time "
+            ResultSet resultSet = statement.executeQuery("SELECT * "
                     + "FROM tournament "
                     + "WHERE name = '" + tournament_name.trim() + "' "
                     + "ORDER BY name, start_date, end_date");
@@ -51,20 +51,23 @@ public class TournamentHelper {
                 throw new TournamentNotExistingException("There is no tournament with this name: " + tournament_name, MyException.INFO);
             } else {
                 resultSet.first();
-                String tournamentname = resultSet.getString("name");
-                int nr_matchdays = resultSet.getInt("nr_of_matchdays");
-                String password = resultSet.getString("password");
-                String description = resultSet.getString("description");
-                String venue = resultSet.getString("venue");
-                Date start_date = resultSet.getDate("start_date");
-                java.sql.Time start_time = resultSet.getTime("start_time");
-                Date end_date = resultSet.getDate("end_date");
-                java.sql.Time end_time = resultSet.getTime("end_time");
-                Date create_date = resultSet.getDate("create_date");
-                Date term_of_application = resultSet.getDate("term_of_application");
-                User leader = new User(resultSet.getString("leader"));
 
-                tournament = new Tournament(tournamentname, password, description, leader, start_date, start_time, end_date, end_time, create_date, nr_matchdays, venue, term_of_application);
+                tournament.setName(resultSet.getString("name"));
+                tournament.setLeader(new User(resultSet.getString("leader")));
+                tournament.setStart_date(resultSet.getDate("start_date"));
+                tournament.setStart_time(resultSet.getTime("start_time"));
+                tournament.setEnd_date(resultSet.getDate("end_date"));
+                tournament.setEnd_time(resultSet.getTime("end_time"));
+                tournament.setCreate_date(resultSet.getDate("create_date"));
+                tournament.setPassword(resultSet.getString("password"));
+                tournament.setDescription(resultSet.getString("description"));
+                tournament.setNr_matchdays(resultSet.getInt("nr_of_matchdays"));
+                tournament.setVenue(resultSet.getString("venue"));
+                tournament.setTerm_of_application(resultSet.getDate("term_of_application"));
+                tournament.setTeams(getTeamsByTournament(tournament.getName()));
+                tournament.setMember(getMemberByTournament(tournament.getName()));
+                tournament.setTable(getTableByTournament(tournament.getName()));
+
             }
 
         } catch (SQLException ex) {
@@ -83,7 +86,7 @@ public class TournamentHelper {
      * @throws DatabaseConnectionException
      * @throws TournamentUpdateException
      */
-    public static void editTournamentName(String tournament_name, String new_name) throws TournamentUpdateSuccess, DatabaseConnectionException, TournamentUpdateException {
+    public void editTournamentName(String tournament_name, String new_name) throws TournamentUpdateSuccess, DatabaseConnectionException, TournamentUpdateException {
         try {
             int result;
             if (tournament_name.equals(new_name)) {
@@ -109,29 +112,35 @@ public class TournamentHelper {
 
     /**
      *
-     * @param tournament_name
+     * @param tournament
      * @param old_password
-     * @param new_password
+     * @param new_password1
+     * @param new_password2
      * @throws TournamentUpdateSuccess
      * @throws TournamentUpdateException
      * @throws DatabaseConnectionException
      */
-    public static void editTournamentPassword(String tournament_name, String old_password, String new_password) throws TournamentUpdateSuccess, TournamentUpdateException, DatabaseConnectionException {
+    public void editTournamentPassword(Tournament tournament, String old_password, String new_password1, String new_password2) throws TournamentUpdateSuccess, TournamentUpdateException, DatabaseConnectionException {
         try {
 
             int result;
 
-            if (old_password.equals(new_password)) {
-                Connection con = DatabaseHelper.connect();
-                Statement statement = con.createStatement();
-                result = statement.executeUpdate("UPDATE tournament "
-                        + "SET password = '" + new_password + "' "
-                        + "WHERE name = '" + tournament_name + "'");
+            if (old_password.equals(tournament.getPassword())) {
 
-                if (result > 0) {
-                    throw new TournamentUpdateSuccess("Password update successful", MyException.SUCCESS);
+                if (new_password1.equals(new_password2)) {
+                    Connection con = DatabaseHelper.connect();
+                    Statement statement = con.createStatement();
+                    result = statement.executeUpdate("UPDATE tournament "
+                            + "SET password = '" + new_password1 + "' "
+                            + "WHERE name = '" + tournament.getName() + "'");
+
+                    if (result > 0) {
+                        throw new TournamentUpdateSuccess("Password update successful", MyException.SUCCESS);
+                    } else {
+                        throw new TournamentUpdateSuccess("An error occured while updating the password", MyException.ERROR);
+                    }
                 } else {
-                    throw new TournamentUpdateSuccess("An error occured while updating the password", MyException.ERROR);
+                    throw new TournamentUpdateException("The passwords aren't matching", MyException.ERROR);
                 }
             } else {
                 throw new TournamentUpdateException("The passwords aren't matching", MyException.ERROR);
@@ -149,7 +158,7 @@ public class TournamentHelper {
      * @throws TournamentUpdateSuccess
      * @throws DatabaseConnectionException
      */
-    public static void editTournamentLeader(String tournament_name, String new_leader) throws TournamentUpdateSuccess, DatabaseConnectionException {
+    public void editTournamentLeader(String tournament_name, String new_leader) throws TournamentUpdateSuccess, DatabaseConnectionException {
         try {
             int result;
 
@@ -177,7 +186,7 @@ public class TournamentHelper {
      * @throws TournamentUpdateSuccess
      * @throws DatabaseConnectionException
      */
-    public static void editTournamentVenue(String tournament_name, String new_venue) throws TournamentUpdateSuccess, DatabaseConnectionException {
+    public void editTournamentVenue(String tournament_name, String new_venue) throws TournamentUpdateSuccess, DatabaseConnectionException {
         try {
             int result;
 
@@ -205,7 +214,7 @@ public class TournamentHelper {
      * @throws TournamentUpdateSuccess
      * @throws DatabaseConnectionException
      */
-    public static void editTournamentDescription(String tournament_name, String description) throws TournamentUpdateSuccess, DatabaseConnectionException {
+    public void editTournamentDescription(String tournament_name, String description) throws TournamentUpdateSuccess, DatabaseConnectionException {
         try {
             int result;
 
@@ -233,7 +242,7 @@ public class TournamentHelper {
      * @throws TournamentUpdateSuccess
      * @throws DatabaseConnectionException
      */
-    public static void editTournamentMatchdays(String tournament_name, int new_nr_matchdays) throws TournamentUpdateSuccess, DatabaseConnectionException {
+    public void editTournamentMatchdays(String tournament_name, int new_nr_matchdays) throws TournamentUpdateSuccess, DatabaseConnectionException {
         try {
             int result;
 
@@ -261,7 +270,7 @@ public class TournamentHelper {
      * @throws TournamentUpdateSuccess
      * @throws DatabaseConnectionException
      */
-    public static void editTournamentTerm(String tournament_name, Date new_term_of_application) throws TournamentUpdateSuccess, DatabaseConnectionException {
+    public void editTournamentTerm(String tournament_name, Date new_term_of_application) throws TournamentUpdateSuccess, DatabaseConnectionException {
         try {
             int result;
 
@@ -289,7 +298,7 @@ public class TournamentHelper {
      * @throws TournamentUpdateSuccess
      * @throws DatabaseConnectionException
      */
-    public static void editTournamentStartDate(String tournament_name, Date new_start_date) throws TournamentUpdateSuccess, DatabaseConnectionException {
+    public void editTournamentStartDate(String tournament_name, Date new_start_date) throws TournamentUpdateSuccess, DatabaseConnectionException {
         try {
             int result;
 
@@ -317,7 +326,7 @@ public class TournamentHelper {
      * @throws DatabaseConnectionException
      * @throws TournamentUpdateSuccess
      */
-    public static void editTournamentEndDate(String tournament_name, Date new_end_date) throws DatabaseConnectionException, TournamentUpdateSuccess {
+    public void editTournamentEndDate(String tournament_name, Date new_end_date) throws DatabaseConnectionException, TournamentUpdateSuccess {
         try {
             int result;
 
@@ -344,7 +353,7 @@ public class TournamentHelper {
      * @throws TournamentUpdateSuccess
      * @throws DatabaseConnectionException
      */
-    public static void deleteTournament(String tournament_name) throws TournamentUpdateSuccess, DatabaseConnectionException {
+    public void deleteTournament(String tournament_name) throws TournamentUpdateSuccess, DatabaseConnectionException {
         try {
             int result;
 
@@ -371,31 +380,29 @@ public class TournamentHelper {
      * @throws DatabaseConnectionException
      * @throws TournamentNotExistingException
      */
-    public static ArrayList<Team> getTeamsByTournament(String tournament_name) throws DatabaseConnectionException, TournamentNotExistingException {
+    public ArrayList<Team> getTeamsByTournament(String tournament_name) throws DatabaseConnectionException, TournamentNotExistingException {
         ArrayList<Team> teams = new ArrayList<Team>();
         try {
 
             Connection con = DatabaseHelper.connect();
             Statement statement = con.createStatement();
 
-            ResultSet resultSet = statement.executeQuery("SELECT name, tag, password, leader, team.wins, team.defeats, "
+            ResultSet resultSet = statement.executeQuery("SELECT name, tag, password, team.leader, team.wins, team.defeats, "
                     + "team.goals, team.goals_conceded, team.tournament_wins, team.tournament_participations, team.create_date"
                     + " FROM team, team_tournament"
                     + " WHERE tournament =  '" + tournament_name + "'"
                     + " AND team = name"
                     + " ORDER BY name, team.wins");
-            resultSet.first();
-
+            
             while (resultSet.next()) {
                 teams.add(new Team(resultSet.getString("name"),
                         resultSet.getString("tag"),
                         resultSet.getString("password"),
-                        new User(resultSet.getString("leader")),
+                        new User(resultSet.getString("team.leader")),
                         new Statistics(resultSet.getInt("team.goals"), resultSet.getInt("team.goals_conceded"),
                                 resultSet.getInt("team.wins"), resultSet.getInt("team.defeats"), resultSet.getInt("team.tournament_wins"),
                                 resultSet.getInt("team.tournament_participations")),
                         resultSet.getDate("team.create_date")));
-                resultSet.next();
             }
         } catch (SQLException ex) {
             Logger.getLogger(TournamentHelper.class.getName()).log(Level.SEVERE, null, ex);
@@ -411,14 +418,14 @@ public class TournamentHelper {
      * @return
      * @throws DatabaseConnectionException
      */
-    public static ArrayList<User> getMemberByTournament(String tournamentname) throws DatabaseConnectionException {
+    public ArrayList<User> getMemberByTournament(String tournamentname) throws DatabaseConnectionException {
         ArrayList<User> member = new ArrayList<User>();
         try {
 
             Connection con = DatabaseHelper.connect();
             Statement statement = con.createStatement();
 
-            ResultSet resultSet = statement.executeQuery("SELECT name, u.password, u.email, u.create_date, u.goals,  u.goals_conceded, u.wins, u.defeats, u.goals_conceded"
+            ResultSet resultSet = statement.executeQuery("SELECT distinct username, u.password, u.email, u.create_date, u.goals,  u.goals_conceded, u.wins, u.defeats, u.goals_conceded, u.tournament_wins, u.tournament_participations"
                     + " FROM  user as u, user_team as ut, team as te, team_tournament as teto, tournament as tou"
                     + " WHERE tou.name = teto.tournament"
                     + "   AND teto.team = te.name"
@@ -426,20 +433,18 @@ public class TournamentHelper {
                     + "   AND ut.user = u.username"
                     + "   AND tou.name = '" + tournamentname + "'"
                     + " ORDER BY u.username, u.wins");
-            resultSet.first();
 
             while (resultSet.next()) {
-                member.add(new User(resultSet.getString("name"),
+                member.add(new User(resultSet.getString("username"),
                         resultSet.getString("email"),
                         resultSet.getString("password"),
                         new Statistics(resultSet.getInt("goals"),
                                 resultSet.getInt("goals_conceded"),
                                 resultSet.getInt("wins"),
                                 resultSet.getInt("defeats"),
-                                resultSet.getInt("tournament_wins"),
-                                resultSet.getInt("tournament_participations")),
-                        resultSet.getDate("create_date")));
-                resultSet.next();
+                                resultSet.getInt("u.tournament_wins"),
+                                resultSet.getInt("u.tournament_participations")),
+                        resultSet.getDate("u.create_date")));
             }
         } catch (SQLException ex) {
             Logger.getLogger(TournamentHelper.class.getName()).log(Level.SEVERE, null, ex);
@@ -455,7 +460,7 @@ public class TournamentHelper {
      * @return
      * @throws DatabaseConnectionException
      */
-    public static ArrayList<Table> getTableFromTournament(String tournament_name) throws DatabaseConnectionException {
+    public ArrayList<Table> getTableByTournament(String tournament_name) throws DatabaseConnectionException {
         ArrayList<Table> table = new ArrayList<Table>();
 
         try {
@@ -467,12 +472,10 @@ public class TournamentHelper {
                     + "  FROM team_tournament "
                     + " WHERE tournament = '" + tournament_name + "'"
                     + " ORDER BY (wins/(wins+defeats)) DESC");
-            resultSet.first();
 
             while (resultSet.next()) {
                 table.add(new Table(resultSet.getString("team"), resultSet.getInt("wins"), resultSet.getInt("defeats"),
                         resultSet.getInt("goals"), resultSet.getInt("goals_conceded")));
-                resultSet.next();
             }
         } catch (SQLException ex) {
             Logger.getLogger(TournamentHelper.class.getName()).log(Level.SEVERE, null, ex);
