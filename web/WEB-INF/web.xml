@@ -50,6 +50,11 @@
         <url-pattern>/tournament/*</url-pattern>
     </servlet-mapping>
     
+    <servlet-mapping>
+        <servlet-name>TournamentServlet</servlet-name>
+        <url-pattern>/new/tournament/</url-pattern>
+    </servlet-mapping>
+    
     <!-- T I M E O U T -->  
     <session-config>
         <session-timeout>
@@ -57,7 +62,7 @@
         </session-timeout>
     </session-config>
     
-    <!-- T I M E O U T -->  
+    <!-- E R R O R -->  
     <error-page>
         <location>/error.jsp</location>
     </error-page>

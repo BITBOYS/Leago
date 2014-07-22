@@ -13,6 +13,9 @@
                 <li class="footer-menu-divider">&sdot;</li>
                 <li><a href="${pageContext.request.contextPath}/contact.jsp"><fmt:message key="footer.link.contact"/></a>
                 </li>
+                <li class="footer-menu-divider">&sdot;</li>
+                <li><a href="${pageContext.request.contextPath}/faq.jsp">FAQ</a>
+                </li>
             </ul>
             <p class="copyright text-muted small">Copyright &copy; B1TB0YS 2014. <fmt:message key="footer.lable.rights"/></p>
         </div>

@@ -24,13 +24,16 @@
 
     <body style="padding-top: 60px;">
         <div class="container">
-            
-            <div class="col-md-12">
-                <h1 class="page-header">About Us <small>Das sind wir!</small></h1>
-            </div>
-
-
             <div class="row">
+
+                <div class="col-md-12">
+                    <h1 class="page-header">About Us <small> The Team</small></h1>
+                    <ol class="breadcrumb">
+                        <li><a href="${pageContext.request.contextPath}/">Home</a></li>
+                        <li class="disabled"><a href="#">Other Pages</a></li>
+                        <li class="active">About Us</li>
+                    </ol>
+                </div>
 
                 <div class="col-md-6">
                     <img class="img-responsive" src="${pageContext.request.contextPath}/resources/img/team.jpg">

@@ -49,17 +49,17 @@
 
                         <div class="panel panel-default">
                             <!-- Default panel contents -->
-                            <div class="panel-heading">Spielplan</div>
+                            <div class="panel-heading"><i class="fa fa-gamepad"></i> Spielplan</div>
 
                             <!-- Table -->
                             <div class="table-responsive">                                               
                                 <table class="table table-hover">  
                                     <thead>  
                                         <tr>  
-                                            <th><span class="label label-success">Datum</span></th> 
-                                            <th><span class="label label-success">Heim</span></th> 
-                                            <th><span class="label label-success">Gast</span></th> 
-                                            <th><span class="label label-success">Ergebnis</span></th> 
+                                            <th><span class="label label-default">Datum</span></th> 
+                                            <th><span class="label label-default">Heim</span></th> 
+                                            <th><span class="label label-default">Gast</span></th> 
+                                            <th><span class="label label-default">Ergebnis</span></th> 
                                         </tr>  
                                     </thead>  
                                     <tbody>  
@@ -91,7 +91,7 @@
 
                         <div class="panel panel-default">
                             <!-- Default panel contents -->
-                            <div class="panel-heading">Tabelle</div>
+                            <div class="panel-heading"><i class="fa fa-table"></i> Tabelle</div>
 
                             <!-- Table -->
                             <div class="table-responsive">                                               
@@ -141,7 +141,7 @@
 
                         <div class="panel panel-default">
                             <!-- Default panel contents -->
-                            <div class="panel-heading">Userstatistik</div>
+                            <div class="panel-heading"><i class="fa fa-arrow-circle-o-up"></i> Userstatistik</div>
 
                             <!-- Table -->
                             <div class="table-responsive">                                               
@@ -152,17 +152,15 @@
                                             <th><span class="label label-default">Spieler</span></th> 
                                             <th><span class="label label-default">Siege</span></th>
                                             <th><span class="label label-default">Tore</span></th> 
-                                            <th><span class="label label-default">Team</span></th> 
                                         </tr>  
                                     </thead>  
                                     <tbody>  
-                                        <c:forEach items="${tournament.member}" var="user">
+                                        <c:forEach items="${tournament.member}" var="user" varStatus="status">
                                             <tr>  
-                                                <td>.</td>  
+                                                <td># ${status.count}</td>  
                                                 <td>${user.name}</td>  
                                                 <td>${user.statistics.wins}</td> 
                                                 <td>${user.statistics.goals}</td>  
-                                                <td>kp</td> 
                                             </tr> 
                                         </c:forEach>
                                     </tbody>  

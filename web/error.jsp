@@ -26,7 +26,7 @@
         <div class="container">
             <div class="row">
 
-                <div class="col-lg-12">
+                <div class="col-md-12">
                     <h1 class="page-header">Error <small>${pageContext.exception}</small></h1>
                     <ol class="breadcrumb">
                         <li><a href="../">Home</a></li>
@@ -56,9 +56,10 @@
                         <li><a href="${pageContext.request.contextPath}">Home</a></li>
                         <li><a href="${pageContext.request.contextPath}/login">Login</a></li>
                         <li><a href="${pageContext.request.contextPath}/register">Sign Up</a></li>
-                        <li><a href="${pageContext.request.contextPath}/about">About Us</a></li>
-                        <li><a href="${pageContext.request.contextPath}/contact">Kontakt</a></li>
-                        <li><a href="${pageContext.request.contextPath}/faq">FAQ</a></li>
+                        <li><a href="${pageContext.request.contextPath}/about.jsp">About Us</a></li>
+                        <li><a href="${pageContext.request.contextPath}/terms.jsp">Terms of use</a></li>
+                        <li><a href="${pageContext.request.contextPath}/contact.jsp">Contact</a></li>
+                        <li><a href="${pageContext.request.contextPath}/faq.jsp">FAQ</a></li>
                     </ul>
                 </div>
 

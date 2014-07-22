@@ -3273,7 +3273,7 @@ input[type="button"].btn-block {
 .dropdown-menu > li > a:focus {
   color: #ffffff;
   text-decoration: none;
-  background-color: #428bca;
+  background-color: #6BBC86;
 }
 
 .dropdown-menu > .active > a,
@@ -3999,6 +3999,12 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .pill-content > .active {
   display: block;
 }
+
+
+/*footer {
+	background-color: #f8f8f8;
+	padding: 50px 0;
+}*/
 
 .nav .caret {
   border-top-color: #428bca;

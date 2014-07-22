@@ -20,7 +20,7 @@
                 <button class="btn btn-lg btn-success btn-block" type="submit">Log me in!</button>
             </div>
         </form>
-        <a href="#" class="pull-right need-help">Brauchst du Hilfe? </a><span class="clearfix"></span>
+        <a href="${pageContext.request.contextPath}/faq.jsp" class="pull-right need-help">Brauchst du Hilfe? </a><span class="clearfix"></span>
         <hr>
         <p class="text-center">New to Leago? <b><a href="#">Sign up! </a></b></p>
     </div>
