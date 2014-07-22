@@ -66,8 +66,6 @@ public class UserServlet extends HttpServlet {
             _new();
         else if (servletPath.equals("settings") && id.trim().equals("delete"))
             _destroy();
-//        else if (servletPath.equals("settings") && !id.trim().equals(""))
-//            _update(id);
         else if (servletPath.equals("settings"))
             _change(id);
         else if(!id.trim().equals(""))
@@ -170,8 +168,11 @@ public class UserServlet extends HttpServlet {
                     break;
                     
                 case "tournaments":
+                    page = "user/update_tournaments";
                     break;
-                default: page = "user/update_profile";
+                    
+                default: 
+                    page = "user/update_profile";
             }
 
             forward();

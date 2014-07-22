@@ -238,7 +238,7 @@ public class UserHelper {
             Connection con = DatabaseHelper.connect();
             Statement statement = con.createStatement();
             
-            ResultSet resultSet = statement.executeQuery("SELECT tou.name, tou.description, tou.create_date, tou.leader, tou.start_date, tou.start_time, tou.end_date, tou.end_time, tou.nr_of_matchdays, tou.venue, tou.term_of_application, tou.password"
+            ResultSet resultSet = statement.executeQuery("SELECT distinct tou.name, tou.description, tou.create_date, tou.leader, tou.start_date, tou.start_time, tou.end_date, tou.end_time, tou.nr_of_matchdays, tou.venue, tou.term_of_application, tou.password"
                                             + " FROM  tournament tou, team_tournament teto, team te, user_team ut, user u"
                                             + " WHERE tou.name = teto.tournament"
                                             + "   AND teto.team = te.name" 
@@ -250,9 +250,8 @@ public class UserHelper {
             while(resultSet.next()) {
                 tournaments.add(new Tournament(resultSet.getString("tou.name"),         resultSet.getString("tou.password"), resultSet.getString("description"), 
                                       new User(resultSet.getString("tou.leader")),      resultSet.getDate("tou.start_date"), resultSet.getTime("tou.start_time"),
-                                               resultSet.getDate("tou.end_date"),       resultSet.getTime("tou.end_time"), resultSet.getDate("tou.create_date"), 
+                                               resultSet.getDate("tou.end_date"),       resultSet.getTime("tou.end_time"),   resultSet.getDate("tou.create_date"), 
                                                resultSet.getInt("tou.nr_of_matchdays"), resultSet.getString("tou.venue"),    resultSet.getDate("tou.term_of_application")));
-                resultSet.next();
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserHelper.class.getName()).log(Level.SEVERE, null, ex);

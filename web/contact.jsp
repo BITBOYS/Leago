@@ -30,11 +30,6 @@
 
                 <div class="col-lg-12">
                     <h1 class="page-header">Contact <small>We'd Love to Hear From You!</small></h1>
-                    <ol class="breadcrumb">
-                        <li><a href="${pageContext.request.contextPath}">Home</a></li>
-                        <li class="disabled"><a href="#">Other Pages</a></li>
-                        <li class="active">Kontakt</li>
-                    </ol>
                 </div>
 
                 <div class="col-lg-12">
@@ -82,7 +77,7 @@
                 </div>
 
                 <div class="col-sm-4">
-                    <h4>B1tb0ys, Inc.</h4>
+                    <h4>B1TB0YS, Inc.</h4>
                     <p>
                         Hamburg City No1<br>
                         Hamburg, D-20097<br>
