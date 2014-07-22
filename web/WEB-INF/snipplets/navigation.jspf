@@ -31,7 +31,7 @@
                 <c:choose>
                     <c:when test="${user != null}">
                         <li><a href="${pageContext.request.contextPath}/user/${user.name}">${user.name}</a></li> 
-                        <li><a href="${pageContext.request.contextPath}/settings"><i class="fa fa-wrench"></i></a></li> 
+                        <li><a href="${pageContext.request.contextPath}/settings/profile"><i class="fa fa-wrench"></i></a></li> 
                         <li><a href="${pageContext.request.contextPath}/logout"><i class="glyphicon glyphicon-log-out"></i></a></li>
                             </c:when>
                             <c:when test="${user == null}">

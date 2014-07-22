@@ -2,19 +2,20 @@
 
     <div class="col-md-3">
         <div class="list-group">
-            <a href="#" class="list-group-item active"><span class="glyphicon glyphicon-user"> </span> Accounteinstellungen</a>
-            <a href="#" class="list-group-item"><span class="fa fa-users"> </span> Meine Teams</a>
-            <a href="#" class="list-group-item"><span class="fa fa-sitemap"> </span> Meine Turniere</a>
+            <a href="${pageContext.request.contextPath}/settings/profile" class="list-group-item active"><span class="glyphicon glyphicon-user"> </span> Accounteinstellungen</a>
+            <a href="${pageContext.request.contextPath}/settings/teams" class="list-group-item"><span class="fa fa-users"> </span> Meine Teams</a>
+            <a href="${pageContext.request.contextPath}/settings/tournaments" class="list-group-item"><span class="fa fa-sitemap"> </span> Meine Turniere</a>
         </div>
     </div>
     
+   
     <div class="col-md-8">
         <div class="panel panel-default">
             <!-- Default panel contents -->
             <div class="panel-heading"><i class="fa fa-user"></i> Name &auml;ndern</div>
             <div class="panel-body">
                 <div class="col-xs-8">
-                    <form role="form" name="name_form" action="${pageContext.request.contextPath}/settings/name" method="POST">
+                    <form role="form" name="name_form" action="${pageContext.request.contextPath}/settings/profile" method="POST">
 
                         <div class="form-group">
                             <label>Name</label>
@@ -32,11 +33,9 @@
                 </div>
             </div> <!-- /.panel-body --> 
         </div> <!-- /.panel --> 
-    </div> <!-- /.grid 12 --> 
-                    
-</div>
+    </div> <!-- /.grid 12 -->
 
-
+</div> 
 
 <div class="row">
     <div class="col-md-8 col-md-offset-3">
@@ -46,7 +45,7 @@
             <div class="panel-body">
                 <div class="col-xs-8">
                 
-                    <form role="form" name="email_form" action="${pageContext.request.contextPath}/settings/email" method="POST">
+                    <form role="form" name="email_form" action="${pageContext.request.contextPath}/settings/profile" method="POST">
 
                         <div class="form-group">
                             <label>E-Mail</label>
@@ -77,7 +76,7 @@
             <div class="panel-heading"><i class="fa fa-lock"></i> Passwort &auml;ndern</div>
             <div class="panel-body">
                 <div class="col-xs-8">
-                    <form role="form" name="password_form" action="${pageContext.request.contextPath}/settings/password" method="POST">
+                    <form role="form" name="password_form" action="${pageContext.request.contextPath}/settings/profile" method="POST">
 
                         <div class="form-group">
                             <label>Altes Passwort</label>
@@ -116,5 +115,4 @@
             </div>
         </div> <!-- /.panel--> 
     </div> <!-- /.grid 8 --> 
-</div>                    
-                    
+</div>

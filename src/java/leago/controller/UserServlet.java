@@ -20,6 +20,7 @@ import leago.error.exceptions.UserUpdateException;
 import leago.error.success.UserCreationSuccess;
 import leago.error.success.UserUpdateSuccess;
 import leago.helper.UserHelper;
+import leago.models.Team;
 import leago.models.User;
 
 /**
@@ -65,10 +66,10 @@ public class UserServlet extends HttpServlet {
             _new();
         else if (servletPath.equals("settings") && id.trim().equals("delete"))
             _destroy();
-        else if (servletPath.equals("settings") && !id.trim().equals(""))
-            _update(id);
+//        else if (servletPath.equals("settings") && !id.trim().equals(""))
+//            _update(id);
         else if (servletPath.equals("settings"))
-            _change();
+            _change(id);
         else if(!id.trim().equals(""))
             _show(id);
     }
@@ -135,28 +136,49 @@ public class UserServlet extends HttpServlet {
         forward();
     }
     
-    private void _change() throws IOException, ServletException {
-        page = "user/update";
-        forward();
-    }
-    
-    private void _update(String id) throws ServletException, IOException {
+    private void _change(String id) throws IOException, ServletException {
         try {
-            page = "user/update";
             
-            switch(id) {
-                case "email": updateEmail(); break;
-                case "name": updateName(); break;
-                case "password": updatePassword(); break;
-                default: break;
+            switch (id) {
+                case "profile":
+                    page = "user/update_profile";
+                    
+                    if(request.getParameter("input_name_new1") != null && 
+                       !request.getParameter("input_name_new1").trim().equals("") &&
+                       request.getParameter("input_name_new2") != null && 
+                       !request.getParameter("input_name_new2").trim().equals(""))
+                        updateName();
+                    else if(request.getParameter("input_email_new1") != null && 
+                            !request.getParameter("input_email_new1").trim().equals("") &&
+                            request.getParameter("input_email_new2") != null && 
+                            !request.getParameter("input_email_new2").trim().equals("")) 
+                        updateEmail();
+                    else if(request.getParameter("input_password_new1") != null && 
+                            !request.getParameter("input_password_new1").trim().equals("") &&
+                            request.getParameter("input_password_new2") != null && 
+                            !request.getParameter("input_password_new2").trim().equals("") &&
+                            request.getParameter("input_password_old") != null && 
+                            !request.getParameter("input_password_old").trim().equals("")) 
+                        updatePassword();
+                    break;
+                    
+                case "teams":
+                    System.out.println("teams -> " + request.getParameter("team"));
+                    page = "user/update_teams";
+                    if(request.getParameter("action") != null && request.getParameter("action").equals("exit"))
+                        leaveTeam();
+                    break;
+                    
+                case "tournaments":
+                    break;
+                default: page = "user/update_profile";
             }
-            
+
             forward();
         } catch (DatabaseConnectionException ex) {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("message", ex);
         }
-        
     }
     
     private void _destroy() throws ServletException, IOException {
@@ -180,6 +202,28 @@ public class UserServlet extends HttpServlet {
     
     
     
+    private void leaveTeam() throws DatabaseConnectionException {
+            System.out.println("leave");
+        // P A R A M E T E R S
+        User user = (User) request.getSession().getAttribute("user");
+        int idx = Integer.valueOf(request.getParameter("team"));
+        Team team = ((User) request.getSession().getAttribute("user")).getTeams().get(idx);
+        
+        // O P E R A T I O N
+        UserHelper userHelper = new UserHelper();
+        try {
+            userHelper.leaveTeam(user, team);
+        } catch (UserUpdateException ex) {
+            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("message", ex);
+        } catch (UserUpdateSuccess ex) {
+            request.setAttribute("message", ex);
+            
+            // U P D A T E # T H E # U S E R # O B J E C T
+            user.getTeams().remove(idx);
+            request.getSession().setAttribute("user", user);
+        }
+    }
     
     
     private void updateName() throws DatabaseConnectionException {

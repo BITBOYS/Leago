@@ -37,6 +37,22 @@ public class UserHelper {
         
     }
     
+    public void leaveTeam(User user, Team team) throws DatabaseConnectionException, UserUpdateException, UserUpdateSuccess {
+        
+        try {
+            Connection con = DatabaseHelper.connect();
+            Statement statement = con.createStatement();
+            
+            statement.execute("DELETE FROM user_team WHERE user = '" + user.getName() + "' AND team = '" + team.getName() + "'");
+            
+            throw new UserUpdateSuccess("Team successfully left", MyException.SUCCESS);
+        } catch (SQLException ex) {
+            Logger.getLogger(UserHelper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new UserUpdateException("User update failed unexpectedly with an SQL error " + ex.getSQLState(), MyException.ERROR);
+        }
+        
+    }
+    
     public void createUser(String name, String email, String password, String reenter_password) throws DatabaseConnectionException, UserCreationException, UserCreationSuccess {
         
         try {
@@ -199,7 +215,6 @@ public class UserHelper {
                                                   resultSet.getInt("wins"), resultSet.getInt("defeats"), resultSet.getInt("tournament_wins"), 
                                                   resultSet.getInt("tournament_participations")), 
                                    resultSet.getDate("create_date")));
-                resultSet.next();
             }
             
         } catch (SQLException ex) {
@@ -216,7 +231,7 @@ public class UserHelper {
     * @return List of alle tournaments in which the user is currently active
     * @throws DatabaseConnectionException 
     */
-   public static ArrayList<Tournament> getTournaments(String username) throws DatabaseConnectionException {
+   public ArrayList<Tournament> getTournaments(String username) throws DatabaseConnectionException {
         ArrayList<Tournament> tournaments = new ArrayList<Tournament>();
         
         try {
