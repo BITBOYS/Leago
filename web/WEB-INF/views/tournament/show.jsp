@@ -114,8 +114,8 @@
                                     <tbody>  
                                         <c:forEach items="${tournament.table}" var="placement" varStatus="status">
                                             <tr>  
-                                                <td>#<c:out value="${status.count}" /></td> 
-                                                <td><a href="${pageContext.request.contextPath}/team?team=${placement.team}">${placement.team}</a></td>  
+                                                <td># <c:out value="${status.count}" /></td> 
+                                                <td><a href="${pageContext.request.contextPath}/team/${placement.team}">${placement.team}</a></td>  
                                                 <td>${placement.tournament_team_matches}</td>  
                                                 <td>${placement.tournament_team_winrate}</td>  
                                                 <td>${placement.tournament_team_wins}</td>  
@@ -216,11 +216,9 @@
                                         </c:forEach>
                                         <c:if test="${empty tournament.teams}">
                                             <tr>
-                                        <p>
-                                            Kein Teams im Turnier
-                                        </p> 
-                                        </tr>
-                                    </c:if>
+                                                <p>Kein Teams im Turnier</p> 
+                                            </tr>
+                                        </c:if>
                                     </tbody>
                                 </table>
                             </div>     
