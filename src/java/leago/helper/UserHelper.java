@@ -20,8 +20,6 @@ import leago.error.exceptions.DatabaseConnectionException;
 import leago.error.exceptions.UserCreationException;
 import leago.error.exceptions.UserNotExistingException;
 import leago.error.exceptions.UserUpdateException;
-import leago.error.success.UserCreationSuccess;
-import leago.error.success.UserUpdateSuccess;
 import leago.models.Statistics;
 import leago.models.Team;
 import leago.models.Tournament;
@@ -37,15 +35,14 @@ public class UserHelper {
         
     }
     
-    public void leaveTeam(User user, Team team) throws DatabaseConnectionException, UserUpdateException, UserUpdateSuccess {
+    public void leaveTeam(User user, Team team) throws DatabaseConnectionException, UserUpdateException {
         
         try {
             Connection con = DatabaseHelper.connect();
             Statement statement = con.createStatement();
             
             statement.execute("DELETE FROM user_team WHERE user = '" + user.getName() + "' AND team = '" + team.getName() + "'");
-            
-            throw new UserUpdateSuccess("Team successfully left", MyException.SUCCESS);
+
         } catch (SQLException ex) {
             Logger.getLogger(UserHelper.class.getName()).log(Level.SEVERE, null, ex);
             throw new UserUpdateException("User update failed unexpectedly with an SQL error " + ex.getSQLState(), MyException.ERROR);
@@ -53,7 +50,9 @@ public class UserHelper {
         
     }
     
-    public void createUser(String name, String email, String password, String reenter_password) throws DatabaseConnectionException, UserCreationException, UserCreationSuccess {
+    public void createUser(String name, String email, String password, String reenter_password) throws DatabaseConnectionException, UserCreationException {
+        
+        int result;
         
         try {
             if(password.equals(reenter_password)) {
@@ -63,12 +62,14 @@ public class UserHelper {
                             Connection con = DatabaseHelper.connect();
                             Statement statement = con.createStatement();
 
-                            statement.execute("insert into user"
+                            result = statement.executeUpdate("insert into user"
                                     + " (username, password, email)"
                                     + " VALUES ('" + name + "','" + password + "','" + email + "')");
 
-                        // SIGN UP successful
-                        throw new UserCreationSuccess("Sign Up successful. You can now sign in.", MyException.SUCCESS);
+                            if(result < 1) {
+                                throw new UserCreationException("An error occured while creating the user account", MyException.ERROR);
+                            }
+                            
                     // Username is already taken
                     } else {
                         throw new UserCreationException("Email already taken", MyException.ERROR);
@@ -261,42 +262,45 @@ public class UserHelper {
         return tournaments;
     }
    
-    public void updateName(String user, String name1, String name2) throws DatabaseConnectionException, UserUpdateException, UserUpdateSuccess {
+    public void updateName(String user, String name1, String name2) throws DatabaseConnectionException, UserUpdateException {
         try {
             int result;
             
             if(name1.equals(name2)) {
-                Connection con = DatabaseHelper.connect();
-                Statement statement = con.createStatement();
-                result = statement.executeUpdate("update user set username='" + name1 + "' where username = '" + user + "'"); 
+                if(isNameAlreadyTaken(name1)) {
+                    Connection con = DatabaseHelper.connect();
+                    Statement statement = con.createStatement();
+                    result = statement.executeUpdate("update user set username='" + name1 + "' where username = '" + user + "'"); 
 
-                if(result > 0) {
-                    throw new UserUpdateSuccess("Username update successful", MyException.SUCCESS); 
+                    if(result < 1) {
+                        throw new UserUpdateException("An error occured while updating the username", MyException.ERROR);
+                    }
                 } else {
-                    throw new UserUpdateException("An error occured while updating the username", MyException.ERROR);
+                    throw new UserUpdateException("The name is already taken", MyException.ERROR);
                 }
             } else {
                 throw new UserUpdateException("The names aren't matching", MyException.ERROR);
             }
-            
         } catch (SQLException ex) {
             Logger.getLogger(UserHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
    
-    public void updateEmail(String user, String email1, String email2) throws DatabaseConnectionException, UserUpdateException, UserUpdateSuccess {
+    public void updateEmail(String user, String email1, String email2) throws DatabaseConnectionException, UserUpdateException {
         try {
             int result;
             
             if(email1.equals(email2)) {
-                Connection con = DatabaseHelper.connect();
-                Statement statement = con.createStatement();
-                result = statement.executeUpdate("update user set email='" + email1 + "' where username = '" + user + "'"); 
+                if(isEmailAlreadyTaken(email1)) {
+                    Connection con = DatabaseHelper.connect();
+                    Statement statement = con.createStatement();
+                    result = statement.executeUpdate("update user set email='" + email1 + "' where username = '" + user + "'"); 
 
-                if(result > 0) {
-                    throw new UserUpdateSuccess("Email update successful", MyException.SUCCESS); 
+                    if(result < 1) {
+                        throw new UserUpdateException("An error occured while updating the email address", MyException.ERROR);
+                    }
                 } else {
-                    throw new UserUpdateException("An error occured while updating the email address", MyException.ERROR);
+                    throw new UserUpdateException("The email is already taken", MyException.ERROR);
                 }
             } else {
                 throw new UserUpdateException("The emails aren't matching", MyException.ERROR);
@@ -307,7 +311,7 @@ public class UserHelper {
         }
     }
    
-    public void updatePassword(User user, String password1, String password2, String passwordOld) throws DatabaseConnectionException, UserUpdateException, UserUpdateSuccess {
+    public void updatePassword(User user, String password1, String password2, String passwordOld) throws DatabaseConnectionException, UserUpdateException {
         try {
             int result;
             
@@ -318,9 +322,7 @@ public class UserHelper {
                     Statement statement = con.createStatement();
                     result = statement.executeUpdate("update user set password='" + password1 + "' where username = '" + user.getName() + "'"); 
 
-                    if(result > 0) {
-                        throw new UserUpdateSuccess("Password update successful", MyException.SUCCESS); 
-                    } else {
+                    if(result < 1) {
                         throw new UserUpdateException("An error occured while updating the password", MyException.ERROR);
                     }
                 } else {
@@ -336,7 +338,7 @@ public class UserHelper {
         }
     }
     
-    public void deleteUser(User user) throws DatabaseConnectionException, UserUpdateException, UserUpdateSuccess {
+    public void deleteUser(User user) throws DatabaseConnectionException, UserUpdateException {
         try {
             int result;
 
@@ -344,9 +346,7 @@ public class UserHelper {
             Statement statement = con.createStatement();
             result = statement.executeUpdate("DELETE FROM user WHERE username = '" + user.getName() + "'"); 
 
-            if(result > 0) {
-                throw new UserUpdateSuccess("Account succesfully deleted", MyException.SUCCESS); 
-            } else {
+            if(result < 1) {
                 throw new UserUpdateException("An error occured while deleting the account", MyException.ERROR);
             }
             

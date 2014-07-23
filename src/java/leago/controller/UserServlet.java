@@ -13,12 +13,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import leago.error.MyException;
 import leago.error.exceptions.DatabaseConnectionException;
 import leago.error.exceptions.UserCreationException;
 import leago.error.exceptions.UserNotExistingException;
 import leago.error.exceptions.UserUpdateException;
-import leago.error.success.UserCreationSuccess;
-import leago.error.success.UserUpdateSuccess;
 import leago.helper.UserHelper;
 import leago.models.Team;
 import leago.models.User;
@@ -121,14 +120,12 @@ public class UserServlet extends HttpServlet {
             // O P E R A T I O N
             UserHelper userHelper = new UserHelper();
             userHelper.createUser(name, email, password, reenter_password);
+            request.setAttribute("message", new MyException("Sign Up successful. You can now sign in.", MyException.SUCCESS));
 
         } catch (UserCreationException | DatabaseConnectionException ex) {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("message", ex);
             page = "/user/create";
-            
-        } catch (UserCreationSuccess ex) {
-            request.setAttribute("message", ex);
         }
      
         forward();
@@ -161,7 +158,6 @@ public class UserServlet extends HttpServlet {
                     break;
                     
                 case "teams":
-                    System.out.println("teams -> " + request.getParameter("team"));
                     page = "user/update_teams";
                     if(request.getParameter("action") != null && request.getParameter("action").equals("exit"))
                         leaveTeam();
@@ -189,11 +185,10 @@ public class UserServlet extends HttpServlet {
         UserHelper userHelper = new UserHelper();
         try {
             userHelper.deleteUser((User) request.getSession().getAttribute("user"));
+            request.getSession().invalidate();
         } catch (UserUpdateException | DatabaseConnectionException ex) {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("message", ex);
-        } catch (UserUpdateSuccess ex) {
-            request.getSession().invalidate();
         }
         
         // R E D I R E C T I N G
@@ -204,7 +199,7 @@ public class UserServlet extends HttpServlet {
     
     
     private void leaveTeam() throws DatabaseConnectionException {
-            System.out.println("leave");
+
         // P A R A M E T E R S
         User user = (User) request.getSession().getAttribute("user");
         int idx = Integer.valueOf(request.getParameter("team"));
@@ -214,15 +209,13 @@ public class UserServlet extends HttpServlet {
         UserHelper userHelper = new UserHelper();
         try {
             userHelper.leaveTeam(user, team);
-        } catch (UserUpdateException ex) {
+            user = userHelper.getUser(user.getName());
+            request.setAttribute("message", new MyException("Team successfully left", MyException.SUCCESS));
+            request.getSession().setAttribute("user", user);
+            
+        } catch (UserUpdateException | UserNotExistingException ex) {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("message", ex);
-        } catch (UserUpdateSuccess ex) {
-            request.setAttribute("message", ex);
-            
-            // U P D A T E # T H E # U S E R # O B J E C T
-            user.getTeams().remove(idx);
-            request.getSession().setAttribute("user", user);
         }
     }
     
@@ -238,15 +231,13 @@ public class UserServlet extends HttpServlet {
         UserHelper userHelper = new UserHelper();
         try {
             userHelper.updateName(user.getName(), input_name_new1, input_name_new2);
-        } catch (UserUpdateException ex) {
+            user = userHelper.getUser(input_name_new1);
+            request.setAttribute("message", new MyException("Username update successful", MyException.SUCCESS));
+            request.getSession().setAttribute("user", user);
+        } catch (UserUpdateException | UserNotExistingException ex) {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("message", ex);
-        } catch (UserUpdateSuccess ex) {
-            request.setAttribute("message", ex);
-            user.setName(input_name_new1);
-            request.getSession().setAttribute("user", user);
         }
-        
     }
     
     private void updateEmail() throws DatabaseConnectionException {
@@ -254,16 +245,17 @@ public class UserServlet extends HttpServlet {
         // P A R A M E T E R S
         String input_email_new1 = request.getParameter("input_email_new1");
         String input_email_new2 = request.getParameter("input_email_new2");
-        String user = ((User) request.getSession().getAttribute("user")).getName();
+        User user = (User) request.getSession().getAttribute("user");
         
         // O P E R A T I O N
         UserHelper userHelper = new UserHelper();
         try {
-            userHelper.updateEmail(user, input_email_new1, input_email_new2);
-        } catch (UserUpdateException ex) {
+            userHelper.updateEmail(user.getName(), input_email_new1, input_email_new2);
+            user = userHelper.getUser(input_email_new1);
+            request.setAttribute("message", new MyException("Email update successful", MyException.SUCCESS));
+            request.getSession().setAttribute("user", user);
+        } catch (UserUpdateException | UserNotExistingException ex) {
             Logger.getLogger(UserServlet.class.getName()).log(Level.INFO, null, ex);
-            request.setAttribute("message", ex);
-        } catch (UserUpdateSuccess ex) {
             request.setAttribute("message", ex);
         }
     }
@@ -280,10 +272,12 @@ public class UserServlet extends HttpServlet {
         UserHelper userHelper = new UserHelper();
         try {
             userHelper.updatePassword(user, input_password_new1, input_password_new2, input_password_old);
-        } catch (UserUpdateException ex) {
+            user = userHelper.getUser(user.getName());
+            request.getSession().setAttribute("user", user);
+            request.setAttribute("message", new MyException("Password update successful", MyException.SUCCESS));
+            
+        } catch (UserUpdateException | UserNotExistingException ex) {
             Logger.getLogger(UserServlet.class.getName()).log(Level.INFO, null, ex);
-            request.setAttribute("message", ex);
-        } catch (UserUpdateSuccess ex) {
             request.setAttribute("message", ex);
         }
     }
