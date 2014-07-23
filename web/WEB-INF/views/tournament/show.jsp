@@ -35,7 +35,7 @@
                                 </c:otherwise>
                             </c:choose> 
                         </p>
-                        <p>Spieltage: <b>${tournament.nr_matchdays}</b></p>
+                        <p>Spieltage: <b>${tournament.rounds}</b></p>
                         <p>Austragungsort: <b><a href="https://maps.google.com/maps?q=${tournament.venue}&hl=de&sll=28.149503,-71.71875&sspn=88.855059,173.144531&hnear=${tournament.venue}&t=m&z=10" target="_blank">${tournament.venue}</a></b></p>
                     </div>
                     <div class="col-lg-5">
@@ -63,14 +63,16 @@
                                         </tr>  
                                     </thead>  
                                     <tbody>  
-                                        <%--<c:forEach items="${tournament.matches}" var="match">--%>
-                                        <tr>  
-                                            <td>1</td>  
-                                            <td>1</td>  
-                                            <td>10</td>  
-                                            <td>2</td> 
-                                        </tr>  
-                                        <%--</c:forEach>--%>
+                                        <c:forEach items="${tournament.schedule.rounds}" var="round">
+                                            <c:forEach items="${round.matches}" var="match">
+                                                <tr>  
+                                                    <td>1</td>  
+                                                    <td>${match.team1.name}</td>  
+                                                    <td>${match.team2.name}</td>  
+                                                    <td>2</td> 
+                                                </tr>  
+                                            </c:forEach>
+                                        </c:forEach>
                                     </tbody>  
                                 </table>  
                             </div>

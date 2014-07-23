@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import leago.error.MyException;
@@ -18,6 +19,9 @@ import leago.error.exceptions.DatabaseConnectionException;
 import leago.error.exceptions.TournamentNotExistingException;
 import leago.error.exceptions.TournamentUpdateException;
 import leago.error.success.TournamentUpdateSuccess;
+import leago.models.Match;
+import leago.models.Round;
+import leago.models.Schedule;
 import leago.models.Statistics;
 import leago.models.Table;
 import leago.models.Team;
@@ -61,12 +65,13 @@ public class TournamentHelper {
                 tournament.setCreate_date(resultSet.getDate("create_date"));
                 tournament.setPassword(resultSet.getString("password"));
                 tournament.setDescription(resultSet.getString("description"));
-                tournament.setNr_matchdays(resultSet.getInt("nr_of_matchdays"));
+                tournament.setRounds(resultSet.getInt("nr_of_matchdays"));
                 tournament.setVenue(resultSet.getString("venue"));
                 tournament.setTerm_of_application(resultSet.getDate("term_of_application"));
                 tournament.setTeams(getTeamsByTournament(tournament.getName()));
                 tournament.setMember(getMemberByTournament(tournament.getName()));
                 tournament.setTable(getTableByTournament(tournament.getName()));
+                
 
             }
 
@@ -393,7 +398,7 @@ public class TournamentHelper {
                     + " WHERE tournament =  '" + tournament_name + "'"
                     + " AND team = name"
                     + " ORDER BY name, team.wins");
-            
+
             while (resultSet.next()) {
                 teams.add(new Team(resultSet.getString("name"),
                         resultSet.getString("tag"),
@@ -483,5 +488,84 @@ public class TournamentHelper {
         }
 
         return table;
+    }
+
+    public ArrayList<User> getMemberByTeam(Team team) throws DatabaseConnectionException {
+        ArrayList<User> teammember = new ArrayList<User>();
+
+        try {
+            Connection con = DatabaseHelper.connect();
+            Statement statement = con.createStatement();
+
+            ResultSet resultSet = statement.executeQuery("SELECT * "
+                    + " FROM  user, user_team"
+                    + " WHERE team = '" + team.getName() + "'"
+                    + "   AND username = user");
+
+            while (resultSet.next()) {
+                teammember.add(new User(resultSet.getString("username"),
+                        resultSet.getString("password"),
+                        resultSet.getString("email"),
+                        new Statistics(resultSet.getInt("goals"),
+                                resultSet.getInt("goals_conceded"),
+                                resultSet.getInt("wins"),
+                                resultSet.getInt("defeats"),
+                                resultSet.getInt("tournament_wins"),
+                                resultSet.getInt("tournament_participations")),
+                        resultSet.getDate("create_date")));
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TournamentHelper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DatabaseConnectionException("An error occured while getting the member of " + team.getName(), MyException.ERROR);
+        }
+
+        return teammember;
+
+    }
+
+    public Schedule createTournamentSchedule(Tournament tournament) throws DatabaseConnectionException, TournamentNotExistingException {
+
+//        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+//        Date date = new Date();
+        ArrayList<Team> teams = getTeamsByTournament(tournament.getName());
+        ArrayList<Match> matches = new ArrayList<Match>();
+        Schedule schedule = new Schedule();
+        int nr_rounds = tournament.getRounds();
+        ArrayList<Round> rounds = new ArrayList<Round>();
+        
+
+        for (int i = 0; i < teams.size(); i++) {
+            ArrayList<User> user = getMemberByTeam(teams.get(i));
+            ArrayList<String> userNames1 = new ArrayList<String>();
+
+            for (int k = 0; k < user.size(); k++) {
+                userNames1.add(user.get(k).getName());
+            }
+
+            for (int j = i + 1; j < teams.size(); j++) {
+                ArrayList<User> userj = getMemberByTeam(teams.get(j));
+                ArrayList<String> userNames2 = new ArrayList<String>();
+
+                for (int k = 0; k < userj.size(); k++) {
+                    userNames2.add(userj.get(k).getName());
+                }
+
+                if (Collections.disjoint(userNames1, userNames2) == true) {
+                    matches.add(new Match(teams.get(i), teams.get(j)));
+                }
+            }
+        }
+
+        for (int i = 0; i <= tournament.getRounds(); i++){
+            rounds.add(new Round(matches));
+        }
+        schedule.setRounds(rounds);
+        
+        for (int i = 0; i < matches.size(); i++) {
+            System.out.println(matches.get(i).getTeam1().getName() + " vs. " + matches.get(i).getTeam2().getName());
+        }
+        
+        return schedule;
     }
 }
