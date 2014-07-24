@@ -69,6 +69,8 @@ public class UserServlet extends HttpServlet {
             _change(id);
         else if(!id.trim().equals(""))
             _show(id);
+        else 
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
     }
     
     private void _show(String id) throws ServletException, IOException {
@@ -287,19 +289,6 @@ public class UserServlet extends HttpServlet {
         // F O R W A R D I N G
         request.setAttribute("page", page);
         request.getRequestDispatcher(path).forward(request, response);
-    }
-    
-    private void forward(String page, String path) throws ServletException, IOException {
-        
-        if(page != null && !page.trim().equals(""))
-            this.page = page;
-        
-        if(path != null && !path.trim().equals(""))
-            this.path = path;
-        
-        // F O R W A R D I N G
-        request.setAttribute("page", this.page);
-        request.getRequestDispatcher(this.path).forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
