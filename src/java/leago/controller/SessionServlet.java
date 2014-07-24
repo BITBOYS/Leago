@@ -18,6 +18,7 @@ import leago.error.exceptions.AuthenticationException;
 import leago.error.exceptions.DatabaseConnectionException;
 import leago.error.exceptions.UserNotExistingException;
 import leago.helper.UserHelper;
+import leago.helper.BCrypt;
 import leago.models.User;
 
 /**
@@ -68,10 +69,12 @@ public class SessionServlet extends HttpServlet {
             // P A R A M E T E R S
             String id = (String) request.getParameter("id");
             String password = (String) request.getParameter("password");
-                
+            String bSalted = BCrypt.gensalt(15);
+            String passwordSaltedAndHashed = BCrypt.hashpw(password, bSalted);
+            
             // O P E R A T I O N
             UserHelper userHelper = new UserHelper();
-            boolean result = userHelper.authenticate(id, password);
+            boolean result = userHelper.authenticate(id, passwordSaltedAndHashed);
 
             // R E S U L T # H A N D L I N G
             if(result) {
