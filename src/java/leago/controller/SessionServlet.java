@@ -68,13 +68,12 @@ public class SessionServlet extends HttpServlet {
         try {            
             // P A R A M E T E R S
             String id = (String) request.getParameter("id");
-            String password = (String) request.getParameter("password");
-            String bSalted = BCrypt.gensalt(15);
-            String passwordSaltedAndHashed = BCrypt.hashpw(password, bSalted);
+            String bSalted = BCrypt.gensalt(15);            
+            String password = BCrypt.hashpw(request.getParameter("password"), bSalted);
             
             // O P E R A T I O N
             UserHelper userHelper = new UserHelper();
-            boolean result = userHelper.authenticate(id, passwordSaltedAndHashed);
+            boolean result = userHelper.authenticate(id, password);
 
             // R E S U L T # H A N D L I N G
             if(result) {
