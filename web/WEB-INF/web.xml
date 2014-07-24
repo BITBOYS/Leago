@@ -55,6 +55,21 @@
         <url-pattern>/new/tournament/</url-pattern>
     </servlet-mapping>
     
+    <!-- ################ T E A M ################ -->
+    <servlet>
+        <servlet-name>TeamServlet</servlet-name>
+        <servlet-class>leago.controller.TeamServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>TeamServlet</servlet-name>
+        <url-pattern>/team/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TeamServlet</servlet-name>
+        <url-pattern>/new/team/*</url-pattern>
+    </servlet-mapping>
+    
     <!-- T I M E O U T -->  
     <session-config>
         <session-timeout>

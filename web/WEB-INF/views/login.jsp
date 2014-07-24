@@ -17,12 +17,12 @@
                 <a href="#" class="pull-right need-help">Passwort vergessen? </a><span class="clearfix"></span>
             </div>
             <div class="form-group">
-                <button class="btn btn-lg btn-success btn-block" type="submit">Log me in!</button>
+                <button class="btn btn-lg btn-leago btn-block" type="submit">Log me in!</button>
             </div>
         </form>
         <a href="${pageContext.request.contextPath}/faq.jsp" class="pull-right need-help">Brauchst du Hilfe? </a><span class="clearfix"></span>
         <hr>
-        <p class="text-center">New to Leago? <b><a href="#">Sign up! </a></b></p>
+        <p class="text-center">New to Leago? <b><a href="${pageContext.request.contextPath}/register">Sign up! </a></b></p>
     </div>
 
 </div><!-- /.row -->

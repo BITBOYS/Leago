@@ -56,7 +56,7 @@ public class UserHelper {
         
         try {
             if(password.equals(reenter_password)) {
-                if(isNameAlreadyTaken(name)) {
+                if(isUserExisting(name)) {
                     if(isEmailAlreadyTaken(email)) {
 
                             Connection con = DatabaseHelper.connect();
@@ -88,29 +88,40 @@ public class UserHelper {
         }
     }
     
-    private boolean isNameAlreadyTaken(String name) throws DatabaseConnectionException, SQLException {
+    public boolean isUserExisting(String name) throws DatabaseConnectionException {
         boolean result = false;
              
-        Connection con = DatabaseHelper.connect();
-        Statement statement = con.createStatement();         
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM user WHERE username = '" + name + "'");
+        
+        try {
+            Connection con = DatabaseHelper.connect();
+            Statement statement = con.createStatement();         
+            ResultSet resultSet = statement.executeQuery("select COUNT(*) as count from user WHERE username = '" + name + "'");
 
-        if(!resultSet.isBeforeFirst()) {
-            result = true;
+            resultSet.first();
+            
+            if(resultSet.getInt("count") > 0) {
+                result = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return result;
     }
     
-    private boolean isEmailAlreadyTaken(String email) throws DatabaseConnectionException, SQLException {
+    private boolean isEmailAlreadyTaken(String email) throws DatabaseConnectionException {
         boolean result = false;
      
-        Connection con = DatabaseHelper.connect();
-        Statement statement = con.createStatement();         
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM user WHERE email = '" + email + "'");
+        try {
+            Connection con = DatabaseHelper.connect();
+            Statement statement = con.createStatement();         
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM user WHERE email = '" + email + "'");
 
-        if(!resultSet.isBeforeFirst()) {
-            result = true;
+            if(!resultSet.isBeforeFirst()) {
+                result = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return result;
@@ -159,7 +170,7 @@ public class UserHelper {
             Statement statement = con.createStatement();
             ResultSet resultSet = statement.executeQuery("select * from user where username='" + id + "' OR email='" + id + "'");
             
-             if(!resultSet.isBeforeFirst()) {
+            if(!resultSet.isBeforeFirst()) {
                 throw new UserNotExistingException("There is no user with this name", MyException.INFO);
             } else {
                 resultSet.first();
@@ -267,7 +278,7 @@ public class UserHelper {
             int result;
             
             if(name1.equals(name2)) {
-                if(isNameAlreadyTaken(name1)) {
+                if(isUserExisting(name1)) {
                     Connection con = DatabaseHelper.connect();
                     Statement statement = con.createStatement();
                     result = statement.executeUpdate("update user set username='" + name1 + "' where username = '" + user + "'"); 

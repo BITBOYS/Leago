@@ -1,6 +1,7 @@
 package leago.models;
 
 import java.sql.Date;
+import java.util.List;
 
 /**
  * @author Maik
@@ -13,6 +14,8 @@ public class Team {
     private User leader;
     private String password;
     private Statistics statistics;
+    private List<User> member;
+    private List<Tournament> tournaments;
     
     public Team() {
         super();
@@ -90,9 +93,24 @@ public class Team {
         this.create_date = create_date;
     }
 
+    public List<User> getMember() {
+        return member;
+    }
+
+    public void setMember(List<User> member) {
+        this.member = member;
+    }
+
+    public List<Tournament> getTournaments() {
+        return tournaments;
+    }
+
+    public void setTournaments(List<Tournament> tournaments) {
+        this.tournaments = tournaments;
+    }
+
     @Override
     public String toString() {
-        return "Team{" + "name=" + name + ", tag=" + tag + ", create_date=" + create_date + ", leader=" + leader + ", password=" + password + ", statistics=" + statistics + '}';
+        return "Team{" + "name=" + name + ", tag=" + tag + ", create_date=" + create_date + ", leader=" + leader + ", password=" + password + ", statistics=" + statistics + ", member=" + member + ", tournaments=" + tournaments + '}';
     }
-    
 }
