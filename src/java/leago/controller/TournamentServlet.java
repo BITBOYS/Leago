@@ -37,7 +37,7 @@ public class TournamentServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, DatabaseConnectionException, TournamentNotExistingException {
         this.request = request;
         this.response = response;
 
@@ -59,29 +59,35 @@ public class TournamentServlet extends HttpServlet {
                     break;
             }
         }
-        System.out.print(id);
 
-        if (!id.trim().equals("")) {
-            _show(id);
-        } else if (servletPath.equals("new/tournament") && id.equals("create")) {
+        System.out.println("ID: " + id);
+        System.out.println("ACTION: " + action);
+        System.out.println("SERVLE-PATH: " + servletPath);
+        System.out.println("PATH-INFO LÄNGE: " + pathinfo.length);
+
+        if (servletPath.equals("new/tournament") && id.equals("create")) {
             _create();
         } else if (servletPath.equals("new/tournament")) {
             _new();
         } else if (action.equals("settings") && !id.trim().equals("")) {
             _update(id);
         } else if (servletPath.equals("settings")) {
-            _change();
+            _change(id);
+        } else if (!id.trim().equals("")) {
+            _show(id);
         }
     }
 
     private void _show(String id) throws ServletException, IOException {
+        System.out.println("show");
         page = "tournament/show";
-        System.out.println(" - show");
 
         try {
             // O P E R A T I O N
             TournamentHelper tournamentHelper = new TournamentHelper();
             Tournament tournament = tournamentHelper.getTournament(id);
+
+            tournament.setSchedule(tournamentHelper.createTournamentSchedule(tournament));
 
             // R E S U L T # H A N D L I N G
             request.setAttribute("tournament", tournament);
@@ -109,50 +115,74 @@ public class TournamentServlet extends HttpServlet {
     }
 
     private void _new() throws IOException, ServletException {
-        page = "create/tournament";
+        System.out.println("new");
+        page = "tournament/create";
         forward();
     }
 
     private void _create() {
+        System.out.println("create");
+    }
 
-    }
-    
-    private void _change() throws IOException, ServletException {
-        page = "user/update";
+    private void _change(String id) throws IOException, ServletException, DatabaseConnectionException, TournamentNotExistingException {
+        System.out.println("change");
+        page = "tournament/update_tournament";
+
+        // O P E R A T I O N
+        TournamentHelper tournamentHelper = new TournamentHelper();
+        Tournament tournament = tournamentHelper.getTournament(id);
+
+        tournament.setSchedule(tournamentHelper.createTournamentSchedule(tournament));
+
+        // R E S U L T # H A N D L I N G
+        request.setAttribute("tournament", tournament);
         forward();
+
+        System.out.println("Tournament: " + tournament);
     }
-    
-    private void _update(String id) throws ServletException, IOException {
+
+    private void _update(String id) throws ServletException, IOException, TournamentNotExistingException {
+        System.out.println("update");
+        
         try {
-            page = "tournament/update";
-            
-            switch(id) {
-                case "name": updateName(); break;
-                case "password": updatePassword(); break;
-                default: break;
+            page = "tournament/update_tournament";
+
+            // O P E R A T I O N
+            TournamentHelper tournamentHelper = new TournamentHelper();
+            Tournament tournament = tournamentHelper.getTournament(id);
+            request.setAttribute("tournament", tournament);
+
+            switch (id) {
+                case "name":
+                    updateName();
+                    break;
+                case "password":
+                    updatePassword();
+                    break;
+                default:
+                    break;
             }
-            
+
             forward();
+
         } catch (DatabaseConnectionException ex) {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("message", ex);
         }
-        
-    }
-    
-    private void _destroy() {
-       path = "/index.jsp";
+
     }
 
-    
-    
-    
+    private void _destroy() {
+        System.out.println("destroy");
+        path = "/index.jsp";
+    }
+
     private void updateName() throws DatabaseConnectionException {
-        
+
         // P A R A M E T E R S
         String input_name_new = request.getParameter("input_name_new");
-        Tournament tournament = (Tournament)request.getAttribute("tournament");
-        
+        Tournament tournament = (Tournament) request.getAttribute("tournament");
+
         // O P E R A T I O N
         TournamentHelper tournamentHelper = new TournamentHelper();
         try {
@@ -165,17 +195,17 @@ public class TournamentServlet extends HttpServlet {
             tournament.setName(input_name_new);
             request.getSession().setAttribute("tournament", tournament);
         }
-        
+
     }
-    
+
     private void updatePassword() throws DatabaseConnectionException {
-            
+
         // P A R A M E T E R S
         String input_password_new1 = request.getParameter("input_password_new1");
         String input_password_new2 = request.getParameter("input_password_new2");
         String input_password_old = request.getParameter("input_password_old");
         Tournament tournament = (Tournament) request.getAttribute("tournament");
-        
+
         // O P E R A T I O N
         TournamentHelper tournamentHelper = new TournamentHelper();
         try {
@@ -187,8 +217,7 @@ public class TournamentServlet extends HttpServlet {
             request.setAttribute("message", ex);
         }
     }
-    
-    
+
     private void forward() throws ServletException, IOException {
 
         // F O R W A R D I N G
@@ -223,7 +252,13 @@ public class TournamentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (DatabaseConnectionException ex) {
+            Logger.getLogger(TournamentServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (TournamentNotExistingException ex) {
+            Logger.getLogger(TournamentServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -237,7 +272,13 @@ public class TournamentServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (DatabaseConnectionException ex) {
+            Logger.getLogger(TournamentServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (TournamentNotExistingException ex) {
+            Logger.getLogger(TournamentServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
