@@ -3995,6 +3995,12 @@ textarea.input-group-sm > .input-group-btn > .btn {
   display: none;
 }
 
+.tab-content > .search-tab {
+  padding: 0;
+  margin: 0;
+  display: none;
+}
+
 .tab-content > .active,
 .pill-content > .active {
   display: block;

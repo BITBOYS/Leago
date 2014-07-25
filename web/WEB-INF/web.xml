@@ -59,6 +59,17 @@
         <servlet-name>TeamServlet</servlet-name>
         <url-pattern>/new/team/*</url-pattern>
     </servlet-mapping>
+    <!-- ################ S E A R C H ################ -->
+    <servlet>
+        <servlet-name>SearchServlet</servlet-name>
+        <servlet-class>leago.controller.SearchServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SearchServlet</servlet-name>
+        <url-pattern>/search/*</url-pattern>
+    </servlet-mapping>
+    
+    
     <!-- F I L T E R -->
     
     <!-- ################ L O G I N ################ -->

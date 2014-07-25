@@ -20,6 +20,10 @@ public class Team {
     public Team() {
         super();
     }
+    
+    public Team(String name) {
+        this.name = name;
+    }
 
     public Team(String name, String tag, User leader, Date create_date) {
         this.name = name;
