@@ -4001,11 +4001,6 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 
-/*footer {
-	background-color: #f8f8f8;
-	padding: 50px 0;
-}*/
-
 .nav .caret {
   border-top-color: #428bca;
   border-bottom-color: #428bca;
@@ -5390,6 +5385,8 @@ a.list-group-item:focus {
   border-bottom: 1px solid transparent;
   border-top-right-radius: 3px;
   border-top-left-radius: 3px;
+  font-family: "Lato";
+  font-size: 17px;
 }
 
 .panel-title {

@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="row" style="padding-top: 50px;">
+<div class="row">
 
     <div class="col-md-3">
         <div class="list-group">
@@ -67,48 +67,38 @@
         </div> <!-- /.panel --> 
     </div> <!-- /.grid 8 --> 
 </div>
-      
-                    
-<div class="row">
-    <div class="col-md-8 col-md-offset-3">
-        <div class="panel panel-default">
-            <!-- Default panel contents -->
-            <div class="panel-heading"><i class="fa fa-flag"></i> Leader &auml;ndern</div>
-            <div class="panel-body">
-                <div class="col-xs-8">
-                
-                    <form role="form" name="leader_form" action="${pageContext.request.contextPath}/team/${team.name}/settings/profile" method="POST">
-
-                        <div class="form-group">
-                            <label>Leader</label>
-                            <select class="form-control" name="input_leader_new">
-                                <c:forEach var="member" items="${team.member}">
-                                    <option>${member.name}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-
-                        <button class="btn btn-primary btn-leago" type="submit">Leader aktualisieren</button>
-
-                    </form>
-                </div>
-            </div> <!-- /.panel-body --> 
-        </div> <!-- /.panel --> 
-    </div> <!-- /.grid 8 --> 
-</div>
                     
             
 <div class="row">
     <div class="col-md-8 col-md-offset-3">
         <!-- Default panel contents -->
         <div class="panel panel-danger">
-            <div class="panel-heading"><span class="fa fa-trash-o"></span> Team l&ouml;schen</div>
-            <div class="panel-body">
-                <div class="col-xs-8">
-                    <p>Das L&ouml;schen des Teams kann <b>nicht</b> r&uuml;ckg&auml;ngig gemacht werden!</p>
-                    <a class="btn btn-primary btn-danger" href="${pageContext.request.contextPath}/team/${team.name}/settings/delete">"${team.name}" l&ouml;schen</a>
-                </div>
-            </div>
-        </div> <!-- /.panel--> 
-    </div> <!-- /.grid 8 --> 
+            <div class="panel-heading"><span class="fa fa-trash-o"></span> Danger Zone</div>
+            <ul class="list-group">
+                <li class="list-group-item ">
+                    <h5><b>Besitzer ändern</b></h5>
+                    <p>&Uuml;bergibt die Besitzerrechte an einen anderen User, der bereits Mitglied des Teams ist.</p>    
+
+                    <form role="form" name="leader_form" action="${pageContext.request.contextPath}/team/${team.name}/settings/profile" method="POST">
+                        <div class="form-group 8">
+                            <select class="form-control" name="input_leader_new">
+                                <c:forEach var="member" items="${team.member}">
+                                    <option>${member.name}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        
+
+                        <button class="btn btn-primary btn-danger" type="submit">Besitzer &auml;ndern</button>
+
+                    </form>
+                </li>
+                <li class="list-group-item">
+                    <h5><b>Team löschen</b></h5>
+                    <p>Das L&ouml;schen des Teams kann <b>nicht</b> r&uuml;ckg&auml;ngig gemacht werden!</p>    
+                    <a class="btn btn-primary btn-danger" href="${pageContext.request.contextPath}/team/${team.name}/settings/delete">"${team.name}" l&ouml;schen</a> 
+                </li>
+              </ul>
+        </div> <!-- /.panel-->
+    </div> <!-- /.grid 8 -->
 </div>

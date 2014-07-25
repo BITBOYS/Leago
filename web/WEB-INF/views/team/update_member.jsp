@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<div class="row" style="padding-top: 50px;">
+<div class="row">
 
     <div class="col-md-3">
         <div class="list-group">

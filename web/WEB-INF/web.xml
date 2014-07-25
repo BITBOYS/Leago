@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-  
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
-    
     <!-- ################ S E S S I O N ################ -->
     <servlet>
         <servlet-name>SessionServlet</servlet-name>
         <servlet-class>leago.controller.SessionServlet</servlet-class>
     </servlet>
-    
     <servlet-mapping>
         <servlet-name>SessionServlet</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -18,14 +15,12 @@
     <servlet-mapping>
         <servlet-name>SessionServlet</servlet-name>
         <url-pattern>/logout</url-pattern>
-    </servlet-mapping>    
-
+    </servlet-mapping>
     <!-- ################ U S E R ################ -->
     <servlet>
         <servlet-name>UserServlet</servlet-name>
         <servlet-class>leago.controller.UserServlet</servlet-class>
     </servlet>
-    
     <servlet-mapping>
         <servlet-name>UserServlet</servlet-name>
         <url-pattern>/register/*</url-pattern>
@@ -38,29 +33,24 @@
         <servlet-name>UserServlet</servlet-name>
         <url-pattern>/settings/*</url-pattern>
     </servlet-mapping>
-    
     <!-- ################ T O U R N A M E N T ################ -->
     <servlet>
         <servlet-name>TournamentServlet</servlet-name>
         <servlet-class>leago.controller.TournamentServlet</servlet-class>
     </servlet>
-    
     <servlet-mapping>
         <servlet-name>TournamentServlet</servlet-name>
         <url-pattern>/tournament/*</url-pattern>
     </servlet-mapping>
-    
     <servlet-mapping>
         <servlet-name>TournamentServlet</servlet-name>
         <url-pattern>/new/tournament/</url-pattern>
     </servlet-mapping>
-    
     <!-- ################ T E A M ################ -->
     <servlet>
         <servlet-name>TeamServlet</servlet-name>
         <servlet-class>leago.controller.TeamServlet</servlet-class>
     </servlet>
-    
     <servlet-mapping>
         <servlet-name>TeamServlet</servlet-name>
         <url-pattern>/team/*</url-pattern>
@@ -69,15 +59,45 @@
         <servlet-name>TeamServlet</servlet-name>
         <url-pattern>/new/team/*</url-pattern>
     </servlet-mapping>
+    <!-- F I L T E R -->
     
-    <!-- T I M E O U T -->  
+    <!-- ################ L O G I N ################ -->
+    <filter>
+        <filter-name>loginFilter</filter-name>
+        <filter-class>leago.filter.LoginFilter</filter-class>
+    </filter>
+    
+    <filter-mapping>
+        <filter-name>loginFilter</filter-name>
+        <url-pattern>/new/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>loginFilter</filter-name>
+        <url-pattern>/settings/profile/*</url-pattern>
+    </filter-mapping>
+    
+    <!-- ################ A U T H E N T I F I C A T I O N ################ -->
+    <filter>
+        <filter-name>AuthenticatonFilter</filter-name>
+        <filter-class>leago.filter.AuthenticatonFilter</filter-class>
+    </filter>
+    
+    <filter-mapping>
+        <filter-name>AuthenticatonFilter</filter-name>
+        <servlet-name>TeamServlet</servlet-name>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenticatonFilter</filter-name>
+        <servlet-name>TurnamentServlet</servlet-name>
+    </filter-mapping>
+    
+    <!-- T I M E O U T -->
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-    
-    <!-- E R R O R -->  
+    <!-- E R R O R -->
     <error-page>
         <location>/error.jsp</location>
     </error-page>
