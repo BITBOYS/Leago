@@ -1,31 +1,26 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package leago.models;
 
 import java.util.ArrayList;
 
 /**
- * Object-Klasse für die Spielrunde eines Turnieres
  *
- * @author Malte
- * @date 07.03.2014
+ * @author v094700
  */
 public class Round {
+    
+    ArrayList<Match> matches;
 
-    private ArrayList<Match> matches;
-
-    /**
-     * Konstruktor
-     */
-    public Round() {
-        super();
-    }
-
-    /**
-     * Konstruktor
-     *
-     * @param matches Liste von den Spielen
-     */
     public Round(ArrayList<Match> matches) {
         this.matches = matches;
+    }
+
+    public Round() {
     }
 
     public ArrayList<Match> getMatches() {
@@ -36,4 +31,9 @@ public class Round {
         this.matches = matches;
     }
 
+    @Override
+    public String toString() {
+        return "Rounds{" + "matches=" + matches + '}';
+    }
+        
 }

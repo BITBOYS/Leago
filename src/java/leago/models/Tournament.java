@@ -19,12 +19,13 @@ public class Tournament {
     private Date end_date;
     private Time end_time;
     private Date create_date;
-    private int nr_matchdays;
+    private int rounds;
     private String venue;
     private Date term_of_application;
     private List<Table> table;
     private List<Team> teams;
     private List<User> member;
+    private Schedule schedule;
 
     public Tournament() {
         super();
@@ -44,12 +45,12 @@ public class Tournament {
         this.end_date = end_date;
         this.end_time = end_time;
         this.create_date = create_date;
-        this.nr_matchdays = nr_matchdays;
+        this.rounds = nr_matchdays;
         this.venue = venue;
         this.term_of_application = term_of_application;
     }
 
-    public Tournament(String name, String password, String description, User leader, Date start_date, Time start_time, Date end_date, Time end_time, Date create_date, int nr_matchdays, String venue, Date term_of_application, List<Table> table) {
+    public Tournament(String name, String password, String description, User leader, Date start_date, Time start_time, Date end_date, Time end_time, Date create_date, int nr_matchdays, String venue, Date term_of_application, List<Table> table, List<Team> teams, List<User> member, Schedule shedule) {
         this.name = name;
         this.password = password;
         this.description = description;
@@ -59,11 +60,15 @@ public class Tournament {
         this.end_date = end_date;
         this.end_time = end_time;
         this.create_date = create_date;
-        this.nr_matchdays = nr_matchdays;
+        this.rounds = nr_matchdays;
         this.venue = venue;
         this.term_of_application = term_of_application;
         this.table = table;
+        this.teams = teams;
+        this.member = member;
+        this.schedule = shedule;
     }
+
 
     public String getName() {
         return name;
@@ -121,12 +126,12 @@ public class Tournament {
         this.create_date = create_date;
     }
 
-    public int getNr_matchdays() {
-        return nr_matchdays;
+    public int getRounds() {
+        return rounds;
     }
 
-    public void setNr_matchdays(int nr_matchdays) {
-        this.nr_matchdays = nr_matchdays;
+    public void setRounds(int rounds) {
+        this.rounds = rounds;
     }
 
     public String getVenue() {
@@ -193,6 +198,14 @@ public class Tournament {
         this.member = member;
     }
 
+    public Schedule getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(Schedule schedule) {
+        this.schedule = schedule;
+    }
+    
     public String getCountdown() {
         java.util.Date today = new java.util.Date();
         long diff = term_of_application.getTime() - today.getTime();
@@ -212,7 +225,6 @@ public class Tournament {
 
     @Override
     public String toString() {
-        return "Tournament{" + "name=" + name + ", password=" + password + ", description=" + description + ", leader=" + leader + ", start_date=" + start_date + ", start_time=" + start_time + ", end_date=" + end_date + ", end_time=" + end_time + ", create_date=" + create_date + ", nr_matchdays=" + nr_matchdays + ", venue=" + venue + ", term_of_application=" + term_of_application + ", table=" + table + ", teams=" + teams + ", member=" + member + '}';
+        return "Tournament{" + "name=" + name + ", password=" + password + ", description=" + description + ", leader=" + leader + ", start_date=" + start_date + ", start_time=" + start_time + ", end_date=" + end_date + ", end_time=" + end_time + ", create_date=" + create_date + ", nr_matchdays=" + rounds + ", venue=" + venue + ", term_of_application=" + term_of_application + ", table=" + table + ", teams=" + teams + ", member=" + member + ", shedule=" + schedule + '}';
     }
-
 }
