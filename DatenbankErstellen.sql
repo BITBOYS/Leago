@@ -1,6 +1,6 @@
 CREATE TABLE user (
         username char(30) NOT NULL,
-        password char(32) NOT NULL,
+        password char(60) NOT NULL,
         email char(40) UNIQUE NOT NULL,
         create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         goals INT,
