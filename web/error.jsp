@@ -7,7 +7,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/img/favicon.ico">
-        <title>Leago</title>
+        <title>Leago - Error</title>
 
         <!-- Bootstrap core CSS -->
         <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
@@ -22,7 +22,7 @@
         <%@include file="WEB-INF/snipplets/navigation.jspf" %>
     </header>
 
-    <body style="padding-top: 60px;">
+    <body style="padding-top: 50px;">
         <div class="container">
             <div class="row">
 
@@ -68,9 +68,11 @@
         </div>
         <!-- /.banner -->
 
-        <footer>
-            <%@include file="WEB-INF/snipplets/footer.jspf" %>
-        </footer>
+        <div class="footer navbar-fixed-bottom">
+            <footer>
+                <%@include file="WEB-INF/snipplets/footer.jspf" %>
+            </footer>
+        </div>
 
         <!-- JavaScript -->
         <script src="resources/js/jquery-1.10.2.js"></script>

@@ -57,7 +57,7 @@
     
     <servlet-mapping>
         <servlet-name>TournamentServlet</servlet-name>
-        <url-pattern>/new/tournament</url-pattern>
+        <url-pattern>/new/tournament/*</url-pattern>
     </servlet-mapping>
     
     <!-- T I M E O U T -->  

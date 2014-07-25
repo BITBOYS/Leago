@@ -23,7 +23,7 @@
                 <li>
                     <form class="navbar-form navbar-left" role="search">
                         <div class="form-group col-sm-9">
-                            <input type="text" class="form-control" placeholder="<fmt:message key="navi.input.search"/>">
+                            <input type="search" class="form-control" placeholder="<fmt:message key="navi.input.search"/>">
                         </div>
                         <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
                     </form>
@@ -36,7 +36,7 @@
                         <ul class="dropdown-menu">
                             <li role="presentation" class="dropdown-header">Create:</li>
                             <li role="presentation" class="divider"></li>
-                            <li><a href="${pageContext.request.contextPath}/new/tournament/"><i class="fa fa-sitemap"></i> Turnier</a></li> 
+                            <li><a href="${pageContext.request.contextPath}/new/tournament"><i class="fa fa-sitemap"></i> Turnier</a></li> 
                             <li><a href="${pageContext.request.contextPath}/new/team"><i class="fa fa-users"></i> Team</a></li> 
                         </ul>
                     </li>

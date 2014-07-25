@@ -149,9 +149,9 @@
     </div>
     <!-- /.banner -->
 
-    <footer>
-        <%@include file="WEB-INF/snipplets/footer.jspf" %>
-    </footer>
+            <footer>
+                <%@include file="WEB-INF/snipplets/footer.jspf" %>
+            </footer>
 
     <!-- JavaScript -->
     <script src="resources/js/jquery-1.10.2.js"></script>

@@ -5,8 +5,9 @@
         <h1 class="page-header">Turnier Settings <small>Einstellungnen zu ${profileuser.name}</small></h1>
         <ol class="breadcrumb">
             <li><a href="${pageContext.request.contextPath}">Home</a></li>
-            <li><a href="${pageContext.request.contextPath}/${tournament.name}">${tournament.name}</a></li>
-            <li class="active">Settings/Tournament</li>
+            <li><a href="#">Tournaments</a></li>
+            <li><a href="${pageContext.request.contextPath}/tournament/${tournament.name}">${tournament.name}</a></li>
+            <li class="active">Settings</li>
         </ol>
     </div>
 
@@ -30,7 +31,7 @@
 
 
     <div class="col-md-8">
-        <div class="panel panel-default">
+        <div class="panel panel-leago">
             <!-- Default panel contents -->
             <div class="panel-heading"><i class="fa fa-sitemap"></i> Name &auml;ndern</div>
             <div class="panel-body">
@@ -39,7 +40,7 @@
 
                         <div class="form-group">
                             <label>Name</label>
-                            <input type="text" class="form-control" name="input_name_new1" required>
+                            <input type="text" class="form-control" name="input_name_new1" placeholder="'${tournament.name}'" required>
                         </div>
 
                         <div class="form-group">
@@ -60,7 +61,7 @@
 
     <div class="col-md-8 col-md-offset-4">
 
-        <div class="panel panel-default">
+        <div class="panel panel-leago">
             <!-- Default panel contents -->
             <div class="panel-heading"><i class="fa fa-lock"></i> Passwort &auml;ndern</div>
             <div class="panel-body">
@@ -95,7 +96,7 @@
 
     <div class="col-md-8 col-md-offset-4">
 
-        <div class="panel panel-default">
+        <div class="panel panel-leago">
             <!-- Default panel contents -->
             <div class="panel-heading"><i class="fa fa-user"></i> Leader &auml;ndern</div>
             <div class="panel-body">
@@ -130,7 +131,7 @@
 
     <div class="col-md-8 col-md-offset-4">
 
-        <div class="panel panel-default">
+        <div class="panel panel-leago">
             <!-- Default panel contents -->
             <div class="panel-heading"><i class="fa fa-code"></i> Beschreibung &auml;ndern</div>
             <div class="panel-body">
@@ -155,7 +156,7 @@
 
     <div class="col-md-8 col-md-offset-4">
 
-        <div class="panel panel-default">
+        <div class="panel panel-leago">
             <!-- Default panel contents -->
             <div class="panel-heading"><i class="fa fa-globe"></i> Austragungsort &auml;ndern</div>
             <div class="panel-body">
@@ -164,7 +165,7 @@
 
                         <div class="form-group">
                             <label>Ort</label>
-                            <input type="text" class="form-control" name="input_venue_new" placeholder="'${tournamet.venue}'" required>
+                            <input type="text" class="form-control" name="input_venue_new" placeholder="'${tournament.venue}'" required>
                         </div>
 
                         <div class="form-group">
@@ -180,7 +181,7 @@
 
     <div class="col-md-8 col-md-offset-4">
 
-        <div class="panel panel-default">
+        <div class="panel panel-leago">
             <!-- Default panel contents -->
             <div class="panel-heading"><i class="fa fa-tags"></i> Spieltage &auml;ndern</div>
             <div class="panel-body">
@@ -189,7 +190,7 @@
 
                         <div class="form-group">
                             <label>Spielrunden</label>
-                            <input type="number" min="1" class="form-control" name="input_rounds_new" placeholder="${tournamet.rounds} Runden" required>
+                            <input type="number" min="1" class="form-control" name="input_rounds_new" placeholder="${tournament.rounds} Runden" required>
                         </div>
 
                         <div class="form-group">
@@ -205,7 +206,7 @@
 
     <div class="col-md-8 col-md-offset-4">
 
-        <div class="panel panel-default">
+        <div class="panel panel-leago">
             <!-- Default panel contents -->
             <div class="panel-heading"><i class="fa fa-clock-o"></i> Zeiten &auml;ndern</div>
             <div class="panel-body">
@@ -213,6 +214,7 @@
                     <form role="form" name="start_date_form" action="${pageContext.request.contextPath}/${tournamet.name}/settings/startdate" method="POST">
                         <div class="form-group">
                             <label>Startdatum</label>
+                            <p class="text-muted">(alt: "${tournament.start_date})"</p>
                             <input type="date" class="form-control" name="input_startdate_new" required>
                         </div>
                         <div class="form-group">
@@ -223,6 +225,7 @@
                     <form role="form" name="start_time_form" action="${pageContext.request.contextPath}/${tournamet.name}/settings/starttime" method="POST">
                         <div class="form-group">
                             <label>Start-Uhrzeit</label>
+                            <p class="text-muted">(alt: "${tournament.start_time})"</p>
                             <input type="time" class="form-control" name="input_starttime_new" required>
                         </div>
                         <div class="form-group">
@@ -232,6 +235,7 @@
                         <form role="form" name="end_date_form" action="${pageContext.request.contextPath}/${tournamet.name}/settings/enddate" method="POST">
                             <div class="form-group">
                                 <label>Enddatum</label>
+                                <p class="text-muted">(alt: "${tournament.end_date})"</p>
                                 <input type="date" class="form-control" name="input_enddate_new" required>
                             </div>
                             <div class="form-group">
@@ -242,6 +246,7 @@
                     <form role="form" name="end_time_form" action="${pageContext.request.contextPath}/${tournamet.name}/settings/endtime" method="POST">
                         <div class="form-group">
                             <label>End-Uhrzeit</label>
+                            <p class="text-muted">(alt: "${tournament.end_time})"</p>
                             <input type="time" class="form-control" name="input_endtime_new" required>
                         </div>
                         <div class="form-group">

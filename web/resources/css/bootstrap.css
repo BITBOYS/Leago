@@ -304,7 +304,7 @@ body {
     font-size: 14px;
     line-height: 1.428571429;
     color: #333333;
-    background-color: #ffffff;
+    background-color: #f7fafa;
 }
 
 input,
@@ -450,17 +450,17 @@ cite {
     text-align: center;
 }
 
-h1,
+/*h1,
 h2,
 h3,
 h4,
-h5,
+h5,*/
 h6,
-.h1,
+/*.h1,
 .h2,
 .h3,
 .h4,
-.h5,
+.h5,*/
 .h6 {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 500;
@@ -481,14 +481,14 @@ h6 small,
 .h6 small {
     font-weight: normal;
     line-height: 1;
-    color: #999999;
 }
 
 h1,
 h2,
 h3 {
-    margin-top: 20px;
-    margin-bottom: 10px;
+    font-family: LeagoFlat;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 h4,
@@ -1650,6 +1650,7 @@ input[type="search"] {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    border: none;
 }
 
 input[type="radio"],
@@ -2209,7 +2210,7 @@ fieldset[disabled] .btn-danger.active {
 .btn-leago {
     font-weight:bold;
     color: #6BBC86;
-    background-color: white;
+    background-color: transparent;
     border: 1px solid;
     border-color: #6BBC86;
 }
@@ -2399,6 +2400,12 @@ input[type="button"].btn-block {
     font-family: 'Glyphicons Halflings';
     src: url('../fonts/glyphicons-halflings-regular.eot');
     src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+}
+
+@font-face {
+    font-family: LeagoFlat;
+    /*src: url('../fonts/Track.ttf') format("truetype"), url('../fonts/Track.otf') format("opentype");*/ 
+    src: url('../fonts/Sketch_Block.ttf') format("truetype"); 
 }
 
 .glyphicon {
@@ -5465,6 +5472,29 @@ a.list-group-item:focus {
     border-color: #428bca;
 }
 
+/*--- L E A G O  P A N E L ---*/
+.panel-leago {
+    border-color: #6BBC86;
+}
+.panel-leago > .panel-heading {
+    color: #ffffff;
+    background-color: #6BBC86;
+    border-color: #6BBC86;
+}
+.panel-leago > .panel-heading {
+    color: #ffffff;
+    background-color: #6BBC86;
+    border-color: #6BBC86;
+}
+.panel-leago > .panel-heading + .panel-collapse .panel-body {
+    border-top-color: #6BBC86;
+}
+.panel-leago > .panel-footer + .panel-collapse .panel-body {
+    border-bottom-color: #6BBC86;
+}
+/*--------------------------*/
+
+
 .panel-primary > .panel-heading {
     color: #ffffff;
     background-color: #428bca;
@@ -6818,4 +6848,14 @@ td.visible-print {
     td.hidden-print {
         display: none !important;
     }
+}
+
+input[type="search"].form-control {
+    width: 100%;
+}
+
+input[type="search"].form-control:focus {
+    outline: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }

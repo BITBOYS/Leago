@@ -7,7 +7,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/img/favicon.ico">
-        <title>Leago - About Page</title>
+        <title>Leago - About Us</title>
 
         <!-- Bootstrap core CSS -->
         <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
@@ -22,21 +22,16 @@
         <%@include file="WEB-INF/snipplets/navigation.jspf" %>
     </header>
 
-    <body style="padding-top: 60px;">
+    <body style="padding-top: 50px;">
         <div class="container">
             <div class="row">
 
                 <div class="col-md-12">
                     <h1 class="page-header">About Us <small> The Team</small></h1>
-                    <ol class="breadcrumb">
-                        <li><a href="${pageContext.request.contextPath}/">Home</a></li>
-                        <li class="disabled"><a href="#">Other Pages</a></li>
-                        <li class="active">About Us</li>
-                    </ol>
                 </div>
 
                 <div class="col-md-6">
-                    <img class="img-responsive" src="${pageContext.request.contextPath}/resources/img/team.jpg">
+                    <img class="img-responsive img-rounded" src="${pageContext.request.contextPath}/resources/img/team.jpg">
                 </div>
                 <div class="col-md-6">
                     <h2>Welcome to Leago</h2>
@@ -74,6 +69,7 @@
                         <li class="tooltip-social linkedin-link"><a href="https://de.linkedin.com/in/mdammann" target="_blank" data-toggle="tooltip" data-placement="bottom" title="LinkedIn"><i class="fa fa-linkedin-square fa-2x"></i></a></li>
                         <li class="tooltip-social facebook-link"><a href="https://www.facebook.com/malte.da.3" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Facebook"><i class="fa fa-facebook-square fa-2x"></i></a></li>
                         <li class="tooltip-social google-plus-link"><a href="https://google.com/+MalteDa" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Google+"><i class="fa fa-google-plus-square fa-2x"></i></a></li>
+                        <li class="tooltip-social"><a href="#github-profile" target="blank" data-toggle="tooltip" data-placement="bottom" title="GitHub"><i class="fa fa-github fa-2x"></i></i></a></li>
                     </ul>
                 </div>
 

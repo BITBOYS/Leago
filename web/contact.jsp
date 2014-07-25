@@ -22,19 +22,13 @@
         <%@include file="WEB-INF/snipplets/navigation.jspf" %>
     </header>
 
-    <body style="padding-top: 60px;">
-
+    <body style="padding-top: 50px;">
         <div class="container">
 
             <div class="row">
 
                 <div class="col-lg-12">
                     <h1 class="page-header">Contact <small>We'd Love to Hear From You!</small></h1>
-                    <ol class="breadcrumb">
-                        <li><a href="${pageContext.request.contextPath}/">Home</a></li>
-                        <li class="disabled"><a href="#">Other Pages</a></li>
-                        <li class="active">Contact</li>
-                    </ol>
                 </div>
 
                 <div class="col-lg-12">
@@ -43,7 +37,7 @@
                 </div>
 
             </div><!-- /.row -->
-
+            <hr>
             <div class="row">
 
                 <div class="col-sm-8">
@@ -71,11 +65,11 @@
                             <br>
                             <div class="form-group col-lg-12">
                                 <label for="input4">Message</label>
-                                <textarea name="contact_message" class="form-control" rows="6" id="input4"></textarea>
+                                <textarea style="max-width: 100%; resize: vertical" name="contact_message" class="form-control" rows="6" id="input4"></textarea>
                             </div>
                             <div class="form-group col-lg-12">
                                 <input type="hidden" name="save" value="contact">
-                                <button type="submit" class="fa fa-mail btn btn-primary">Senden <i class="fa fa-angle-right"></i></button>
+                                <button type="submit" class="fa fa-mail btn btn-leago"><i class="fa fa-mail"></i> Senden <i class="fa fa-angle-double-right"></i></button>
                             </div>
                         </div>
                     </form>
@@ -91,18 +85,19 @@
                     <p><i class="fa fa-envelope-o"></i> <abbr title="Email">E</abbr>: <a href="mailto:maik.schmaddebeck@generali.de">leago@bitboys.com</a></p>
                     <p><i class="fa fa-clock-o"></i> <abbr title="Hours">H</abbr>: Samstag - Sonntag: 10:00 bis 15:00 Uhr</p>
                     <ul class="list-unstyled list-inline list-social-icons">
-                        <li class="tooltip-social facebook-link"><a href="#facebook-page" data-toggle="tooltip" data-placement="bottom" title="Facebook"><i class="fa fa-facebook-square fa-2x"></i></a></li>
-                        <li class="tooltip-social google-plus-link"><a href="#google-plus-page" data-toggle="tooltip" data-placement="bottom" title="Google+"><i class="fa fa-google-plus-square fa-2x"></i></a></li>
+                        <li class="tooltip-social facebook-link"><a target="_blank" href="#facebook-page" data-toggle="tooltip" data-placement="bottom" title="Facebook"><i class="fa fa-facebook-square fa-2x"></i></a></li>
+                        <li class="tooltip-social google-plus-link"><a target="_blank" href="#google-plus-page" data-toggle="tooltip" data-placement="bottom" title="Google+"><i class="fa fa-google-plus-square fa-2x"></i></a></li>
+                        <li class="tooltip-social"><a target="_blank" href="https://github.com/BITBOYS" data-toggle="tooltip" data-placement="bottom" title="GitHub"><i class="fa fa-github fa-2x"></i></a></li>
                     </ul>
                 </div>
 
             </div><!-- /.row -->
 
         </div><!-- /.container -->
-        
-        <footer>
-            <%@include file="WEB-INF/snipplets/footer.jspf" %>
-        </footer>
+
+            <footer>
+                <%@include file="WEB-INF/snipplets/footer.jspf" %>
+            </footer>
 
         <!-- JavaScript -->
         <script src="resources/js/jquery-1.10.2.js"></script>

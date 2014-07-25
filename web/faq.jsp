@@ -29,11 +29,6 @@
 
                 <div class="col-lg-12">
                     <h1 class="page-header">FAQ <small>Frequently Asked Questions</small></h1>
-                    <ol class="breadcrumb">
-                        <li><a href="${pageContext.request.contextPath}/">Home</a></li>
-                        <li class="disabled"><a href="#">Other Pages</a></li>
-                        <li class="active">FAQ</li>
-                    </ol>
                 </div>
 
             </div><!-- /.row -->
@@ -42,7 +37,7 @@
                 <div class="col-lg-12">
                     <div class="panel-group" id="accordion">
 
-                        <div class="panel panel-default">
+                        <div class="panel panel-leago">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
@@ -57,7 +52,7 @@
                             </div>
                         </div>
 
-                        <div class="panel panel-default">
+                        <div class="panel panel-leago">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
@@ -72,7 +67,7 @@
                             </div>
                         </div>
 
-                        <div class="panel panel-default">
+                        <div class="panel panel-leago">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
@@ -87,7 +82,7 @@
                             </div>
                         </div>
 
-                        <div class="panel panel-default">
+                        <div class="panel panel-leago">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
@@ -102,7 +97,7 @@
                             </div>
                         </div>
 
-                        <div class="panel panel-default">
+                        <div class="panel panel-leago">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
@@ -117,7 +112,7 @@
                             </div>
                         </div>
 
-                        <div class="panel panel-default">
+                        <div class="panel panel-leago">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
@@ -137,9 +132,11 @@
             </div><!-- /.row -->
         </div><!-- /.container -->
 
-        <footer>
-            <%@include file="WEB-INF/snipplets/footer.jspf" %>
-        </footer>
+        <div class="footer navbar-fixed-bottom">
+            <footer>
+                <%@include file="WEB-INF/snipplets/footer.jspf" %>
+            </footer>
+        </div>
 
         <!-- JavaScript -->
         <script src="resources/js/jquery-1.10.2.js"></script>
