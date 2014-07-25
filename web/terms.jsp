@@ -22,27 +22,22 @@
         <%@include file="WEB-INF/snipplets/navigation.jspf" %>
     </header>
 
-    <body style="padding-top: 60px;">
+    <body style="padding-top: 50px;">
 
         <div class="container">
-            
+
             <div class="row">
 
                 <div class="col-lg-12">
                     <h1 class="page-header">Impressum <small>Terms of use</small></h1>
-                    <ol class="breadcrumb">
-                        <li><a href="${pageContext.request.contextPath}/">Home</a></li>
-                        <li class="disabled"><a href="#">Other Pages</a></li>
-                        <li class="active">Impressum</li>
-                    </ol>
                 </div>
 
             </div><!--./row -->
 
-            <div class="well col-sm-12">
+            <div class="col-md-12">
                 <h3>Betreiber dieser Webseite</h3>
                 <p><b>B1TB0YS</b><br>Hamburg<br>Germany</p>
-                <p>E-Mail: <a href="mailto:dede@kms.de">leago@bitboys.de</a></p>
+                <p>E-Mail: <a href="mailto:leago@bitboys.de">leago@bitboys.de</a></p>
                 <hr>
 
                 <h3>Nutzungsbedingungen</h3>

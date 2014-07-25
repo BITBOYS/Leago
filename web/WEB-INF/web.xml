@@ -44,7 +44,12 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>TournamentServlet</servlet-name>
-        <url-pattern>/new/tournament/</url-pattern>
+        <url-pattern>/tournament/*/settings/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>TournamentServlet</servlet-name>
+        <url-pattern>/new/tournament/*</url-pattern>
     </servlet-mapping>
     <!-- ################ T E A M ################ -->
     <servlet>

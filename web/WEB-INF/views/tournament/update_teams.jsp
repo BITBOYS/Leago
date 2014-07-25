@@ -9,10 +9,12 @@
             <li class="active">Settings/Tournament/Teams</li>
         </ol>
     </div>
+</div>
 
+<div class="row">
     <div class="col-md-4">
         <div class="list-group">
-            <a href="#" class="list-group-item">
+            <a href="${pageContext.request.contextPath}/tournament/${tournament.name}/settings/tournament" class="list-group-item">
                 <h4><span class="fa fa-sitemap"></span> Tournament settings</h4>
                 <p class="list-group-item-text">Change the Tournament values</p>
             </a>
@@ -27,7 +29,7 @@
         </div>
     </div>
 
-    <div class="col-md-8 col-md-offset-4">
+    <div class="col-md-8">
 
         <div class="panel panel-danger">
             <!-- Default panel contents -->
@@ -37,9 +39,9 @@
                     <!-- Table -->
                     <table class="table">
                         <tbody>
-                        <c:choose>
-                            <c:when test="${empty tournament.teams}">
-                                <tr>
+                            <c:choose>
+                                <c:when test="${empty tournament.teams}">
+                                    <tr>
                                 <p>Kein Teams im Turnier</p> 
                                 </tr>
                             </c:when>
@@ -71,5 +73,6 @@
             </div> <!-- /.panel-body --> 
         </div> <!-- /.panel -->  
     </div> <!-- /.col --> 
+</div>
 
 </div><!-- /.row --> 

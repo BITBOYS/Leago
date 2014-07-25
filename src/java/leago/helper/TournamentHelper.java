@@ -10,14 +10,21 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import leago.error.MyException;
 import leago.error.exceptions.DatabaseConnectionException;
+import leago.error.exceptions.TournamentCreationException;
 import leago.error.exceptions.TournamentNotExistingException;
 import leago.error.exceptions.TournamentUpdateException;
+import leago.error.success.TournamentCreationSuccess;
 import leago.error.success.TournamentUpdateSuccess;
 import leago.models.Match;
 import leago.models.Round;
@@ -33,6 +40,9 @@ import leago.models.User;
  * @author v094702
  */
 public class TournamentHelper {
+
+    private static final DateFormat FORMATTER_TIME = new SimpleDateFormat("HH:mm");
+    private static final DateFormat FORMATTER_DATE = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
      *
@@ -533,7 +543,6 @@ public class TournamentHelper {
         Schedule schedule = new Schedule();
         int nr_rounds = tournament.getRounds();
         ArrayList<Round> rounds = new ArrayList<Round>();
-        
 
         for (int i = 0; i < teams.size(); i++) {
             ArrayList<User> user = getMemberByTeam(teams.get(i));
@@ -557,15 +566,126 @@ public class TournamentHelper {
             }
         }
 
-        for (int i = 0; i <= tournament.getRounds(); i++){
+        for (int i = 0; i <= tournament.getRounds(); i++) {
             rounds.add(new Round(matches));
         }
         schedule.setRounds(rounds);
-        
+
         for (int i = 0; i < matches.size(); i++) {
             System.out.println(matches.get(i).getTeam1().getName() + " vs. " + matches.get(i).getTeam2().getName());
         }
-        
+
         return schedule;
+    }
+
+    public void createTournament(String name, User leader, String start_date, String start_time, String end_date, String end_time, String password, String password_reenter, String description, int rounds, String venue, String term_of_application) throws DatabaseConnectionException, TournamentCreationException, TournamentCreationSuccess, ParseException {
+
+        try {
+
+            String date1 = start_date;
+            String date2 = end_date;
+            java.util.Date dateStart = new java.util.Date();
+            java.util.Date dateEnd = new java.util.Date();
+            java.util.Date timeStart = new java.util.Date();
+            java.util.Date timeEnd = new java.util.Date();
+
+            if (date1 != null) {
+                dateStart = FORMATTER_DATE.parse(date1.substring(1, date1.length() - 1));
+                System.out.println(dateStart);
+            }
+
+            if (date2 != null) {
+                dateEnd = FORMATTER_DATE.parse(date2.substring(1, date2.length() - 1));
+                System.out.println(dateEnd);
+            }
+
+            if (start_time != null) {
+                timeStart = FORMATTER_TIME.parse(start_time.substring(1, start_time.length() - 1));
+                System.out.println(timeStart);
+            }
+
+            if (end_time != null) {
+                timeEnd = FORMATTER_TIME.parse(end_time.substring(1, end_time.length() - 1));
+                System.out.println(timeEnd);
+            }
+
+            System.out.println("ZEITEN: " + start_date + " - " + start_time + " - " + end_date + " - " + end_time + "\n " + leader);
+
+            if (password.equals(password_reenter)) {
+                if (isNameAlreadyTaken(name)) {
+                    if (dateEnd.after(dateStart) || dateEnd.equals(dateStart)) {
+                        if (timeEnd.after(timeStart) || timeEnd.equals(timeStart)) {
+
+                            Connection con = DatabaseHelper.connect();
+                            Statement statement = con.createStatement();
+
+                            statement.execute("INSERT INTO tournament "
+                                    + " (name, leader, start_date, start_time, end_date, end_time, create_date, password, description, nr_of_matchdays, venue, term_of_application)"
+                                    + " VALUES ('" + name + "','" + leader.getName() + "'," + start_date + "," + start_time + "," + end_date + "," + end_time + ",CURRENT_TIMESTAMP,'" + password + "','" + description + "'," + rounds + ",'" + venue + "'," + term_of_application + ")");
+
+                            // Creation successful
+                            throw new TournamentCreationException("Creation successful", MyException.SUCCESS);
+
+                            // Starttime after Endtime at the same day
+                        } else {
+                            throw new TournamentCreationException("Starttime after Endtime at the same day", MyException.ERROR);
+                        }
+                        // Startdate bigger than Enddate
+                    } else {
+                        throw new TournamentCreationException("Startdate bigger than Enddate", MyException.ERROR);
+                    }
+                    // Name is already taken
+                } else {
+                    throw new TournamentCreationException("Name already taken", MyException.ERROR);
+                }
+                // passwords aren't equal
+            } else {
+                throw new TournamentCreationException("The passwords aren't matching", MyException.ERROR);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserHelper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new TournamentCreationException("Tournament creation failed unexpectedly with an SQL error " + ex.getSQLState(), MyException.ERROR);
+        }
+    }
+
+    private boolean isNameAlreadyTaken(String name) throws DatabaseConnectionException, SQLException {
+        boolean result = false;
+
+        Connection con = DatabaseHelper.connect();
+        Statement statement = con.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM tournament WHERE name = '" + name + "'");
+
+        if (!resultSet.isBeforeFirst()) {
+            result = true;
+        }
+
+        return result;
+    }
+
+//    DUMMY: METHODE MUSS IN TEAMHELPER VORHANDEN SEIN, HANPASSUNG IM TOURNAMENTSERVLET MUSS GEMACHT WERDEN FÜR DEN AUFRUF
+    public ArrayList<Team> getAllTeams() throws DatabaseConnectionException {
+        ArrayList<Team> teams = new ArrayList<Team>();
+
+        try {
+            Connection con = DatabaseHelper.connect();
+            Statement statement = con.createStatement();
+
+            ResultSet resultSet = statement.executeQuery("SELECT name, tag, leader, create_date FROM team");
+            resultSet.first();
+
+            while (resultSet.next()) {
+                teams.add(new Team(resultSet.getString("name"),
+                        resultSet.getString("tag"),
+                        new User(resultSet.getString("leader")),
+                        resultSet.getDate("create_date")));
+                resultSet.next();
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(TournamentHelper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DatabaseConnectionException("An error occured while getting the teams: " + teams.size(), MyException.ERROR);
+        }
+
+        return teams;
     }
 }
