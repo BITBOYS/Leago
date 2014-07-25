@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html>
     <%@include file="snipplets/head.jspf" %>
-    
-    <header>
-        <%@include file="snipplets/navigation.jspf" %>
-    </header>
-    
-    <body style="padding-top: 60px;">
-        <div class="container">
-            <%@include file="snipplets/error.jspf" %>
-            <div style="margin-top: -30px;">
-            <jsp:include page="views/${page}.jsp" flush="true">
-                <jsp:param name="user" value="${user}"/>
-            </jsp:include>
-            <div>
-        </div>
-    </body>
-    
-    <footer>
-        <%@include file="snipplets/footer.jspf" %>
-    </footer>
+
+        <body>
+            <div class="wrapper">
+                <header>
+                    <%@include file="snipplets/navigation.jspf" %>
+                </header>
+
+                <div class="body">
+                    <div class="container">
+                        <%@include file="snipplets/error.jspf" %>
+                        <jsp:include page="views/${page}.jsp" flush="true">
+                            <jsp:param name="user" value="${user}"/>
+                        </jsp:include>
+                    </div>
+                </div>
+
+                <footer>
+                    <%@include file="snipplets/footer.jspf" %>
+                </footer>
+            </div>
+        </body>
     
     <!-- JavaScript -->
     <script src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.js"></script>

@@ -1,4 +1,4 @@
-<div class="row" style="padding-top: 50px;">
+<div class="row">
 
     <div class="col-md-3">
         <div class="list-group">

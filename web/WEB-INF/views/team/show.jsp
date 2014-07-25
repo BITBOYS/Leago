@@ -1,21 +1,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<div class="row">
-    <div class="col-lg-12">
-        <h1 class="page-header">Team-Profil <small>Alles &uuml;ber ${team.name}!</small>
-            <div class="pull-right need-help">
-                <c:if test="${user.name == team.leader.name}">
-                    <a href="${pageContext.request.contextPath}/team/${team.name}/settings/profile" class="btn btn-leago"><i class="fa fa-wrench"></i> Settings</a>
-                </c:if>
-            </div>
-        </h1>
-    </div>
-</div>
 
 <div class="row">
 
     <div class="col-lg-12">
-        
+
+        <div class="pull-right need-help">
+            <c:if test="${user.name == team.leader.name}">
+                <a href="${pageContext.request.contextPath}/team/${team.name}/settings/profile" class="btn btn-leago"><i class="fa fa-pencil"></i> Turnier bearbeiten</a>
+            </c:if>
+        </div>
+
         <ul id="myTab" class="nav nav-tabs">
             <li class="active"><a href="#member" data-toggle="tab">Mitglieder</a></li>
             <li><a href="#tournaments" data-toggle="tab">Turniere</a></li>
@@ -36,7 +31,11 @@
                             <div class="panel-heading">Teammitglieder</div>
                             <div class="list-group">
                                 <c:forEach var="member" items="${team.member}" >
-                                    <a href="${pageContext.request.contextPath}/user/${member.name}" class="list-group-item">${member.name}</a>    
+                                    <a href="${pageContext.request.contextPath}/user/${member.name}" class="list-group-item">${member.name}
+                                        <c:if test="${member.name == team.leader.name}">
+                                            <i class="fa fa-star-o"></i>
+                                        </c:if>
+                                    </a>
                                 </c:forEach>
                             </div>
                         </div>
