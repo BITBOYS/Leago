@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-lg-12 text-center">
             <ul class="list-inline">
-                <li><a href="${pageContext.request.contextPath}"><i class="fa fa-2x fa-facebook"></i></a></li>
+                <li><a href="${pageContext.request.contextPath}"><i class="fa fa-facebook fa-2x"></i></a></li>
                 <li class="footer-menu-divider"></li>
                 <li><a href="https://plus.google.com/110655655037221087199/"><i class="fa fa-2x fa-google-plus"></i></a></li>
                 <li class="footer-menu-divider"></li>

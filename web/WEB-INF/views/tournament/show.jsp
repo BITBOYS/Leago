@@ -1,15 +1,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<div class="row col-md-12 page-header">
-    <div class="col-md-10">
-        <h1 >Turnier Profil <small>Alles &uuml;ber ${tournament.name}</small></h1>
-    </div><!-- /.col -->
-    <c:if test="${tournament.leader.name == user.name}">
-        <div class="col-md-2">
-            <a class="btn btn-leago pull-right" href="${pageContext.request.contextPath}/tournament/${tournament.name}/settings"><span class="fa fa-wrench"> Settings <i class="fa fa-angle-double-right"></i></span></a>
-        </div><!-- /.col -->
-    </c:if>
-</div><!-- /.row -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right need-help">
+            <c:if test="${tournament.leader.name == user.name}">
+                <a href="${pageContext.request.contextPath}/tournament/${tournament.name}/settings" class="btn btn-leago"><i class="fa fa-pencil"></i> Turnier bearbeiten</a>
+            </c:if>
+        </div>
+        
+        <h2 class="page-header">Turnier Profil <small>Alles &uuml;ber ${tournament.name}</small></h2>
+    </div>
+</div>
 
 <div class="row">
     <div class="col-md-12">
@@ -25,11 +26,11 @@
                     <div class="col-md-6">
                         <p>${tournament.description}</p>
                         <p>Leader: <b><a href="${pageContext.request.contextPath}/user/${tournament.leader.name}"> ${tournament.leader.name} </a></b></p>
-                        <p>Zeitraum: <b> ${tournament.start_date} ${tournament.start_time}</b> bis <b>${tournament.end_date} ${tournament.end_time}</b></p>
+                        <p>Zeitraum: <b> ${tournament.start_date_web} ${tournament.start_time}</b> bis <b>${tournament.end_date_web} ${tournament.end_time}</b></p>
                         <p>Anmeldefrist: 
                             <c:choose>
                                 <c:when test="${tournament.term_of_application != null}"> 
-                                    <b>${tournament.term_of_application}</b>, <b>${countdown}</b>
+                                    <b>${tournament.term_of_application_web}</b>, <b>${countdown}</b>
                                 </c:when>
                                 <c:otherwise> Keine Anmeldefrist
                                 </c:otherwise>
@@ -45,7 +46,7 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <h2 class="page-header">Spielplan f&uuml;r "${tournament.name}"</h2>
+                        <h2 class="page-header"></h2>
 
                         <div class="panel panel-leago">
                             <!-- Default panel contents -->
@@ -88,7 +89,7 @@
                 <div class="row">  
 
                     <div class="col-sm-12">
-                        <h2 class="page-header">Tabelle f&uuml;r "${tournament.name}"</h2>
+                        <h2 class="page-header"></h2>
 
                         <div class="panel panel-leago">
                             <!-- Default panel contents -->
@@ -137,7 +138,7 @@
                 <div class="row">
 
                     <div class="col-lg-12">
-                        <h2 class="page-header">Userstatistik f&uuml;r "${tournament.name}"</h2>
+                        <h2 class="page-header"></h2>
 
                         <div class="panel panel-leago">
                             <!-- Default panel contents -->

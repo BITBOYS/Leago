@@ -56,19 +56,22 @@ public class UserHelper {
         
         try {
             if(password.equals(reenter_password)) {
-                if(isUserExisting(name)) {
-                    if(isEmailAlreadyTaken(email)) {
+                if(!isUserExisting(name)) {
+                    if(!isEmailAlreadyTaken(email)) {
+                        
+                        String salt = BCrypt.gensalt(10);
+                        String hashpw = BCrypt.createHash(password, salt);
 
-                            Connection con = DatabaseHelper.connect();
-                            Statement statement = con.createStatement();
+                        Connection con = DatabaseHelper.connect();
+                        Statement statement = con.createStatement();
 
-                            result = statement.executeUpdate("insert into user"
-                                    + " (username, password, email)"
-                                    + " VALUES ('" + name + "','" + password + "','" + email + "')");
+                        result = statement.executeUpdate("insert into user"
+                                + " (username, password, email)"
+                                + " VALUES ('" + name + "','" + hashpw + "','" + email + "')");
 
-                            if(result < 1) {
-                                throw new UserCreationException("An error occured while creating the user account", MyException.ERROR);
-                            }
+                        if(result < 1) {
+                            throw new UserCreationException("An error occured while creating the user account", MyException.ERROR);
+                        }
                             
                     // Username is already taken
                     } else {
@@ -89,7 +92,7 @@ public class UserHelper {
     }
     
     public boolean isUserExisting(String name) throws DatabaseConnectionException {
-        boolean result = false;
+        boolean userExisting =  false;
              
         
         try {
@@ -100,17 +103,17 @@ public class UserHelper {
             resultSet.first();
             
             if(resultSet.getInt("count") > 0) {
-                result = true;
+                userExisting = true;
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        return result;
+        return userExisting;
     }
     
     private boolean isEmailAlreadyTaken(String email) throws DatabaseConnectionException {
-        boolean result = false;
+        boolean alreadyTaken = false;
      
         try {
             Connection con = DatabaseHelper.connect();
@@ -118,13 +121,13 @@ public class UserHelper {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM user WHERE email = '" + email + "'");
 
             if(!resultSet.isBeforeFirst()) {
-                result = true;
+                alreadyTaken = true;
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        return result;
+        return alreadyTaken;
     }
     
     public boolean authenticate(String id, String password) throws AuthenticationException, DatabaseConnectionException {
@@ -134,17 +137,18 @@ public class UserHelper {
         try {
             Connection con = DatabaseHelper.connect();
             Statement statement = con.createStatement();
-            ResultSet resultSet = statement.executeQuery("select COUNT(*) as count "
+            ResultSet resultSet = statement.executeQuery("select * "
                     + " FROM user"
-                    + " WHERE (email='" + id + "' OR username='" + id + "')"
-                    + " AND password='" + password + "'");
+                    + " WHERE (email='" + id + "' OR username='" + id + "')");
             
-            resultSet.first();
-            
-            if(resultSet.getInt("count") > 0 ) {
-                result = true;
+            if(resultSet.next()) {
+                if(BCrypt.checkPassword(password, resultSet.getString("password"))) {
+                    result = true;
+                } else {
+                    throw new AuthenticationException("Username and/or password are wrong", MyException.ERROR);
+                }
             } else {
-                throw new AuthenticationException("Username and/or password are wrong", MyException.ERROR);
+                    throw new AuthenticationException("Username and/or password are wrong", MyException.ERROR);
             }
            
         } catch (SQLException ex) {
@@ -185,6 +189,7 @@ public class UserHelper {
                 user.setName(resultSet.getString("username"));
                 user.setEmail(resultSet.getString("email"));
                 user.setPassword(resultSet.getString("password"));
+                user.setCreate_date(resultSet.getDate("create_date"));
                 user.setStatistics(statistics);
                 user.setTeams(getTeams(user.getName()));
                 user.setTournaments(getTournaments(user.getName()));
@@ -278,7 +283,7 @@ public class UserHelper {
             int result;
             
             if(name1.equals(name2)) {
-                if(isUserExisting(name1)) {
+                if(!isUserExisting(name1)) {
                     Connection con = DatabaseHelper.connect();
                     Statement statement = con.createStatement();
                     result = statement.executeUpdate("update user set username='" + name1 + "' where username = '" + user + "'"); 

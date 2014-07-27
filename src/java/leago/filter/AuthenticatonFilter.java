@@ -52,59 +52,53 @@ public class AuthenticatonFilter implements Filter {
         boolean error = false;
         String link = "";
         
-        if (session == null || session.getAttribute("user") == null) {
-            response.sendRedirect(request.getContextPath() + "/login"); // No logged-in user found, so redirect to login page.
-            
-        } else {
-        
-            for(int idx = 0; idx < pathinfo.length; idx++) {
-                switch(idx) {
-                    case 0: 
-                        id = pathinfo[idx]; 
-                        break;
-                    case 1: 
-                        if(pathinfo[idx].equals("settings"))
-                            settings = true;
-                        break;
-                    default: 
-                        break;
-                }
+        for(int idx = 0; idx < pathinfo.length; idx++) {
+            switch(idx) {
+                case 0: 
+                    id = pathinfo[idx]; 
+                    break;
+                case 1: 
+                    if(pathinfo[idx].equals("settings"))
+                        settings = true;
+                    break;
+                default: 
+                    break;
+            }
+        }
+
+        try {
+            User user = (User) session.getAttribute("user");
+
+            if(servletPath.equals("team") && !id.trim().equals("") && settings) {
+                link = "/team/" + id;
+                TeamHelper teamHelper = new TeamHelper();
+                Team team = teamHelper.getTeam(id);
+                if(!team.getLeader().getName().equals(user.getName()))
+                    unauthorized = true;
             }
 
-            try {
-                User user = (User) session.getAttribute("user");
-
-                if(servletPath.equals("team") && !id.trim().equals("") && settings) {
-                    link = "/team/" + id;
-                    TeamHelper teamHelper = new TeamHelper();
-                    Team team = teamHelper.getTeam(id);
-                    if(!team.getLeader().getName().equals(user.getName()))
-                        unauthorized = true;
-                }
-
-                if(servletPath.equals("tournament") && !id.trim().equals("") && settings) {
-                    link = "/tournament/" + id;
-                    TournamentHelper tournamentHelper = new TournamentHelper();
-                    Tournament tournament = tournamentHelper.getTournament(id);
-                    if(!tournament.getLeader().getName().equals(user.getName()))
-                        unauthorized = true;
-                }
-
-            } catch (DatabaseConnectionException ex) {
-                Logger.getLogger(AuthenticatonFilter.class.getName()).log(Level.SEVERE, null, ex);
-                error = true;
-            } catch (TeamNotExistingException | TournamentNotExistingException ex) {
-                Logger.getLogger(AuthenticatonFilter.class.getName()).log(Level.SEVERE, null, ex);
-                response.sendRedirect(request.getContextPath() + link); // Redirect to the Team / Tournament profile page
+            if(servletPath.equals("tournament") && !id.trim().equals("") && settings) {
+                link = "/tournament/" + id;
+                TournamentHelper tournamentHelper = new TournamentHelper();
+                Tournament tournament = tournamentHelper.getTournament(id);
+                if(!tournament.getLeader().getName().equals(user.getName()))
+                    unauthorized = true;
             }
 
-            if (error) 
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            else if (unauthorized)
-                response.sendRedirect(request.getContextPath() + link); // Redirect to the Team / Tournament profile page
-            else
-                chain.doFilter(req, res);
-         }
+        } catch (DatabaseConnectionException ex) {
+            Logger.getLogger(AuthenticatonFilter.class.getName()).log(Level.SEVERE, null, ex);
+            error = true;
+        } catch (TeamNotExistingException | TournamentNotExistingException ex) {
+            Logger.getLogger(AuthenticatonFilter.class.getName()).log(Level.SEVERE, null, ex);
+            response.sendRedirect(request.getContextPath() + link); // Redirect to the Team / Tournament profile page
+        }
+
+        if (error) 
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        else if (unauthorized)
+            response.sendRedirect(request.getContextPath() + link); // Redirect to the Team / Tournament profile page
+        else
+            chain.doFilter(req, res);
     }
 
     @Override

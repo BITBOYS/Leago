@@ -43,7 +43,6 @@
             <div class="col-md-8">
                 <c:forEach var="team_entry" items="${teams_found}" >
                     <h3><a href="${pageContext.request.contextPath}/team/${team_entry.name}">${team_entry.name}</a></h3>
-                    <p>Teamleiter: <a href="${pageContext.request.contextPath}/user/${team_entry.leader.name}">${team_entry.leader.name}</a> &dot; Erstellt am ${team_entry.create_date}</p>
                     <hr>
                 </c:forEach>
                     

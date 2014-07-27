@@ -3,7 +3,6 @@ package leago.controller;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -51,8 +50,8 @@ public class TournamentServlet extends HttpServlet {
         String servletPath = request.getServletPath().substring(1);
         String[] pathinfo = (request.getPathInfo() == null) ? new String[0] : request.getPathInfo().substring(1).split("/");
         String id = "";
-        String action = "";
         String settings_action = "";
+        boolean settings = false;
 
         for (int idx = 0; idx < pathinfo.length; idx++) {
 
@@ -60,8 +59,9 @@ public class TournamentServlet extends HttpServlet {
                 case 0:
                     id = pathinfo[idx];
                     break;
-                case 1:
-                    action = pathinfo[idx];
+                case 1: 
+                    if(pathinfo[idx].equals("settings"))
+                        settings = true;
                     break;
                 case 2:
                     settings_action = pathinfo[idx];
@@ -71,19 +71,21 @@ public class TournamentServlet extends HttpServlet {
         }
 
         System.out.println("ID: " + id);
-        System.out.println("ACTION: " + action);
         System.out.println("SERVLE-PATH: " + servletPath);
-        System.out.println("PATH-INFO LÄNGE: " + pathinfo.length);
-
-        if (servletPath.equals("new/tournament") && id.equals("create")) {
+        System.out.println("PATH-INFO LÄNGE: " + pathinfo.length);        
+        
+        if (servletPath.equals("new/tournament") && id.equals("create"))
             _create();
-        } else if (servletPath.equals("new/tournament")) {
+        else if (servletPath.equals("new/tournament") && id.trim().equals(""))
             _new();
-        } else if (action.equals("settings") && !id.trim().equals("") && !settings_action.trim().equals("")) {
-            _update(id, settings_action);
-        } else if (!id.trim().equals("")) {
+        else if (servletPath.equals("tournament") && !id.trim().equals("") && settings && settings_action.equals("delete"))
+            _destroy(id);
+        else if (servletPath.equals("tournament") && !id.trim().equals("") && settings)
+            _change(id, settings_action);
+        else if(servletPath.equals("tournament") && !id.trim().equals(""))
             _show(id);
-        }
+        else 
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
     }
 
     private void _show(String id) throws ServletException, IOException {
@@ -198,24 +200,7 @@ public class TournamentServlet extends HttpServlet {
         forward();
     }
 
-    private void _change(String id) throws IOException, ServletException, DatabaseConnectionException, TournamentNotExistingException {
-        System.out.println("change");
-        page = "tournament/update_tournament";
-
-        // O P E R A T I O N
-        TournamentHelper tournamentHelper = new TournamentHelper();
-        Tournament tournament = tournamentHelper.getTournament(id);
-
-        tournament.setSchedule(tournamentHelper.createTournamentSchedule(tournament));
-
-        // R E S U L T # H A N D L I N G
-        request.setAttribute("tournament", tournament);
-        forward();
-
-        System.out.println("Tournament: " + tournament);
-    }
-
-    private void _update(String id, String settings_action) throws ServletException, IOException, TournamentNotExistingException {
+    private void _change(String id, String settings_action) throws ServletException, IOException, TournamentNotExistingException {
         System.out.println("update - " + settings_action);
 
         try {
@@ -243,6 +228,8 @@ public class TournamentServlet extends HttpServlet {
                     break;
             }
 
+            request.setAttribute("settings_action", settings_action);
+            
             forward();
 
         } catch (DatabaseConnectionException ex) {
@@ -252,7 +239,7 @@ public class TournamentServlet extends HttpServlet {
 
     }
 
-    private void _destroy(String id) throws TournamentUpdateSuccess, ServletException, IOException {
+    private void _destroy(String id) {
 //        System.out.println("destroy");
 //        page = "tournament/destroy";
 //

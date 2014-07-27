@@ -12,14 +12,14 @@
     <c:forEach var="team" items="${user.teams}" varStatus="loop">
         <c:choose>
             <c:when test="${loop.index == 0}">
-                <div class="col-md-8 ">
+                <div class="col-md-9 ">
             </c:when>
             <c:when test="${loop.index > 0}">  
-                <div class="col-md-8 col-md-offset-3">
+                <div class="col-md-9 col-md-offset-3">
             </c:when>
         </c:choose> 
                     <!-- Default panel contents -->
-                    <div class="panel panel-default">
+                    <div class="panel panel-danger">
                         <div class="panel-heading"><span class="glyphicon glyphicon-remove"></span> Team verlassen</div>
                         <div class="panel-body">
                             <div class="col-xs-12">

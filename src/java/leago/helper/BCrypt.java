@@ -644,7 +644,7 @@ public class BCrypt {
 	 * using BCrypt.gensalt)
 	 * @return	the hashed password
 	 */
-	public static String hashpw(String password, String salt) {
+	public static String createHash(String password, String salt) {
 		BCrypt B;
 		String real_salt;
 		byte passwordb[], saltb[], hashed[];
@@ -745,7 +745,17 @@ public class BCrypt {
 	 * @param hashed	the previously-hashed password
 	 * @return	true if the passwords match, false otherwise
 	 */
-	public static boolean checkpw(String plaintext, String hashed) {
-		return (hashed.compareTo(hashpw(plaintext, hashed)) == 0);
+	public static boolean checkPassword(String plaintext, String hashed) {
+		return (hashed.compareTo(createHash(plaintext, hashed)) == 0);
 	}
+        
+        public static void main(String[] args) {
+            String password = "maiko";
+            String salt = gensalt(12);
+            String hash = createHash(password, salt);
+            System.out.println(hash);
+            System.out.println(hash.length());
+            System.out.println(checkPassword(password, hash));
+            
+        }
 }

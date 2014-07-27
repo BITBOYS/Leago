@@ -9,7 +9,7 @@
     </div>
     
    
-    <div class="col-md-8">
+    <div class="col-md-9">
         <div class="panel panel-default">
             <!-- Default panel contents -->
             <div class="panel-heading"><i class="fa fa-user"></i> Name &auml;ndern</div>
@@ -19,12 +19,12 @@
 
                         <div class="form-group">
                             <label>Name</label>
-                            <input type="text" class="form-control" name="input_name_new1">
+                            <input type="text" class="form-control" name="input_name_new1" required>
                         </div>
 
                         <div class="form-group">
                             <label>Name wiederholen</label>
-                            <input type="text" class="form-control" name="input_name_new2">
+                            <input type="text" class="form-control" name="input_name_new2" required>
                         </div>
 
                         <button class="btn btn-primary btn-leago" type="submit">Name aktualisieren</button>
@@ -38,7 +38,7 @@
 </div> 
 
 <div class="row">
-    <div class="col-md-8 col-md-offset-3">
+    <div class="col-md-9 col-md-offset-3">
         <div class="panel panel-default">
             <!-- Default panel contents -->
             <div class="panel-heading"><i class="fa fa-envelope-o"></i> E-Mail &auml;ndern</div>
@@ -69,7 +69,7 @@
 
 
 <div class="row">
-    <div class="col-md-8 col-md-offset-3">
+    <div class="col-md-9 col-md-offset-3">
         
         <div class="panel panel-default">
             <!-- Default panel contents -->
@@ -80,17 +80,17 @@
 
                         <div class="form-group">
                             <label>Altes Passwort</label>
-                            <input type="password" class="form-control" name="input_password_old">
+                            <input type="password" class="form-control" name="input_password_old" required>
                         </div>
 
                         <div class="form-group">
                             <label>Neues Passwort</label>    
-                            <input type="password" class="form-control" name="input_password_new1">
+                            <input type="password" class="form-control" name="input_password_new1" required>
                         </div>
 
                         <div class="form-group">
                             <label>Passwort wiederholen</label>
-                            <input type="password" class="form-control" name="input_password_new2">
+                            <input type="password" class="form-control" name="input_password_new2" required>
                         </div>
 
                         <button class="btn btn-primary btn-leago" type="submit">Passwort aktualisieren</button>
@@ -103,7 +103,7 @@
 </div>
             
 <div class="row">
-    <div class="col-md-8 col-md-offset-3">
+    <div class="col-md-9 col-md-offset-3">
         <!-- Default panel contents -->
         <div class="panel panel-danger">
             <div class="panel-heading"><span class="fa fa-trash-o"></span> Account l&ouml;schen</div>

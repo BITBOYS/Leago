@@ -1,6 +1,7 @@
 package leago.models;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -89,6 +90,13 @@ public class User {
         this.tournaments = tournaments;
     }
 
+    public String getCreate_date_web() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        String formattedDate = formatter.format(create_date);
+        
+        return formattedDate;
+    }
+    
     @Override
     public String toString() {
         return "User{" + "username=" + name + ", email=" + email + ", create_date=" + create_date + ", password=" + password + ", statistics=" + statistics + '}';

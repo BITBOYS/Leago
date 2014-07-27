@@ -67,9 +67,8 @@ public class SessionServlet extends HttpServlet {
     private void _create() throws IOException, ServletException {
         try {            
             // P A R A M E T E R S
-            String id = (String) request.getParameter("id");
-            String bSalted = BCrypt.gensalt(15);            
-            String password = BCrypt.hashpw(request.getParameter("password"), bSalted);
+            String id = (String) request.getParameter("id");  
+            String password = request.getParameter("password");
             
             // O P E R A T I O N
             UserHelper userHelper = new UserHelper();

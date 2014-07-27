@@ -8,7 +8,6 @@
 
     <!-- Bootstrap core CSS -->
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
-    <script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.1.min.js"></script>
     
     <!-- Custom Google Web Font -->
     <link href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
@@ -16,4 +15,8 @@
 
 
     <link href="${pageContext.request.contextPath}/resources/css/modern-business.css" rel="stylesheet">
+    
+    <!-- JavaScript imports -->
+    <script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.1.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/Chart.js"></script>
 </head>

@@ -9,7 +9,7 @@
         </div>
     </div>
             
-    <div class="col-md-8 ">
+    <div class="col-md-9">
         <!-- Default panel contents -->
         <div class="panel panel-default">
             <div class="panel-heading">Turniere</div>

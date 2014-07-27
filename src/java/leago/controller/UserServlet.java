@@ -18,7 +18,6 @@ import leago.error.exceptions.DatabaseConnectionException;
 import leago.error.exceptions.UserCreationException;
 import leago.error.exceptions.UserNotExistingException;
 import leago.error.exceptions.UserUpdateException;
-import leago.helper.BCrypt;
 import leago.helper.UserHelper;
 import leago.models.Team;
 import leago.models.User;
@@ -116,9 +115,8 @@ public class UserServlet extends HttpServlet {
         // P A R A M E T E R S
         String name = request.getParameter("name");
         String email = request.getParameter("email");
-        String salt = BCrypt.gensalt(15);
-        String password = BCrypt.hashpw(request.getParameter("password"), salt);
-        String reenter_password = BCrypt.hashpw(request.getParameter("reenter-password"), salt);
+        String password = request.getParameter("password");
+        String reenter_password = request.getParameter("reenter_password");
         
         try {
             // O P E R A T I O N

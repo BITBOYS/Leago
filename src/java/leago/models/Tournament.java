@@ -223,6 +223,34 @@ public class Tournament {
 
     }
 
+    public String getCreate_date_web() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        String formattedDate = formatter.format(create_date);
+        
+        return formattedDate;
+    }
+
+    public String getStart_date_web() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        String formattedDate = formatter.format(start_date);
+        
+        return formattedDate;
+    }
+
+    public String getEnd_date_web() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        String formattedDate = formatter.format(end_date);
+        
+        return formattedDate;
+    }
+
+    public String getTerm_of_application_web() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        String formattedDate = formatter.format(term_of_application);
+        
+        return formattedDate;
+    }
+
     @Override
     public String toString() {
         return "Tournament{" + "name=" + name + ", password=" + password + ", description=" + description + ", leader=" + leader + ", start_date=" + start_date + ", start_time=" + start_time + ", end_date=" + end_date + ", end_time=" + end_time + ", create_date=" + create_date + ", nr_matchdays=" + rounds + ", venue=" + venue + ", term_of_application=" + term_of_application + ", table=" + table + ", teams=" + teams + ", member=" + member + ", shedule=" + schedule + '}';

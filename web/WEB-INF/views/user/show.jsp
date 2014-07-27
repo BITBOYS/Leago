@@ -1,180 +1,120 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+            
 <div class="row">
-    <div class="col-lg-12">
-        <ul id="myTab" class="nav nav-tabs">
-            <li class="active"><a href="#statistics" data-toggle="tab">Statistik</a></li>
-            <li><a href="#teams" data-toggle="tab">Teams</a></li>
-            <li><a href="#tournaments" data-toggle="tab">Turniere</a></li>
-        </ul>
-        <div id="myTabContent" class="tab-content">
-            
-            
-            <!-- T A B # S T A T I S T I K -->
-            <div class="tab-pane fade in active" id="statistics">
-                <i class="fa fa-user pull-left fa-4x"></i>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac habitasse platea dictumst. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam placerat nunc ut tellus tristique, non posuere neque iaculis. Fusce aliquet dui ut felis rhoncus, vitae molestie mauris auctor. Donec pellentesque feugiat leo a adipiscing. Pellentesque quis tristique eros, sed rutrum mauris.</p>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h2 class="page-header">${profileuser.name}s pers&ouml;nliche Statistik</h2>
-                        <div class="panel panel-default">
-                            <!-- Default panel contents -->
-                            <div class="panel-heading">&Uuml;bersicht</div>
-                            <!-- Table -->
-                            <div class="table-responsive">                                               
-                                <table class="table table-hover">  
-                                    <thead>  
-                                        <tr>  
-                                            <th><span class="label label-primary">Turnierteilnahmen</span></th> 
-                                            <th><span class="label label-success">Turniersiege</span></th>  
-                                            <th><span class="label label-primary">Matches</span></th>  
-                                            <th><span class="label label-success">Gesmatsiege</span></th>  
-                                            <th><span class="label label-danger">Niederlagen</span></th>  
-                                            <th><span class="label label-primary">Tordifferenz</span></th> 
-                                            <th><span class="label label-success">Tore</span></th>  
-                                            <th><span class="label label-danger">Gegentore</span></th> 
-                                        </tr>  
-                                    </thead>  
-                                    <tbody>  
-                                        <tr>  
-                                            <td>${profileuser.statistics.tournament_participations}</td> 
-                                            <td>${profileuser.statistics.tournament_wins}</td> 
-                                            <td>${profileuser.statistics.matches}</td>   
-                                            <td>${profileuser.statistics.wins}</td>  
-                                            <td>${profileuser.statistics.defeats}</td>  
-                                            <td>${profileuser.statistics.goal_difference}</td>  
-                                            <td>${profileuser.statistics.goals}</td>  
-                                            <td>${profileuser.statistics.goals_conceded}</td> 
-                                        </tr>  
-                                    </tbody>  
-                                </table> 
-                            </div> <!-- /.table-reponsive --> 
-                        </div> <!-- /.panel --> 
-                    </div><!-- /.col-lg-12 -->
-                </div><!-- /.row -->
-            </div><!-- /.tab statistik -->
+    <div class="col-md-2">
+        <h2>${profileuser.name}</h2>
+        <img src="http://placehold.it/150x150">
+    </div>
+
+    <div class="col-md-4">
+        <p style="margin-top: 50px;">Mitglied seit ${profileuser.create_date_web}</p>
+    </div>
+    
+    <div class="col-md-6">
+        <c:choose>
+            <c:when test="${profileuser.statistics.goal_difference != 0 && profileuser.statistics.goals != 0}">    
+                <div class="pull-right text-center stats">
+                    <h2>Match Stats</h2>
+                    <canvas id="matches" width="200" height="150"></canvas>
+                </div>
+            </c:when>
+            <c:when test="${profileuser.statistics.goal_difference == 0 && profileuser.statistics.goals == 0}">
+                <div class="pull-right text-center stats">
+                    <h2>Match Stats</h2>
+                    <p style="margin-top: 30px">No stats recorded</p>
+                </div>
+            </c:when>
+        </c:choose>
+
+        <c:choose>
+            <c:when test="${profileuser.statistics.wins != 0 && profileuser.statistics.defeats != 0}">    
+                <div class="pull-right text-center stats">
+                    <h2>Goal Stats</h2>
+                    <canvas id="goals" width="200" height="150"></canvas>
+                </div>
+            </c:when>
+            <c:when test="${profileuser.statistics.goal_difference == 0 && profileuser.statistics.goals == 0}">
+                <div class="pull-right text-center stats">
+                    <h2>Goal Stats</h2>
+                    <p style="margin-top: 30px">No stats recorded</p>
+                </div>
+            </c:when>
+        </c:choose>        
+    </div>
+    
 
 
-            <!-- T A B # T E A M S -->
-            <div class="tab-pane fade" id="teams">
-                <i class="fa fa-beer pull-left fa-4x"></i>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac habitasse platea dictumst. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam placerat nunc ut tellus tristique, non posuere neque iaculis. Fusce aliquet dui ut felis rhoncus, vitae molestie mauris auctor. Donec pellentesque feugiat leo a adipiscing. Pellentesque quis tristique eros, sed rutrum mauris.</p>
-                <div class="row">  
-                    <div class="col-lg-12">
-                        <h2 class="page-header">${profileuser.name}s Teams</h2>
+    
+</div>
 
-                        <c:if test="${empty profileuser.teams}">
-                            ${profileuser.name} ist in keinem Team.
-                        </c:if>
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="page-header">Teams in denen ${profileuser.name} Mitglied ist</h2>
+        <!-- Schleife zum Anzeigen aller Teams in denen man sich befindet -->
+        <c:forEach var="team" items="${profileuser.teams}">
+            <div class="col-md-2" style="margin: 0 0 20px -15px;">
+                <a href="${pageContext.request.contextPath}/team/${team.name}">
+                    <div class="caption">
+                        <h4>${team.name}</h4>  
+                        <p><i class="fa fa-group fa-4x"></i></p>  
                     </div>
+                </a>
+            </div>
+        </c:forEach> <!-- /.forEach teams -->
+    </div>
+</div>   
 
-                    <!-- Schleife zum Anzeigen aller Teams in denen man sich befindet -->
-                    <c:forEach var="team" items="${profileuser.teams}">
-                        <div class="col-lg-4 col-md-4 hero-feature">
-                            <div class="thumbnail">
-                                <div class="caption">
-                                    <h3>${team.name} <small> Leader: <a href="${pageContext.request.contextPath}/user/${team.leader.name}">${team.leader.name}</a></small></h3>
-                                </div>
-                                <div class="caption">
-                                    <div class="panel panel-default">
-                                        <!-- Default panel contents -->
-                                        <div class="panel-heading">Stats</div>
-                                        <!-- Table -->
-                                        <div class="table-responsive">                                               
-                                            <table class="table table-hover">   
-                                                <thead>  
-                                                    <tr>  
-                                                        <th class="tooltip-social"><a href="#" data-toggle="tooltip" data-placement="top" title="Turniersiege" class="label label-success">TS</a></th>  
-                                                        <th><span title="Gesamtsiege" class="label label-success">GS</span></th>  
-                                                        <th><span title="Niederlagen" class="label label-danger">N</span></th>  
-                                                        <th><span title="Tore" class="label label-success">T</span></th>  
-                                                        <th><span title="Gegentore" class="label label-danger">GT</span></th>  
-                                                        <th><span title="Tordifferenz" class="label label-primary">TD</span></th> 
-                                                    </tr>  
-                                                </thead>  
-                                                <tbody>  
-                                                    <tr>  
-                                                        <td>${team.statistics.tournament_wins}</td>  
-                                                        <td>${team.statistics.wins}</td>  
-                                                        <td>${team.statistics.defeats}</td>  
-                                                        <td>${team.statistics.goals}</td>  
-                                                        <td>${team.statistics.goals_conceded}</td>  
-                                                        <td>${team.statistics.goal_difference}</td> 
-                                                    </tr>  
-                                                </tbody>  
-                                            </table> 
-                                        </div>
-                                    </div>  
-                                    <p>
-                                        <a href="${pageContext.request.contextPath}/team/${team.name}" class="btn btn-primary">Zum Teamprofil <i class="fa fa-angle-right"></i></a>
-                                        <a onclick="" class="btn btn-danger">Team verlassen <i class="fa fa-angle-right"></i></a>
-                                    </p>
-                                </div>
-                            </div><!-- /.thumbnail -->
-                            <br>
-                        </div> <!-- /.col-lg-4 -->
-                    </c:forEach> <!-- /.forEach teams -->
-                </div> <!-- /.row -->
-            </div> <!-- /.tab team -->
-
-
-            <!-- T A B # T O U R N A M E N T S -->
-            <div class="tab-pane fade" id="tournaments">
-                <i class="fa fa-flag pull-left fa-4x"></i>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac habitasse platea dictumst. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam placerat nunc ut tellus tristique, non posuere neque iaculis. Fusce aliquet dui ut felis rhoncus, vitae molestie mauris auctor. Donec pellentesque feugiat leo a adipiscing. Pellentesque quis tristique eros, sed rutrum mauris.</p>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h2 class="page-header">${profileuser.name}s Turniere</h2>
-                        <c:if test="${empty profileuser.tournaments}">
-                            ${profileuser.name} ist in keinem Turnier.
-                        </c:if>
+<div class="row">       
+    <div class="col-md-12">
+        <h2 class="page-header">Turniere an denen ${profileuser.name} teilnimmt</h2>
+        <!-- Schleife zum Anzeigen aller Teams in denen man sich befindet -->
+        <c:forEach var="tournament" items="${profileuser.tournaments}">
+            <div class="col-md-3" style="margin: 0 0 20px -15px;">
+                <a href="${pageContext.request.contextPath}/tournament/${tournament.name}">
+                    <div class="caption">  
+                        <h4>${tournament.name}</h4>  
+                        <p><i class="fa fa-trophy fa-4x"></i></p>  
                     </div>
-                    <c:forEach var="tournament" items="${profileuser.tournaments}">
-                        <div class="col-lg-4 col-md-4 hero-feature">
-                            <div class="thumbnail">
-                                <div class="caption">
-                                    <h3>${tournament.name} <small> Leader: <a href="${pageContext.request.contextPath}/user/${tournament.leader.name}">${tournament.leader.name}</a></small></h3>
-                                </div>
-                                <div class="caption">
-                                    <p>${tournament.description}</p>
-                                    <div class="panel panel-default">
-                                        <!-- Default panel contents -->
-                                        <div class="panel-heading">Daten</div>
-                                        <!-- Table -->
-                                        <div class="table-responsive">                                               
-                                            <table class="table table-hover">  
-                                                <thead>  
-                                                    <tr>  
-                                                        <th>Startdatum</th>  
-                                                        <th>Enddatum</th>  
-                                                        <th>Status</th>   
-                                                    </tr>  
-                                                </thead>  
-                                                <tbody>  
-                                                    <tr>  
-                                                        <td>${tournament.start_date}</td>  
-                                                        <td>${tournament.end_date}</td>
-                                                        <c:choose>
-                                                            <c:when test="${tournament.password == null}">
-                                                                <td>&Ouml;ffentlich</td>  
-                                                            </c:when>
-                                                            <c:when test="${tournament.password != null}">
-                                                                <td>Privat</td> 
-                                                            </c:when>
-                                                        </c:choose>
-                                                    </tr>  
-                                                </tbody>  
-                                            </table>  
-                                        </div>
-                                    </div>  
-                                    <p><a href="${pageContext.request.contextPath}/tournament/${tournament.name}" class="btn btn-primary">Zum Turnierprofil <i class="fa fa-angle-right"></i></a></p>
-                                </div>
-                            </div> <!-- /.thumbnail -->
-                            <br>
-                        </div> <!-- /.col-lg-4 --> 
-                    </c:forEach> <!-- /.forEach teams -->
-                </div> <!-- /.row -->
-            </div> <!-- /.tab tournament -->       
-        </div>   
+                </a>
+            </div>
+        </c:forEach> <!-- /.forEach teams -->
     </div>
 </div>
+                    
+<script>
+    // pie chart data
+    var matchesData = [
+        { value: ${profileuser.statistics.matches}, color: "#428bca", label: "Matches"},
+        { value: ${profileuser.statistics.wins}, color: "#5cb85c", label: "Wins"},
+        { value : ${profileuser.statistics.defeats}, color : "#d9534f", label: "Defeats" }
+    ];
+    // pie chart options
+    var matchesOptions = {
+         segmentShowStroke : false,
+         animateScale : true
+    }
+    // get pie chart canvas
+    var matches= document.getElementById("matches").getContext("2d");
+    // draw pie chart
+    new Chart(matches).Doughnut(matchesData, matchesOptions);
+</script>
+        
+<script>
+    // pie chart data
+    var goalsData = [
+        { value: ${profileuser.statistics.goal_difference}, color: "#428bca", label: "Goal difference"},
+        { value: ${profileuser.statistics.goals}, color: "#5cb85c", label: "Goals"},
+        { value : ${profileuser.statistics.goals_conceded}, color : "#d9534f", label: "Goals conceded" }
+    ];
+    
+    // pie chart options
+    var goalsOptions = {
+         segmentShowStroke : false,
+         animateScale : true
+    }
+    // get pie chart canvas
+    var goals = document.getElementById("goals").getContext("2d");
+    // draw pie chart
+    new Chart(goals).Doughnut(goalsData, goalsOptions);
+</script>

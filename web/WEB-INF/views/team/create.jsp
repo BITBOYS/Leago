@@ -1,8 +1,8 @@
-<div class="row"> 
-    <div class="col-md-4 col-md-offset-4">
+<div class="row" style="margin-top: 30px;"> 
+    <div class="col-md-6 col-md-offset-3">
 
-        <div class="panel panel-default">
-            <div class="panel-heading">Team erstellen</div>
+        <div class="panel panel-leago">
+            <div class="panel-heading"><i class="fa fa-users"></i> Team erstellen</div>
             <div class="panel-body">
                 <div class="col-xs-12">
                     <form class="form-horizontal" role="form" action="${pageContext.request.contextPath}/new/team/create" method="post">

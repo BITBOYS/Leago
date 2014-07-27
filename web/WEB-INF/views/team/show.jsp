@@ -1,137 +1,159 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
 <div class="row">
-
-    <div class="col-lg-12">
-
+    <div class="col-md-3">
+        <h2><b>${team.name}</b></h2>
+        <img src="http://placehold.it/150x150">
+    </div>
+        
+    <div class="col-md-8 pull-right">
+        
+        <c:choose>
+            <c:when test="${team.statistics.goal_difference != 0 && team.statistics.goals != 0}">    
+                <div class="pull-right text-center stats">
+                    <h2>Match Stats</h2>
+                    <canvas id="matches" width="200" height="150"></canvas>
+                </div>
+            </c:when>
+            <c:when test="${team.statistics.goal_difference == 0 && team.statistics.goals == 0}">
+                <div class="pull-right text-center stats">
+                    <h2>Match Stats</h2>
+                    <p style="margin-top: 30px">No stats recorded</p>
+                </div>
+            </c:when>
+        </c:choose>
+        
+        <c:choose>
+            <c:when test="${team.statistics.wins != 0 && team.statistics.defeats != 0}">    
+                <div class="pull-right text-center stats">
+                    <h2>Goal Stats</h2>
+                    <canvas id="goals" width="200" height="150"></canvas>
+                </div>
+            </c:when>
+            <c:when test="${team.statistics.goal_difference == 0 && team.statistics.goals == 0}">
+                <div class="pull-right text-center stats">
+                    <h2>Goal Stats</h2>
+                    <p style="margin-top: 30px">No stats recorded</p>
+                </div>
+            </c:when>
+        </c:choose>        
+        
+        <c:choose>
+            <c:when test="${team.statistics.tournament_wins != 0 && team.statistics.tournament_participations != 0}">    
+                <div class="pull-right text-center stats">
+                    <h2>Tournament Stats</h2>
+                    <canvas id="tournaments" width="200" height="150"></canvas>
+                </div>
+            </c:when>
+            <c:when test="${team.statistics.tournament_wins == 0 && team.statistics.tournament_participations == 0}">
+                <div class="pull-right text-center stats">
+                    <h2>Tournament Stats</h2>
+                    <p style="margin-top: 30px">No stats recorded</p>
+                </div>
+            </c:when>
+        </c:choose>
+    </div>    
+        
+ 
+</div>
+        
+<div class="row">
+    <div class="col-md-12">
         <div class="pull-right need-help">
             <c:if test="${user.name == team.leader.name}">
                 <a href="${pageContext.request.contextPath}/team/${team.name}/settings/profile" class="btn btn-leago"><i class="fa fa-pencil"></i> Turnier bearbeiten</a>
             </c:if>
         </div>
-
-        <ul id="myTab" class="nav nav-tabs">
-            <li class="active"><a href="#member" data-toggle="tab">Mitglieder</a></li>
-            <li><a href="#tournaments" data-toggle="tab">Turniere</a></li>
-            <li><a href="#statistics" data-toggle="tab">Statistiken</a></li>
-        </ul>
-        <div id="myTabContent" class="tab-content">
-
-
-            <!-- M E M B E R  -->
-            <div class="tab-pane fade in active" id="member">
-                <i class="fa fa-beer pull-left fa-4x"></i>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac habitasse platea dictumst. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam placerat nunc ut tellus tristique, non posuere neque iaculis. Fusce aliquet dui ut felis rhoncus, vitae molestie mauris auctor. Donec pellentesque feugiat leo a adipiscing. Pellentesque quis tristique eros, sed rutrum mauris.</p>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h2 class="page-header">Mitglieder</h2>
-                        <div class="panel panel-default">
-                            <!-- Default panel contents -->
-                            <div class="panel-heading">Teammitglieder</div>
-                            <div class="list-group">
-                                <c:forEach var="member" items="${team.member}" >
-                                    <a href="${pageContext.request.contextPath}/user/${member.name}" class="list-group-item">${member.name}
-                                        <c:if test="${member.name == team.leader.name}">
-                                            <i class="fa fa-star-o"></i>
-                                        </c:if>
-                                    </a>
-                                </c:forEach>
-                            </div>
-                        </div>
+        <h2 class="page-header">Mitgleider von ${team.name}</h2>
+        <!-- Schleife zum Anzeigen aller Teams in denen man sich befindet -->
+        <c:forEach var="member" items="${team.member}">
+            <div class="col-md-2" style="margin: 0 0 20px -15px;">
+                <a href="${pageContext.request.contextPath}/user/${member.name}">
+                    <div class="caption">
+                        <h4><c:if test="${member.name == team.leader.name}"><i class="fa fa-star-o"></i></c:if> ${member.name}</h4>  
+                        <p><i class="fa fa-user fa-4x"></i></p>  
                     </div>
-
-                </div><!-- /.row -->
+                </a>
             </div>
-
-
-            <!-- T O U R N A M E N T -->
-            <div class="tab-pane fade" id="tournaments">
-                <i class="fa fa-flag pull-left fa-4x"></i>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac habitasse platea dictumst. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam placerat nunc ut tellus tristique, non posuere neque iaculis. Fusce aliquet dui ut felis rhoncus, vitae molestie mauris auctor. Donec pellentesque feugiat leo a adipiscing. Pellentesque quis tristique eros, sed rutrum mauris.</p>
-                <div class="row">
-
-                    <div class="col-lg-12">
-                        <h2 class="page-header">Aktuelle Turniere</h2>
-                    </div>
-
-                    <c:forEach var="tournament" items="${team.tournaments}">
-                        <div class="col-lg-4 col-md-4 hero-feature">
-                            <div class="thumbnail">
-                                <h3>${tournament.name} <small> Leader: <a href="${pageContext.request.contextPath}/user/${tournament.leader.name}">${tournament.leader.name}</a></small></h3>
-                                <img src="http://placehold.it/800x500" alt="">
-                                <div class="caption">
-                                    <p>${tournament.description}</p>
-                                    <div class="panel panel-default">
-                                        <!-- Default panel contents -->
-                                        <div class="panel-heading">Daten</div>
-
-                                        <!-- Table -->
-                                        <table class="table">  
-                                            <thead>  
-                                                <tr>  
-                                                    <th>Startdatum</th>  
-                                                    <th>Enddatum</th>
-                                                </tr>  
-                                            </thead>  
-                                            <tbody>  
-                                                <tr>  
-                                                    <td>${tournament.start_date}</td>  
-                                                    <td>${tournament.end_date}</td>
-                                                </tr>  
-                                            </tbody>  
-                                        </table>  
-                                    </div>  
-                                    <p><a href="${pageContext.request.contextPath}/tournament/${tournament.name}" class="btn btn-primary">Zum Turnierprofil <i class="fa fa-angle-right"></i></a></p>
-                                </div>
-                            </div>
-                        </div> 
-                    </c:forEach>
-                </div><!-- /.row -->
+        </c:forEach> <!-- /.forEach teams -->
+    </div>
+</div>    
+        
+<div class="row">       
+    <div class="col-md-12">
+        <h2 class="page-header">Turniere an denen ${team.name} teilnimmt</h2>
+        <!-- Schleife zum Anzeigen aller Teams in denen man sich befindet -->
+        <c:forEach var="tournament" items="${team.tournaments}">
+            <div class="col-md-3" style="margin: 0 0 20px -15px;">
+                <a href="${pageContext.request.contextPath}/tournament/${tournament.name}" >
+                    <div class="caption">  
+                        <h4>${tournament.name}</h4>  
+                        <p><i class="fa fa-trophy fa-4x"></i></p>  
+                    </div>  
+                </a>
             </div>
-
-
-            <!-- S T A T I S T I C S -->
-            <div class="tab-pane fade in" id="statistics">
-                <i class="fa fa-gear pull-left fa-4x"></i>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac habitasse platea dictumst. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam placerat nunc ut tellus tristique, non posuere neque iaculis. Fusce aliquet dui ut felis rhoncus, vitae molestie mauris auctor. Donec pellentesque feugiat leo a adipiscing. Pellentesque quis tristique eros, sed rutrum mauris.</p>
-                <div class="row">
-
-                    <div class="col-lg-12">
-                        <h2 class="page-header">Statistik</h2>
-
-                        <div class="panel panel-default">
-                            <!-- Default panel contents -->
-                            <div class="panel-heading">&Uuml;bersicht</div>
-
-                            <!-- Table -->
-                            <table class="table">  
-                                <thead>  
-                                    <tr>  
-                                        <th>Turniersiege</th> 
-                                        <th>Turnierteilnahmen</th> 
-                                        <th>Gesmatsiege</th>  
-                                        <th>Niederlagen</th>  
-                                        <th>Tore</th>  
-                                        <th>Gegentore</th>
-                                    </tr>  
-                                </thead>  
-                                <tbody>  
-                                    <tr>  
-                                        <td>${team.statistics.tournament_wins}</td>
-                                        <td>${team.statistics.tournament_participations}</td>  
-                                        <td>${team.statistics.wins}</td>  
-                                        <td>${team.statistics.defeats}</td>  
-                                        <td>${team.statistics.goals}</td>  
-                                        <td>${team.statistics.goals_conceded}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div><!-- /.row -->
-            </div>
-        </div><!-- /Tab closed -->                            
-    </div><!-- /Column closed -->
+        </c:forEach> <!-- /.forEach teams -->
+    </div>
 </div>
+        
+        
+<div class="row">
+    <div class="col-lg-12">
+    </div>
+</div>                 
+                                                
+<script>
+    // pie chart data
+    var matchesData = [
+        { value: ${team.statistics.matches}, color: "#428bca", label: "Matches"},
+        { value: ${team.statistics.wins}, color: "#5cb85c", label: "Wins"},
+        { value : ${team.statistics.defeats}, color : "#d9534f", label: "Defeats" }
+    ];
+    // pie chart options
+    var matchesOptions = {
+         segmentShowStroke : false,
+         animateScale : true
+    }
+    // get pie chart canvas
+    var matches= document.getElementById("matches").getContext("2d");
+    // draw pie chart
+    new Chart(matches).Doughnut(matchesData, matchesOptions);
+</script>
+        
+<script>
+    // pie chart data
+    var goalsData = [
+        { value: ${team.statistics.goal_difference}, color: "#428bca", label: "Goal difference"},
+        { value: ${team.statistics.goals}, color: "#5cb85c", label: "Goals"},
+        { value: ${team.statistics.goals_conceded}, color : "#d9534f", label: "Goals conceded" }
+    ];
+    
+    // pie chart options
+    var goalsOptions = {
+         segmentShowStroke : false,
+         animateScale : true
+    }
+    // get pie chart canvas
+    var goals = document.getElementById("goals").getContext("2d");
+    // draw pie chart
+    new Chart(goals).Doughnut(goalsData, goalsOptions);
+</script>
+        
+<script>
+    // pie chart data
+    var tournamentData = [
+        { value: ${team.statistics.tournament_participations}, color: "#428bca", label: "Participations"},
+        { value: ${team.statistics.tournament_wins}, color: "#5cb85c", label: "Wins"}
+    ];
+    
+    // pie chart options
+    var tournamentOptions = {
+         segmentShowStroke : false,
+         animateScale : true
+    }
+    // get pie chart canvas
+    var tournaments = document.getElementById("tournaments").getContext("2d");
+    // draw pie chart
+    new Chart(tournaments).Doughnut(tournamentData, tournamentOptions);
+</script>
 

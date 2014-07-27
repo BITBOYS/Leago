@@ -1,37 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<div class="row" style="padding-top: 50px;">
-     <div class="col-md-12">
-        <h1 class="page-header">Turnier Settings <small>Einstellungnen zu ${profileuser.name}</small></h1>
-        <ol class="breadcrumb">
-            <li><a href="${pageContext.request.contextPath}">Home</a></li>
-            <li><a href="#">Tournaments</a></li>
-            <li><a href="${pageContext.request.contextPath}/tournament/${tournament.name}">${tournament.name}</a></li>
-            <li class="active">Settings</li>
-        </ol>
-    </div>
-
-
-    <div class="col-md-4">
-        <div class="list-group">
-            <a href="#" class="list-group-item active">
-                <h4><span class="fa fa-sitemap"></span> Tournament settings</h4>
-                <p class="list-group-item-text">Change the Tournament values</p>
-            </a>
-            <a href="${pageContext.request.contextPath}/tournament/${tournament.name}/settings/team" class="list-group-item">
-                <h4><span class="fa fa-users"></span> Teams settings</h4> 
-                <p class="list-group-item-text">Kick od add individual Teams</p>
-            </a>
-            <a href="${pageContext.request.contextPath}/tournament/${tournament.name}/settings/danger" class="list-group-item"> 
-                <h4 class="list-group-item-heading"><span class="fa fa-exclamation-triangle"></span> Danger zone</h4> 
-                <p class="list-group-item-text">Delete the tournament ${tournament.name}</p>
-            </a>
-        </div>
-    </div>
+<div class="row">
+    <%@include file="link_list.jsp" %>
 
 
     <div class="col-md-8">
-        <div class="panel panel-leago">
+        <div class="panel panel-default">
             <!-- Default panel contents -->
             <div class="panel-heading"><i class="fa fa-sitemap"></i> Name &auml;ndern</div>
             <div class="panel-body">
@@ -61,7 +35,7 @@
 
     <div class="col-md-8 col-md-offset-4">
 
-        <div class="panel panel-leago">
+        <div class="panel panel-default">
             <!-- Default panel contents -->
             <div class="panel-heading"><i class="fa fa-lock"></i> Passwort &auml;ndern</div>
             <div class="panel-body">
@@ -96,7 +70,7 @@
 
     <div class="col-md-8 col-md-offset-4">
 
-        <div class="panel panel-leago">
+        <div class="panel panel-default">
             <!-- Default panel contents -->
             <div class="panel-heading"><i class="fa fa-user"></i> Leader &auml;ndern</div>
             <div class="panel-body">
@@ -131,7 +105,7 @@
 
     <div class="col-md-8 col-md-offset-4">
 
-        <div class="panel panel-leago">
+        <div class="panel panel-default">
             <!-- Default panel contents -->
             <div class="panel-heading"><i class="fa fa-code"></i> Beschreibung &auml;ndern</div>
             <div class="panel-body">
@@ -156,7 +130,7 @@
 
     <div class="col-md-8 col-md-offset-4">
 
-        <div class="panel panel-leago">
+        <div class="panel panel-default">
             <!-- Default panel contents -->
             <div class="panel-heading"><i class="fa fa-globe"></i> Austragungsort &auml;ndern</div>
             <div class="panel-body">
@@ -181,7 +155,7 @@
 
     <div class="col-md-8 col-md-offset-4">
 
-        <div class="panel panel-leago">
+        <div class="panel panel-default">
             <!-- Default panel contents -->
             <div class="panel-heading"><i class="fa fa-tags"></i> Spieltage &auml;ndern</div>
             <div class="panel-body">
@@ -206,7 +180,7 @@
 
     <div class="col-md-8 col-md-offset-4">
 
-        <div class="panel panel-leago">
+        <div class="panel panel-default">
             <!-- Default panel contents -->
             <div class="panel-heading"><i class="fa fa-clock-o"></i> Zeiten &auml;ndern</div>
             <div class="panel-body">

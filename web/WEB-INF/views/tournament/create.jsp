@@ -1,11 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<div class="row" style="padding-top: 40px;">
-
-    <div class="col-md-12">
-        <h1 class="page-header">Turnier erstellen <small>Erstelle Turniere und lade Teams ein!</small></h1>
-    </div>
-
+<div class="row" style="margin-top: 30px;">
+    
     <div class="col-md-6 col-md-offset-3">
         <div class="panel panel-leago">
             <!-- Default panel contents -->
