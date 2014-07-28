@@ -18,16 +18,6 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Passwort</label>
-                            <input type="text" class="form-control" name="password" >
-                        </div>
-
-                        <div class="form-group">
-                            <label>Passwort wiederholen</label>
-                            <input type="text" class="form-control" name="reenter_password">
-                        </div>
-
-                        <div class="form-group">
                             <small>* Pflichtfelder die ausgef&uuml;llt werden m&uuml;ssen</small>
                         </div>
                         

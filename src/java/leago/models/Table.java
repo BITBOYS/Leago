@@ -15,7 +15,7 @@ public class Table {
     private int tournament_team_goals_conceded;
     private int tournament_team_goal_difference;
     
-    public Table(){
+    public Table() {
         super();
     }
 

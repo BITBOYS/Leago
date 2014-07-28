@@ -17,7 +17,6 @@ import leago.error.exceptions.TournamentUpdateException;
 import leago.error.success.TournamentCreationSuccess;
 import leago.error.success.TournamentUpdateSuccess;
 import leago.helper.TournamentHelper;
-import leago.models.Team;
 import leago.models.Tournament;
 import leago.models.User;
 
@@ -136,30 +135,30 @@ public class TournamentServlet extends HttpServlet {
         System.out.println("new");
         page = "tournament/create";
 
-        try {
+//        try {
             // O P E R A T I O N S
-            TournamentHelper tournamentHelper = new TournamentHelper();
-
-            //GET ALL TEAMS TO SHOW
-            ArrayList<Team> teams = tournamentHelper.getAllTeams();
-
-            // R E S U L T # H A N D L I N G
-            request.setAttribute("all_teams", teams);
+//            TeamHelper teamHelper = new TeamHelper();
+//
+//            //GET ALL TEAMS TO SHOW
+//            ArrayList<Team> teams = teamHelper.getAllTeams();
+//
+//            // R E S U L T # H A N D L I N G
+//            request.setAttribute("all_teams", teams);
 
             // EMPTY LIST TO FILL
 //            request.setAttribute("tournament_teams", tournament_teams);
             forward();
 
-        } catch (DatabaseConnectionException ex) {
-
-            // E R R O R # L O G G I N G
-            Logger.getLogger(TournamentServlet.class.getName()).log(Level.SEVERE, null, ex);
-            request.setAttribute("message", ex);
-
-            // F O R W A R D I N G
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-
-        }
+//        } catch (DatabaseConnectionException ex) {
+//
+//            // E R R O R # L O G G I N G
+//            Logger.getLogger(TournamentServlet.class.getName()).log(Level.SEVERE, null, ex);
+//            request.setAttribute("message", ex);
+//
+//            // F O R W A R D I N G
+//            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+//
+//        }
     }
 
     private void _create() throws ServletException, IOException, ParseException {
@@ -169,8 +168,6 @@ public class TournamentServlet extends HttpServlet {
 
         int rounds = ((request.getParameter("tournament_rounds_create") == null || request.getParameter("tournament_rounds_create").equals(""))) ? 1 : Integer.valueOf(request.getParameter("tournament_rounds_create"));
         String venue = request.getParameter("tournament_venue_create");
-        String password = request.getParameter("tournament_password_create");
-        String password_reenter = request.getParameter("tournament_password_reenter_create");
         String startdate = (request.getParameter("tournament_startdate_create").equals("")) ? null : "'" + request.getParameter("tournament_startdate_create") + "'";
         String starttime = (request.getParameter("tournament_starttime_create").equals("")) ? null : "'" + request.getParameter("tournament_starttime_create") + "'";
         String enddate = (request.getParameter("tournament_enddate_create").equals("")) ? null : "'" + request.getParameter("tournament_enddate_create") + "'";
@@ -185,7 +182,7 @@ public class TournamentServlet extends HttpServlet {
         try {
             // O P E R A T I O N
             TournamentHelper tournamentHelper = new TournamentHelper();
-            tournamentHelper.createTournament(name, leader, startdate, starttime, enddate, endtime, password, password_reenter, description, rounds, venue, term);
+            tournamentHelper.createTournament(name, leader, startdate, starttime, enddate, endtime, description, rounds, venue, term);
 
         } catch (TournamentCreationException | DatabaseConnectionException ex) {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -280,42 +277,7 @@ public class TournamentServlet extends HttpServlet {
 
     }
 
-    private void updatePassword() throws DatabaseConnectionException {
-
-        // P A R A M E T E R S
-        String input_password_new1 = request.getParameter("input_password_new1");
-        String input_password_new2 = request.getParameter("input_password_new2");
-        String input_password_old = request.getParameter("input_password_old");
-        Tournament tournament = (Tournament) request.getAttribute("tournament");
-
-        // O P E R A T I O N
-        TournamentHelper tournamentHelper = new TournamentHelper();
-        try {
-            tournamentHelper.editTournamentPassword(tournament, input_password_old, input_password_new1, input_password_new2);
-        } catch (TournamentUpdateException ex) {
-            Logger.getLogger(TournamentServlet.class.getName()).log(Level.INFO, null, ex);
-            request.setAttribute("message", ex);
-        } catch (TournamentUpdateSuccess ex) {
-            request.setAttribute("message", ex);
-        }
-    }
-
     private void forward() throws ServletException, IOException {
-
-        // F O R W A R D I N G
-        request.setAttribute("page", this.page);
-        request.getRequestDispatcher(this.path).forward(request, response);
-    }
-
-    private void forward(String page, String path) throws ServletException, IOException {
-
-        if (page != null && !page.trim().equals("")) {
-            this.page = page;
-        }
-
-        if (path != null && !path.trim().equals("")) {
-            this.path = path;
-        }
 
         // F O R W A R D I N G
         request.setAttribute("page", this.page);

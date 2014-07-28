@@ -6,7 +6,7 @@
 
 package leago.models;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -14,20 +14,20 @@ import java.util.ArrayList;
  */
 public class Round {
     
-    ArrayList<Match> matches;
+    List<Match> matches;
 
-    public Round(ArrayList<Match> matches) {
+    public Round(List<Match> matches) {
         this.matches = matches;
     }
 
     public Round() {
     }
 
-    public ArrayList<Match> getMatches() {
+    public List<Match> getMatches() {
         return matches;
     }
 
-    public void setMatches(ArrayList<Match> matches) {
+    public void setMatches(List<Match> matches) {
         this.matches = matches;
     }
 

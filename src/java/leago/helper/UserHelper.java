@@ -218,20 +218,15 @@ public class UserHelper {
             Connection con = DatabaseHelper.connect();
             Statement statement = con.createStatement();
             
-            ResultSet resultSet = statement.executeQuery("SELECT name, tag, password, create_date, leader, team.wins, team.defeats, "
+            ResultSet resultSet = statement.executeQuery("SELECT name, tag, create_date, leader, team.wins, team.defeats, "
                                                     + "team.goals, team.goals_conceded, team.tournament_wins, team.tournament_participations"
                                             + " FROM  team, user_team"
                                             + " WHERE user = '" + username + "'"
                                             + "   AND team = name" );
             while(resultSet.next()) {
-                teams.add(new Team(resultSet.getString("name"), 
-                                   resultSet.getString("tag"),
-                                   resultSet.getString("password"), 
-                                   new User(resultSet.getString("leader")), 
-                                   new Statistics(resultSet.getInt("goals"), resultSet.getInt("goals_conceded"), 
-                                                  resultSet.getInt("wins"), resultSet.getInt("defeats"), resultSet.getInt("tournament_wins"), 
-                                                  resultSet.getInt("tournament_participations")), 
-                                   resultSet.getDate("create_date")));
+                Team team = new Team();
+                team.setName(resultSet.getString("name"));
+                teams.add(team);
             }
             
         } catch (SQLException ex) {
@@ -248,14 +243,14 @@ public class UserHelper {
     * @return List of alle tournaments in which the user is currently active
     * @throws DatabaseConnectionException 
     */
-   public ArrayList<Tournament> getTournaments(String username) throws DatabaseConnectionException {
-        ArrayList<Tournament> tournaments = new ArrayList<Tournament>();
+   public List<Tournament> getTournaments(String username) throws DatabaseConnectionException {
+        List<Tournament> tournaments = new ArrayList<>();
         
         try {
             Connection con = DatabaseHelper.connect();
             Statement statement = con.createStatement();
             
-            ResultSet resultSet = statement.executeQuery("SELECT distinct tou.name, tou.description, tou.create_date, tou.leader, tou.start_date, tou.start_time, tou.end_date, tou.end_time, tou.nr_of_matchdays, tou.venue, tou.term_of_application, tou.password"
+            ResultSet resultSet = statement.executeQuery("SELECT distinct tou.name"
                                             + " FROM  tournament tou, team_tournament teto, team te, user_team ut, user u"
                                             + " WHERE tou.name = teto.tournament"
                                             + "   AND teto.team = te.name" 
@@ -265,10 +260,9 @@ public class UserHelper {
                                             + " ORDER BY tou.name, tou.start_date, tou.start_time");            
             
             while(resultSet.next()) {
-                tournaments.add(new Tournament(resultSet.getString("tou.name"),         resultSet.getString("tou.password"), resultSet.getString("description"), 
-                                      new User(resultSet.getString("tou.leader")),      resultSet.getDate("tou.start_date"), resultSet.getTime("tou.start_time"),
-                                               resultSet.getDate("tou.end_date"),       resultSet.getTime("tou.end_time"),   resultSet.getDate("tou.create_date"), 
-                                               resultSet.getInt("tou.nr_of_matchdays"), resultSet.getString("tou.venue"),    resultSet.getDate("tou.term_of_application")));
+                Tournament tournament = new Tournament();
+                tournament.setName(resultSet.getString("tou.name"));
+                tournaments.add(tournament);
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserHelper.class.getName()).log(Level.SEVERE, null, ex);

@@ -65,7 +65,7 @@
                             <textarea class="form-control" style="max-width: 100%; resize: vertical" name="tournament_description_create" maxlength="255" placeholder="Beschreibe dein Turnier mit maximal 255 Zeichen..." rows="5"></textarea>
                         </div>
 
-                        <div class="form-group">
+<!--                        <div class="form-group">
                             <label class="control-label">Teams hinzuf&uuml;gen</label>
                             <input list="teamAuswahl" name="teamList" autocomplete="off" class="form-control" >
                             <datalist id="teamAuswahl">
@@ -76,7 +76,7 @@
                         </div>
                         <div class="form-group">
                             <a href="#"><i class="pull-right fa fa-plus-square fa-2x"></i></a>
-                        </div>
+                        </div>-->
                         <div class="form-group ">
                             <small>*Nur der Turniername ist Pflicht. Alles andere kannst du auf dem Turnierdashboard bearbeiten.</small>
                         </div>

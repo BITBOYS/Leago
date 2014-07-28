@@ -20,11 +20,10 @@ CREATE TABLE tournament (
         end_date DATETIME,
         end_time TIME,
         create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        password CHAR(32),
         description CHAR(255),
-        nr_of_matchdays INT,
+        rounds INT,
         venue CHAR(30),
-        term_of_application DATETIME,
+        deadline DATETIME,
         PRIMARY KEY (name),
         FOREIGN KEY (leader) REFERENCES user(username) ON DELETE RESTRICT ON UPDATE CASCADE
 );
@@ -33,7 +32,6 @@ CREATE TABLE team (
         name CHAR(30) NOT NULL,
         tag CHAR(4) NOT NULL,
         leader CHAR(30) NOT NULL,
-        password CHAR(32),
         create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         goals INT,
         goals_conceded INT,
@@ -67,7 +65,6 @@ CREATE TABLE team_tournament (
         wins INT,
         defeats INT,
         enter_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        quit_date DATE,
         PRIMARY KEY (team, tournament),
         FOREIGN KEY (team) REFERENCES team(name) ON DELETE CASCADE ON UPDATE CASCADE,
         FOREIGN KEY (tournament) REFERENCES tournament(name) ON DELETE CASCADE ON UPDATE CASCADE
@@ -77,7 +74,6 @@ CREATE TABLE user_team (
         user CHAR(30) NOT NULL,
         team CHAR(30) NOT NULL,
         enter_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        quit_date DATE,
         PRIMARY KEY (user, team),
         FOREIGN KEY (user) REFERENCES user(username) ON DELETE CASCADE ON UPDATE CASCADE,
         FOREIGN KEY (team) REFERENCES team(name) ON DELETE CASCADE ON UPDATE CASCADE
@@ -85,23 +81,23 @@ CREATE TABLE user_team (
 
 INSERT INTO user (username, password, email, goals, goals_conceded, 
 					wins, defeats, tournament_wins, tournament_participations)
-          VALUES ("Maik", "Passwort", "maik@kms.de", 0, 0, 0, 0, 0, 0);
+          VALUES ("Maik", "$2a$10$mAoleFV433Ufc/bUTfamxewAiVFWbPweKKn3s5SffhpzWUuclNiFW", "maik@kms.de", 0, 0, 0, 0, 0, 0);
           
 INSERT INTO user (username, password, email, goals, goals_conceded, 
 			wins, defeats, tournament_wins, tournament_participations)
-	  VALUES ("Malte", "Passwort", "malte@kms.de", 0, 0, 0, 0, 0, 0);
+	  VALUES ("Malte", "$2a$10$mAoleFV433Ufc/bUTfamxewAiVFWbPweKKn3s5SffhpzWUuclNiFW", "malte@kms.de", 0, 0, 0, 0, 0, 0);
 
 INSERT INTO user (username, password, email, goals, goals_conceded, 
 			wins, defeats, tournament_wins, tournament_participations)
-	  VALUES ("Alex", "Passwort", "alex@kms.de", 0, 0, 0, 0, 0, 0);
+	  VALUES ("Alex", "$2a$10$mAoleFV433Ufc/bUTfamxewAiVFWbPweKKn3s5SffhpzWUuclNiFW", "alex@kms.de", 0, 0, 0, 0, 0, 0);
 	  
 INSERT INTO user (username, password, email, goals, goals_conceded, 
 			wins, defeats, tournament_wins, tournament_participations)
-	  VALUES ("Louis", "Passwort", "louis@kms.de", 0, 0, 0, 0, 0, 0);	 
+	  VALUES ("Louis", "$2a$10$mAoleFV433Ufc/bUTfamxewAiVFWbPweKKn3s5SffhpzWUuclNiFW", "louis@kms.de", 0, 0, 0, 0, 0, 0);	 
 
 INSERT INTO user (username, password, email, goals, goals_conceded, 
 			wins, defeats, tournament_wins, tournament_participations)
-	  VALUES ("Lorenz", "Passwort", "lorenz@kms.de", 0, 0, 0, 0, 0, 0);
+	  VALUES ("Lorenz", "$2a$10$mAoleFV433Ufc/bUTfamxewAiVFWbPweKKn3s5SffhpzWUuclNiFW", "lorenz@kms.de", 0, 0, 0, 0, 0, 0);
 	  
 	  
 	  
@@ -215,7 +211,7 @@ INSERT INTO user_team (user, team)
 		  		  
 		  		  		  		  		  		  		  		  
 INSERT INTO tournament (name, leader, start_date, end_date, 
-					    nr_of_matchdays, venue, term_of_application, description)
+					    rounds, venue, deadline, description)
 		  VALUES ("GDIS - alle", "Maik", "2014-01-01", "2014-07-18", 4, "Kicko Eingango", "2014-01-01", "Jeden Mittag nach dem Essen KICKO! Und vielleicht gibts auch noch den ein oder anderen Kaffo =)");
 
 
