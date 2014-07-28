@@ -257,7 +257,7 @@ public class UserHelper {
                                             + "   AND te.name = ut.team" 
                                             + "   AND ut.user = u.username" 
                                             + "   AND username = '" + username + "'"
-                                            + " ORDER BY tou.name, tou.start_date, tou.start_time");            
+                                            + " ORDER BY tou.name, tou.start_date");            
             
             while(resultSet.next()) {
                 Tournament tournament = new Tournament();
