@@ -750,8 +750,8 @@ public class BCrypt {
 	}
         
         public static void main(String[] args) {
-            String password = "maiko";
-            String salt = gensalt(12);
+            String password = "Passwort";
+            String salt = gensalt(10);
             String hash = createHash(password, salt);
             System.out.println(hash);
             System.out.println(hash.length());

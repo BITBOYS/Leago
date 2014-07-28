@@ -29,8 +29,8 @@
                         <p>Zeitraum: <b> ${tournament.start_date_web} ${tournament.start_time}</b> bis <b>${tournament.end_date_web} ${tournament.end_time}</b></p>
                         <p>Anmeldefrist: 
                             <c:choose>
-                                <c:when test="${tournament.term_of_application != null}"> 
-                                    <b>${tournament.term_of_application_web}</b>, <b>${countdown}</b>
+                                <c:when test="${tournament.deadline != null}"> 
+                                    <b>${tournament.deadline_web}</b>, <b>${countdown}</b>
                                 </c:when>
                                 <c:otherwise> Keine Anmeldefrist
                                 </c:otherwise>

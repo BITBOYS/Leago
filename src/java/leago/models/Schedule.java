@@ -7,6 +7,7 @@
 package leago.models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -14,7 +15,7 @@ import java.util.ArrayList;
  */
 public class Schedule {
     
-    private ArrayList<Round> rounds;
+    private List<Round> rounds;
 
     /**
      * Konstruktor
@@ -29,15 +30,15 @@ public class Schedule {
      *
      * @param rounds  Liste von den Spielen
      */
-    public Schedule(ArrayList<Round> rounds) {
+    public Schedule(List<Round> rounds) {
         this.rounds = rounds;
     }
 
-    public ArrayList<Round> getRounds() {
+    public List<Round> getRounds() {
         return rounds;
     }
 
-    public void setRounds(ArrayList<Round> rounds) {
+    public void setRounds(List<Round> rounds) {
         this.rounds = rounds;
     }
     

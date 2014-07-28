@@ -19,7 +19,6 @@ import leago.error.exceptions.DatabaseConnectionException;
 import leago.error.exceptions.TeamCreationException;
 import leago.error.exceptions.TeamNotExistingException;
 import leago.error.exceptions.TeamUpdateException;
-import leago.error.exceptions.UserUpdateException;
 import leago.models.Statistics;
 import leago.models.Team;
 import leago.models.Tournament;
@@ -72,28 +71,24 @@ public class TeamHelper {
     }
         
     
-    public void createTeam(User leader, String name, String tag, String password, String reenter_password) throws TeamCreationException, DatabaseConnectionException {
+    public void createTeam(User leader, String name, String tag) throws TeamCreationException, DatabaseConnectionException {
 
         try {
             int result;
             
-            if(password.equals(reenter_password)) {
-                if(!isTeamExisting(name)) {
-                    Connection con = DatabaseHelper.connect();
-                    Statement statement = con.createStatement();
+            if(!isTeamExisting(name)) {
+                Connection con = DatabaseHelper.connect();
+                Statement statement = con.createStatement();
 
-                    result = statement.executeUpdate("insert into team"
-                            + " (name, tag, password, leader)"
-                            + " VALUES ('" + name + "','" + tag + "','" + password + "','" + leader.getName() + "')");
+                result = statement.executeUpdate("insert into team"
+                        + " (name, tag, leader)"
+                        + " VALUES ('" + name + "','" + tag + "','" + leader.getName() + "')");
 
-                    if(result < 1) {
-                        throw new TeamCreationException("Team team creation failed!", MyException.ERROR);
-                    }
-                } else {
-                    throw new TeamCreationException("The name is already taken", MyException.ERROR);
+                if(result < 1) {
+                    throw new TeamCreationException("Team team creation failed!", MyException.ERROR);
                 }
             } else {
-                throw new TeamCreationException("The passwords aren't matching", MyException.ERROR);
+                throw new TeamCreationException("The name is already taken", MyException.ERROR);
             }
             
         } catch (SQLException ex) {
@@ -120,7 +115,6 @@ public class TeamHelper {
                 team.setName(resultSet.getString("name"));
                 team.setTag(resultSet.getString("tag"));
                 team.setLeader(new User(resultSet.getString("leader")));
-                team.setPassword(resultSet.getString("password"));
                 team.setCreate_date(resultSet.getDate("create_date"));
                 
                 Statistics statistics = new Statistics(resultSet.getInt("goals"), resultSet.getInt("goals_conceded"), resultSet.getInt("wins"), 

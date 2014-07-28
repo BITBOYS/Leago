@@ -11,7 +11,6 @@ import java.sql.Time;
 public class Tournament {
 
     private String name;
-    private String password;
     private String description;
     private User leader;
     private Date start_date;
@@ -21,7 +20,7 @@ public class Tournament {
     private Date create_date;
     private int rounds;
     private String venue;
-    private Date term_of_application;
+    private Date deadline;
     private List<Table> table;
     private List<Team> teams;
     private List<User> member;
@@ -35,9 +34,8 @@ public class Tournament {
         this.name = name;
     }
 
-    public Tournament(String name, String password, String description, User leader, Date start_date, Time start_time, Date end_date, Time end_time, Date create_date, int nr_matchdays, String venue, Date term_of_application) {
+    public Tournament(String name, String description, User leader, Date start_date, Time start_time, Date end_date, Time end_time, Date create_date, int nr_matchdays, String venue, Date deadline) {
         this.name = name;
-        this.password = password;
         this.description = description;
         this.leader = leader;
         this.start_date = start_date;
@@ -47,12 +45,11 @@ public class Tournament {
         this.create_date = create_date;
         this.rounds = nr_matchdays;
         this.venue = venue;
-        this.term_of_application = term_of_application;
+        this.deadline = deadline;
     }
 
-    public Tournament(String name, String password, String description, User leader, Date start_date, Time start_time, Date end_date, Time end_time, Date create_date, int nr_matchdays, String venue, Date term_of_application, List<Table> table, List<Team> teams, List<User> member, Schedule shedule) {
+    public Tournament(String name, String description, User leader, Date start_date, Time start_time, Date end_date, Time end_time, Date create_date, int nr_matchdays, String venue, Date deadline, List<Table> table, List<Team> teams, List<User> member, Schedule shedule) {
         this.name = name;
-        this.password = password;
         this.description = description;
         this.leader = leader;
         this.start_date = start_date;
@@ -62,7 +59,7 @@ public class Tournament {
         this.create_date = create_date;
         this.rounds = nr_matchdays;
         this.venue = venue;
-        this.term_of_application = term_of_application;
+        this.deadline = deadline;
         this.table = table;
         this.teams = teams;
         this.member = member;
@@ -76,14 +73,6 @@ public class Tournament {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getDescription() {
@@ -142,12 +131,12 @@ public class Tournament {
         this.venue = venue;
     }
 
-    public Date getTerm_of_application() {
-        return term_of_application;
+    public Date getDeadline() {
+        return deadline;
     }
 
-    public void setTerm_of_application(Date term_of_application) {
-        this.term_of_application = term_of_application;
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
     }
 
     public List<Table> getTable() {
@@ -208,7 +197,7 @@ public class Tournament {
     
     public String getCountdown() {
         java.util.Date today = new java.util.Date();
-        long diff = term_of_application.getTime() - today.getTime();
+        long diff = deadline.getTime() - today.getTime();
         if (diff > 0) {
 
             long diffSeconds = diff / 1000 % 60;
@@ -244,15 +233,15 @@ public class Tournament {
         return formattedDate;
     }
 
-    public String getTerm_of_application_web() {
+    public String getDeadline_web() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-        String formattedDate = formatter.format(term_of_application);
+        String formattedDate = formatter.format(deadline);
         
         return formattedDate;
     }
 
     @Override
     public String toString() {
-        return "Tournament{" + "name=" + name + ", password=" + password + ", description=" + description + ", leader=" + leader + ", start_date=" + start_date + ", start_time=" + start_time + ", end_date=" + end_date + ", end_time=" + end_time + ", create_date=" + create_date + ", nr_matchdays=" + rounds + ", venue=" + venue + ", term_of_application=" + term_of_application + ", table=" + table + ", teams=" + teams + ", member=" + member + ", shedule=" + schedule + '}';
+        return "Tournament{" + "name=" + name + ", description=" + description + ", leader=" + leader + ", start_date=" + start_date + ", start_time=" + start_time + ", end_date=" + end_date + ", end_time=" + end_time + ", create_date=" + create_date + ", nr_matchdays=" + rounds + ", venue=" + venue + ", deadline=" + deadline + ", table=" + table + ", teams=" + teams + ", member=" + member + ", shedule=" + schedule + '}';
     }
 }

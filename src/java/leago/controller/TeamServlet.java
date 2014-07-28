@@ -134,14 +134,12 @@ public class TeamServlet extends HttpServlet {
         // P A R A M E T E R S
         String name = request.getParameter("name");
         String tag = request.getParameter("tag");
-        String password = (request.getParameter("password") == null)? "" : request.getParameter("password");
-        String reenter_password = (request.getParameter("reenter_password") == null)? "" : request.getParameter("reenter_password");
         User user = (User) request.getSession().getAttribute("user");
         
         try {
             // O P E R A T I O N
             TeamHelper teamHelper = new TeamHelper();
-            teamHelper.createTeam(user, name, tag, password, reenter_password);
+            teamHelper.createTeam(user, name, tag);
             teamHelper.addPlayer(user, name);
             request.setAttribute("message", new MyException("Team creation successful", MyException.SUCCESS));
 
