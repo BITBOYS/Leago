@@ -26,18 +26,31 @@
                     <div class="col-md-6">
                         <p>${tournament.description}</p>
                         <p>Leader: <b><a href="${pageContext.request.contextPath}/user/${tournament.leader.name}"> ${tournament.leader.name} </a></b></p>
-                        <p>Zeitraum: <b> ${tournament.start_date_web} ${tournament.start_time}</b> bis <b>${tournament.end_date_web} ${tournament.end_time}</b></p>
+                        <p>Zeitraum: 
+                            <c:choose>
+                                <c:when test="${tournament.start_date != null && tournament.end_date != null}">
+                                    <b> ${tournament.start_date_web}</b> bis <b>${tournament.end_date_web}</b>
+                                </c:when>
+                                <c:otherwise> Keine Angabe </c:otherwise>
+                            </c:choose> 
+                        </p>
                         <p>Anmeldefrist: 
                             <c:choose>
                                 <c:when test="${tournament.deadline != null}"> 
-                                    <b>${tournament.deadline_web}</b>, <b>${countdown}</b>
+                                    <b>${tournament.deadline_web}</b>, <b>${tournament.countdown}</b>
                                 </c:when>
-                                <c:otherwise> Keine Anmeldefrist
-                                </c:otherwise>
+                                <c:otherwise> Keine Anmeldefrist </c:otherwise>
                             </c:choose> 
                         </p>
                         <p>Spieltage: <b>${tournament.rounds}</b></p>
-                        <p>Austragungsort: <b><a href="https://maps.google.com/maps?q=${tournament.venue}&hl=de&sll=28.149503,-71.71875&sspn=88.855059,173.144531&hnear=${tournament.venue}&t=m&z=10" target="_blank">${tournament.venue}</a></b></p>
+                        <p>Austragungsort: 
+                            <c:choose>
+                                <c:when test="${tournament.venue != null}">
+                                    <b><a href="https://maps.google.com/maps?q=${tournament.venue}&hl=de&sll=28.149503,-71.71875&sspn=88.855059,173.144531&hnear=${tournament.venue}&t=m&z=10" target="_blank">${tournament.venue}</a></b>
+                                </c:when>
+                                <c:otherwise> Keine Angabe </c:otherwise>
+                            </c:choose> 
+                        </p>
                     </div>
                     <div class="col-md-6">
                         <iframe width="100%" height="220dpx" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.de/maps?hl=de&q=${tournament.venue}+(${tournament.venue})&ie=UTF8&t=&z=12&iwloc=B&output=embed"></iframe>

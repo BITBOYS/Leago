@@ -40,7 +40,6 @@ import leago.models.User;
  */
 public class TournamentHelper {
 
-    private static final DateFormat FORMATTER_TIME = new SimpleDateFormat("HH:mm");
     private static final DateFormat FORMATTER_DATE = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
@@ -68,9 +67,7 @@ public class TournamentHelper {
                 tournament.setName(resultSet.getString("name"));
                 tournament.setLeader(new User(resultSet.getString("leader")));
                 tournament.setStart_date(resultSet.getDate("start_date"));
-                tournament.setStart_time(resultSet.getTime("start_time"));
                 tournament.setEnd_date(resultSet.getDate("end_date"));
-                tournament.setEnd_time(resultSet.getTime("end_time"));
                 tournament.setCreate_date(resultSet.getDate("create_date"));
                 tournament.setDescription(resultSet.getString("description"));
                 tournament.setRounds(resultSet.getInt("rounds"));
@@ -535,62 +532,40 @@ public class TournamentHelper {
         return schedule;
     }
 
-    public void createTournament(String name, User leader, String start_date, String start_time, String end_date, String end_time, String description, int rounds, String venue, String deadline) throws DatabaseConnectionException, TournamentCreationException, TournamentCreationSuccess, ParseException {
+    public void createTournament(String name, User leader, String start_date, String end_date, String description, int rounds, String venue, String deadline) throws DatabaseConnectionException, TournamentCreationException, ParseException {
 
         try {
-
-            String date1 = start_date;
-            String date2 = end_date;
             java.util.Date dateStart = new java.util.Date();
             java.util.Date dateEnd = new java.util.Date();
-            java.util.Date timeStart = new java.util.Date();
-            java.util.Date timeEnd = new java.util.Date();
+            java.util.Date dateDeadline = new java.util.Date();
 
-            if (date1 != null) {
-                dateStart = FORMATTER_DATE.parse(date1.substring(1, date1.length() - 1));
-                System.out.println(dateStart);
+            if (start_date != null) {
+                dateStart = FORMATTER_DATE.parse(start_date.substring(1, start_date.length() - 1));
             }
 
-            if (date2 != null) {
-                dateEnd = FORMATTER_DATE.parse(date2.substring(1, date2.length() - 1));
-                System.out.println(dateEnd);
+            if (end_date != null) {
+                dateEnd = FORMATTER_DATE.parse(end_date.substring(1, end_date.length() - 1));
             }
-
-            if (start_time != null) {
-                timeStart = FORMATTER_TIME.parse(start_time.substring(1, start_time.length() - 1));
-                System.out.println(timeStart);
-            }
-
-            if (end_time != null) {
-                timeEnd = FORMATTER_TIME.parse(end_time.substring(1, end_time.length() - 1));
-                System.out.println(timeEnd);
-            }
-
-            System.out.println("ZEITEN: " + start_date + " - " + start_time + " - " + end_date + " - " + end_time + "\n " + leader);
             
-            if (!isNameAlreadyTaken(name)) {
+            if (deadline != null) {
+                dateDeadline = FORMATTER_DATE.parse(deadline.substring(1, deadline.length() - 1));
+            }
+            
+            if (!isTournamentExisting(name)) {
                 if (dateEnd.after(dateStart) || dateEnd.equals(dateStart)) {
-                    if (timeEnd.after(timeStart) || timeEnd.equals(timeStart)) {
-
+                    if(dateDeadline.before(dateStart)) {
                         Connection con = DatabaseHelper.connect();
                         Statement statement = con.createStatement();
 
                         statement.execute("INSERT INTO tournament "
-                                + " (name, leader, start_date, start_time, end_date, end_time, create_date, description, rounds, venue, deadline)"
-                                + " VALUES ('" + name + "','" + leader.getName() + "'," + start_date + "," + start_time + "," + end_date + "," + end_time + ",CURRENT_TIMESTAMP,'" + description + "'," + rounds + ",'" + venue + "'," + deadline + ")");
-
-                        // Creation successful
-                        throw new TournamentCreationException("Creation successful", MyException.SUCCESS);
-
-                        // Starttime after Endtime at the same day
+                                + " (name, leader, start_date, end_date, create_date, description, rounds, venue, deadline)"
+                                + " VALUES ('" + name + "','" + leader.getName() + "'," + start_date + "," + end_date + ",CURRENT_TIMESTAMP," + description + "," + rounds + "," + venue + "," + deadline + ")");
                     } else {
-                        throw new TournamentCreationException("Starttime after Endtime at the same day", MyException.ERROR);
+                        throw new TournamentCreationException("Deadline has to end before the tournament starts", MyException.ERROR);
                     }
-                    // Startdate bigger than Enddate
                 } else {
-                    throw new TournamentCreationException("Startdate bigger than Enddate", MyException.ERROR);
+                    throw new TournamentCreationException("The tournament can't start before it ends", MyException.ERROR);
                 }
-                // Name is already taken
             } else {
                 throw new TournamentCreationException("Name already taken", MyException.ERROR);
             }
@@ -601,16 +576,17 @@ public class TournamentHelper {
         }
     }
 
-    private boolean isNameAlreadyTaken(String name) throws DatabaseConnectionException {
+    private boolean isTournamentExisting(String name) throws DatabaseConnectionException {
         boolean result = false;
         
         try {
             
             Connection con = DatabaseHelper.connect();
             Statement statement = con.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM tournament WHERE name = '" + name + "'");
+            ResultSet resultSet = statement.executeQuery("select COUNT(*) as count from tournament where name='" + name + "'");
+            resultSet.next();
             
-            if (!resultSet.isBeforeFirst()) {
+            if (resultSet.getInt("count") > 0) {
                 result = true;
             }
             
