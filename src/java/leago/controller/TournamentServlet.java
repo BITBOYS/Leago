@@ -1,8 +1,11 @@
 package leago.controller;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -15,9 +18,8 @@ import leago.error.exceptions.DatabaseConnectionException;
 import leago.error.exceptions.TournamentCreationException;
 import leago.error.exceptions.TournamentNotExistingException;
 import leago.error.exceptions.TournamentUpdateException;
-import leago.error.success.TournamentCreationSuccess;
-import leago.error.success.TournamentUpdateSuccess;
 import leago.helper.TournamentHelper;
+import leago.models.Team;
 import leago.models.Tournament;
 import leago.models.User;
 
@@ -28,10 +30,14 @@ import leago.models.User;
 @WebServlet(name = "TournamentServlet", urlPatterns = {"/tournament"})
 public class TournamentServlet extends HttpServlet {
 
+    private static final DateFormat FORMATTER_DATE = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    
     private String page;
     private String path = "/WEB-INF/frame.jsp";
     HttpServletRequest request;
     HttpServletResponse response;
+    boolean redirect;
+    Tournament tournament;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,6 +52,8 @@ public class TournamentServlet extends HttpServlet {
             throws ServletException, IOException, DatabaseConnectionException, TournamentNotExistingException, ParseException {
         this.request = request;
         this.response = response;
+        redirect = false;
+        tournament = new Tournament();
 
         String servletPath = request.getServletPath().substring(1);
         String[] pathinfo = (request.getPathInfo() == null) ? new String[0] : request.getPathInfo().substring(1).split("/");
@@ -91,19 +99,11 @@ public class TournamentServlet extends HttpServlet {
             // O P E R A T I O N
             TournamentHelper tournamentHelper = new TournamentHelper();
             Tournament tournament = tournamentHelper.getTournament(id);
-
-            tournament.setSchedule(tournamentHelper.createTournamentSchedule(tournament));
-
-            //GET ALL TEAMS FOR SCHEDULE
-            tournament.setSchedule(tournamentHelper.createTournamentSchedule(tournament));
-            //GET THE STATISTIC OF ALLE TOURNAMENT MEMBERS
-            ArrayList<User> member = tournamentHelper.getMemberByTournament(id);
+            //tournament.setSchedule(tournamentHelper.createTournamentSchedule(tournament));
 
             // R E S U L T # H A N D L I N G
             request.setAttribute("tournament", tournament);
             forward();
-
-            System.out.println(" - " + tournament);
 
         } catch (DatabaseConnectionException ex) {
 
@@ -135,11 +135,11 @@ public class TournamentServlet extends HttpServlet {
         // P A R A M E T E R
         String name = request.getParameter("tournament_name");
         int rounds = ((request.getParameter("tournament_rounds") == null || request.getParameter("tournament_rounds").equals(""))) ? 1 : Integer.valueOf(request.getParameter("tournament_rounds"));
-        String venue = request.getParameter("tournament_venue").equals("") ? null : "'" + request.getParameter("tournament_venue") + "'";;
-        String startdate = (request.getParameter("tournament_startdate").equals("")) ? null : "'" + request.getParameter("tournament_startdate") + "'";
-        String enddate = (request.getParameter("tournament_enddate").equals("")) ? null : "'" + request.getParameter("tournament_enddate") + "'";
-        String deadline = (request.getParameter("tournament_deadline").equals("")) ? null : "'" + request.getParameter("tournament_deadline") + "'";
-        String description = request.getParameter("tournament_description").equals("") ? null : "'" + request.getParameter("tournament_description") + "'";
+        String venue = request.getParameter("tournament_venue");
+        String startdate = request.getParameter("tournament_startdate");
+        String enddate = request.getParameter("tournament_enddate");
+        String deadline = request.getParameter("tournament_deadline");
+        String description = request.getParameter("tournament_description");
         User leader = (User) request.getSession().getAttribute("user");
 
         try {
@@ -152,6 +152,7 @@ public class TournamentServlet extends HttpServlet {
 
         } catch (TournamentCreationException | DatabaseConnectionException ex) {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            
             request.setAttribute("message", ex);
             request.setAttribute("name", name);
             request.setAttribute("rounds", rounds);
@@ -170,36 +171,48 @@ public class TournamentServlet extends HttpServlet {
     }
 
     private void _change(String id, String settings_action) throws ServletException, IOException, TournamentNotExistingException {
-        System.out.println("update - " + settings_action);
 
         try {
-            page = "tournament/update_tournament";
-
+            page = "tournament/update_profile";
+            
             // O P E R A T I O N
             TournamentHelper tournamentHelper = new TournamentHelper();
-            Tournament tournament = tournamentHelper.getTournament(id);
-            request.setAttribute("tournament", tournament);
-
+            tournament = tournamentHelper.getTournament(id);
+            
             switch (settings_action) {
-                case "tournament":
-                    page = "tournament/update_tournament";                    
-                    break;
+                case "profile":
+                    page = "tournament/update_profile";
+                    updateProfile();
+                    break;                           
 
-                case "team":
+                case "teams":
                     page = "tournament/update_teams";
+                    if(request.getParameter("action") != null && request.getParameter("action").equals("kick"))
+                        kickTeam();
                     break;
 
                 case "danger":
                     page = "tournament/update_danger";
+                    
+                    String leader = request.getParameter("input_leader_new");
+                    
+                    if(validInput(leader))
+                        updateLeader(leader);
                     break;
 
                 default:
+                    settings_action = "profile";
                     break;
             }
-
+            
+            request.setAttribute("tournament", tournament);
             request.setAttribute("settings_action", settings_action);
             
-            forward();
+            if(redirect) {
+                response.sendRedirect(request.getContextPath() + "/tournament/" + tournament.getName() + "/settings/profile");
+            } else {
+                forward();
+            }
 
         } catch (DatabaseConnectionException ex) {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -208,45 +221,205 @@ public class TournamentServlet extends HttpServlet {
 
     }
 
-    private void _destroy(String id) {
-//        System.out.println("destroy");
-//        page = "tournament/destroy";
+    private void _destroy(String id) throws IOException, ServletException {
+        page = "tournament/destroy";
 //
-//        // O P E R A T I O N
-//        TournamentHelper tournamentHelper = new TournamentHelper();
-//
-//        try {
-//            tournamentHelper.deleteTournament(id);
-//        } catch (TournamentUpdateException | DatabaseConnectionException ex) {
-//            Logger.getLogger(TournamentServlet.class.getName()).log(Level.SEVERE, null, ex);
-//            request.setAttribute("message", ex);
-//        } catch (TournamentCreationSuccess ex) {
-//            request.setAttribute("message", ex);
-//        }
-//
-//        // R E D I R E C T I N G
-//        forward();
-    }
+        // O P E R A T I O N
+        TournamentHelper tournamentHelper = new TournamentHelper();
 
-    private void updateName() throws DatabaseConnectionException {
+        try {
+            tournamentHelper.deleteTournament(id);
+        } catch (TournamentUpdateException | DatabaseConnectionException ex) {
+            Logger.getLogger(TournamentServlet.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("message", ex);
+        }
+
+        // R E D I R E C T I N G
+        forward();
+    }
+    
+    private boolean validInput(String input) {
+        boolean result = true;
+        
+        if(input == null || input.trim().equals(""))
+            result = false;
+        
+        return result;
+    }
+    
+    private void kickTeam() throws DatabaseConnectionException {
 
         // P A R A M E T E R S
-        String input_name_new = request.getParameter("input_name_new");
-        Tournament tournament = (Tournament) request.getAttribute("tournament");
+        int idx = Integer.valueOf(request.getParameter("team"));
+        Team team = tournament.getTeams().get(idx);
+        
+        // O P E R A T I O N
+        TournamentHelper tournamentHelper = new TournamentHelper();
+        
+        try {
+            tournamentHelper.kickTeam(team, tournament);
+            tournament = tournamentHelper.getTournament(tournament.getName());
+            request.setAttribute("message", new MyException("Team kicked successfully", MyException.SUCCESS));
+            request.setAttribute("tournament", tournament);
+            
+        } catch (TournamentUpdateException | TournamentNotExistingException ex) {
+            Logger.getLogger(TournamentServlet.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("message", ex);
+        }
+    }
+    
+    private void updateProfile() throws DatabaseConnectionException {
+            
+            // P A R A M E T E R
+            String name1 = request.getParameter("input_name_new1");
+            String name2 = request.getParameter("input_name_new2");
+            String description = request.getParameter("input_description_new");
+            String venue = request.getParameter("input_venue_new");
+            String rounds = request.getParameter("input_rounds_new");
+            String start_date = request.getParameter("input_startdate_new");
+            String end_date = request.getParameter("input_enddate_new");
+            String deadline = request.getParameter("input_deadline_new");
+            
+        if(validInput(name1) && validInput(name2)) {
+            updateName(name1, name2);
+        } else if(validInput(description)) {
+            updateDescription(description);
+        } else if(validInput(venue)) {
+            updateVenue(venue);
+        } else if(validInput(rounds)) {
+            updateRounds(Integer.valueOf(rounds));
+        } else if(validInput(start_date)) {
+            updateStart_date(start_date);
+        } else if(validInput(end_date)) {
+            updateEnd_date(end_date);
+        } else if(validInput(deadline)) {
+            updateDeadline(deadline);
+        }
+    }
+
+    private void updateName(String input_name_new, String input_name_new2) throws DatabaseConnectionException {
 
         // O P E R A T I O N
         TournamentHelper tournamentHelper = new TournamentHelper();
         try {
-            tournamentHelper.editTournamentName(tournament.getName(), input_name_new);
-        } catch (TournamentUpdateException ex) {
+            tournamentHelper.editTournamentName(tournament.getName(), input_name_new, input_name_new2);
+            tournament = tournamentHelper.getTournament(input_name_new);
+            redirect = true;
+        } catch (TournamentUpdateException | TournamentNotExistingException ex) {
+            request.setAttribute("value_name1", input_name_new);
+            request.setAttribute("value_name2", input_name_new2);
             Logger.getLogger(TournamentServlet.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("message", ex);
-        } catch (TournamentUpdateSuccess ex) {
-            request.setAttribute("message", ex);
-            tournament.setName(input_name_new);
-            request.getSession().setAttribute("tournament", tournament);
         }
 
+    }
+
+    private void updateLeader(String input_leader_new) throws DatabaseConnectionException {
+
+        // O P E R A T I O N
+        TournamentHelper tournamentHelper = new TournamentHelper();
+        try {
+            tournamentHelper.editTournamentLeader(tournament.getName(), input_leader_new);
+            tournament.setLeader(new User(input_leader_new));
+            redirect = true;
+        } catch (TournamentUpdateException ex) {
+            request.setAttribute("value_leader", input_leader_new);
+            Logger.getLogger(TournamentServlet.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("message", ex);
+        }
+    }
+
+    private void updateDescription(String input_description_new) throws DatabaseConnectionException {
+
+        // O P E R A T I O N
+        TournamentHelper tournamentHelper = new TournamentHelper();
+        try {
+            tournamentHelper.editTournamentDescription(tournament.getName(), input_description_new);
+            tournament.setDescription(input_description_new);
+            request.setAttribute("message", new MyException("The description was updated successfully", MyException.SUCCESS));
+        } catch (TournamentUpdateException ex) {
+            request.setAttribute("value_description", input_description_new);
+            Logger.getLogger(TournamentServlet.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("message", ex);
+        }
+    }
+
+    private void updateVenue(String input_venue_new) throws DatabaseConnectionException {
+
+        // O P E R A T I O N
+        TournamentHelper tournamentHelper = new TournamentHelper();
+        try {
+            tournamentHelper.editTournamentVenue(tournament.getName(), input_venue_new);
+            tournament.setVenue(input_venue_new);
+            request.setAttribute("message", new MyException("The venue was updated successfully", MyException.SUCCESS));
+        } catch (TournamentUpdateException ex) {
+            request.setAttribute("value_venue", input_venue_new);
+            Logger.getLogger(TournamentServlet.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("message", ex);
+        }
+    }
+
+    private void updateRounds(int input_rounds_new) throws DatabaseConnectionException {
+
+        // O P E R A T I O N
+        TournamentHelper tournamentHelper = new TournamentHelper();
+        try {
+            tournamentHelper.editTournamentRounds(tournament.getName(), input_rounds_new);
+            tournament.setRounds(input_rounds_new);
+            request.setAttribute("message", new MyException("The amount of rounds was updated successfully", MyException.SUCCESS));
+        } catch (TournamentUpdateException ex) {
+            request.setAttribute("value_rounds", input_rounds_new);
+            Logger.getLogger(TournamentServlet.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("message", ex);
+        }
+    }
+
+    private void updateStart_date(String input_startdate_new) throws DatabaseConnectionException {
+
+        // O P E R A T I O N
+        TournamentHelper tournamentHelper = new TournamentHelper();
+        try {
+            Date dateStart = FORMATTER_DATE.parse(input_startdate_new.replace('T', ' '));
+            tournamentHelper.editTournamentStartDate(tournament, dateStart);
+            tournament.setStart_date(dateStart);
+            request.setAttribute("message", new MyException("The start date was updated successfully", MyException.SUCCESS));
+        } catch (TournamentUpdateException | ParseException ex) {
+            request.setAttribute("value_start_date", input_startdate_new);
+            Logger.getLogger(TournamentServlet.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("message", ex);
+        }
+    }
+
+    private void updateEnd_date(String input_enddate_new) throws DatabaseConnectionException {
+
+        // O P E R A T I O N
+        TournamentHelper tournamentHelper = new TournamentHelper();
+        try {
+            Date dateEnd = FORMATTER_DATE.parse(input_enddate_new.replace('T', ' '));
+            tournamentHelper.editTournamentEndDate(tournament, dateEnd);
+            tournament.setEnd_date(dateEnd);
+            request.setAttribute("message", new MyException("The end date was updated successfully", MyException.SUCCESS));
+        } catch (TournamentUpdateException | ParseException ex) {
+            request.setAttribute("value_end_date", input_enddate_new);
+            Logger.getLogger(TournamentServlet.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("message", ex);
+        }
+    }
+
+    private void updateDeadline(String input_deadline_new) throws DatabaseConnectionException {
+
+        // O P E R A T I O N
+        TournamentHelper tournamentHelper = new TournamentHelper();
+        try {
+            Date dateDeadline = FORMATTER_DATE.parse(input_deadline_new.replace('T', ' '));
+            tournamentHelper.editTournamentDeadline(tournament, dateDeadline);
+            tournament.setDeadline(dateDeadline);
+            request.setAttribute("message", new MyException("The dateline was updated successfully", MyException.SUCCESS));
+        } catch (TournamentUpdateException | ParseException ex) {
+            request.setAttribute("value_deadline", input_deadline_new);
+            Logger.getLogger(TournamentServlet.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("message", ex);
+        }
     }
 
     private void forward() throws ServletException, IOException {
@@ -254,6 +427,21 @@ public class TournamentServlet extends HttpServlet {
         // F O R W A R D I N G
         request.setAttribute("page", this.page);
         request.getRequestDispatcher(this.path).forward(request, response);
+    }
+    
+    public String toDatetime_local(Date date) {
+        String result = "";
+        
+        if(date != null) {
+            SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd");
+            String day = formatter1.format(date);
+            SimpleDateFormat formatter2 = new SimpleDateFormat("hh:MM:ss");
+            String hour = formatter2.format(date);
+            
+            result = day + "T" + hour;
+        }
+        
+        return result;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

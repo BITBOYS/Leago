@@ -6,7 +6,7 @@
 package leago.helper;
 
 import java.sql.Connection;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -23,7 +23,6 @@ import leago.error.exceptions.DatabaseConnectionException;
 import leago.error.exceptions.TournamentCreationException;
 import leago.error.exceptions.TournamentNotExistingException;
 import leago.error.exceptions.TournamentUpdateException;
-import leago.error.success.TournamentCreationSuccess;
 import leago.error.success.TournamentUpdateSuccess;
 import leago.models.Match;
 import leago.models.Round;
@@ -88,27 +87,29 @@ public class TournamentHelper {
     }
 
     /**
-     *
+     * 
      * @param tournament_name
      * @param new_name
-     * @throws TournamentUpdateSuccess
+     * @param name_new2
      * @throws DatabaseConnectionException
-     * @throws TournamentUpdateException
+     * @throws TournamentUpdateException 
      */
-    public void editTournamentName(String tournament_name, String new_name) throws TournamentUpdateSuccess, DatabaseConnectionException, TournamentUpdateException {
+    public void editTournamentName(String tournament_name, String new_name, String name_new2) throws DatabaseConnectionException, TournamentUpdateException {
         try {
             int result;
-            if (tournament_name.equals(new_name)) {
-                Connection con = DatabaseHelper.connect();
-                Statement statement = con.createStatement();
-                result = statement.executeUpdate("UPDATE tournament "
-                        + "SET name = '" + new_name + "' "
-                        + "WHERE name = '" + tournament_name + "'");
+            if (name_new2.equals(new_name)) {
+                if(!isTournamentExisting(new_name)) {
+                    Connection con = DatabaseHelper.connect();
+                    Statement statement = con.createStatement();
+                    result = statement.executeUpdate("UPDATE tournament "
+                            + "SET name = '" + new_name + "' "
+                            + "WHERE name = '" + tournament_name + "'");
 
-                if (result > 0) {
-                    throw new TournamentUpdateSuccess("Name update successful", MyException.SUCCESS);
+                    if (result < 1) {
+                        throw new TournamentUpdateException("An error occured while updating the name", MyException.ERROR);
+                    }
                 } else {
-                    throw new TournamentUpdateSuccess("An error occured while updating the name", MyException.ERROR);
+                    throw new TournamentUpdateException("A tournament with this name is already existing", MyException.ERROR);
                 }
             } else {
                 throw new TournamentUpdateException("The names aren't matching", MyException.ERROR);
@@ -120,13 +121,13 @@ public class TournamentHelper {
     }
 
     /**
-     *
+     * 
      * @param tournament_name
      * @param new_leader
-     * @throws TournamentUpdateSuccess
-     * @throws DatabaseConnectionException
+     * @throws TournamentUpdateException
+     * @throws DatabaseConnectionException 
      */
-    public void editTournamentLeader(String tournament_name, String new_leader) throws TournamentUpdateSuccess, DatabaseConnectionException {
+    public void editTournamentLeader(String tournament_name, String new_leader) throws TournamentUpdateException, DatabaseConnectionException {
         try {
             int result;
 
@@ -136,10 +137,8 @@ public class TournamentHelper {
                     + "SET leader = '" + new_leader + "' "
                     + "WHERE name = '" + tournament_name + "'");
 
-            if (result > 0) {
-                throw new TournamentUpdateSuccess("Leader update successful", MyException.SUCCESS);
-            } else {
-                throw new TournamentUpdateSuccess("An error occured while updating the leader", MyException.ERROR);
+            if (result < 1) {
+                throw new TournamentUpdateException("An error occured while updating the leader", MyException.ERROR);
             }
 
         } catch (SQLException ex) {
@@ -148,13 +147,13 @@ public class TournamentHelper {
     }
 
     /**
-     *
+     * 
      * @param tournament_name
      * @param new_venue
-     * @throws TournamentUpdateSuccess
-     * @throws DatabaseConnectionException
+     * @throws TournamentUpdateException
+     * @throws DatabaseConnectionException 
      */
-    public void editTournamentVenue(String tournament_name, String new_venue) throws TournamentUpdateSuccess, DatabaseConnectionException {
+    public void editTournamentVenue(String tournament_name, String new_venue) throws TournamentUpdateException, DatabaseConnectionException {
         try {
             int result;
 
@@ -164,10 +163,8 @@ public class TournamentHelper {
                     + "SET venue = '" + new_venue + "' "
                     + "WHERE name = '" + tournament_name + "'");
 
-            if (result > 0) {
-                throw new TournamentUpdateSuccess("Venue update successful", MyException.SUCCESS);
-            } else {
-                throw new TournamentUpdateSuccess("An error occured while updating the venue", MyException.ERROR);
+            if (result < 1) {
+                throw new TournamentUpdateException("An error occured while updating the venue", MyException.ERROR);
             }
 
         } catch (SQLException ex) {
@@ -176,13 +173,13 @@ public class TournamentHelper {
     }
 
     /**
-     *
+     * 
      * @param tournament_name
      * @param description
-     * @throws TournamentUpdateSuccess
-     * @throws DatabaseConnectionException
+     * @throws TournamentUpdateException
+     * @throws DatabaseConnectionException 
      */
-    public void editTournamentDescription(String tournament_name, String description) throws TournamentUpdateSuccess, DatabaseConnectionException {
+    public void editTournamentDescription(String tournament_name, String description) throws TournamentUpdateException, DatabaseConnectionException {
         try {
             int result;
 
@@ -192,10 +189,8 @@ public class TournamentHelper {
                     + "SET description = '" + description + "' "
                     + "WHERE name = '" + tournament_name + "'");
 
-            if (result > 0) {
-                throw new TournamentUpdateSuccess("Description update successful", MyException.SUCCESS);
-            } else {
-                throw new TournamentUpdateSuccess("An error occured while updating the description", MyException.ERROR);
+            if (result < 1) {
+                throw new TournamentUpdateException("An error occured while updating the description", MyException.ERROR);
             }
 
         } catch (SQLException ex) {
@@ -204,13 +199,13 @@ public class TournamentHelper {
     }
 
     /**
-     *
+     * 
      * @param tournament_name
-     * @param new_nr_matchdays
-     * @throws TournamentUpdateSuccess
-     * @throws DatabaseConnectionException
+     * @param rounds
+     * @throws TournamentUpdateException
+     * @throws DatabaseConnectionException 
      */
-    public void editTournamentMatchdays(String tournament_name, int rounds) throws TournamentUpdateSuccess, DatabaseConnectionException {
+    public void editTournamentRounds(String tournament_name, int rounds) throws TournamentUpdateException, DatabaseConnectionException {
         try {
             int result;
 
@@ -220,10 +215,8 @@ public class TournamentHelper {
                     + "SET rounds = '" + rounds + "' "
                     + "WHERE name = '" + tournament_name + "'");
 
-            if (result > 0) {
-                throw new TournamentUpdateSuccess("Rounds update successful", MyException.SUCCESS);
-            } else {
-                throw new TournamentUpdateSuccess("An error occured while updating the rounds", MyException.ERROR);
+            if (result < 1) {
+                throw new TournamentUpdateException("An error occured while updating the rounds", MyException.ERROR);
             }
 
         } catch (SQLException ex) {
@@ -238,49 +231,68 @@ public class TournamentHelper {
      * @throws TournamentUpdateSuccess
      * @throws DatabaseConnectionException
      */
-    public void editTournamentTerm(String tournament_name, Date new_deadline) throws TournamentUpdateSuccess, DatabaseConnectionException {
+    public void editTournamentDeadline(Tournament tournament, Date new_deadline) throws TournamentUpdateException, DatabaseConnectionException {
         try {
             int result;
 
-            Connection con = DatabaseHelper.connect();
-            Statement statement = con.createStatement();
-            result = statement.executeUpdate("UPDATE tournament "
-                    + "SET deadline = '" + new_deadline + "' "
-                    + "WHERE name = '" + tournament_name + "'");
+            if(new_deadline.before(tournament.getStart_date())) {            
+                Connection con = DatabaseHelper.connect();
+                Statement statement = con.createStatement();
+                result = statement.executeUpdate("UPDATE tournament "
+                        + "SET deadline = '" + new_deadline + "' "
+                        + "WHERE name = '" + tournament.getName() + "'");
 
-            if (result > 0) {
-                throw new TournamentUpdateSuccess("Deadline update successful", MyException.SUCCESS);
+                if (result < 1) {
+                    throw new TournamentUpdateException("An error occured while updating the deadline", MyException.ERROR);
+                }
             } else {
-                throw new TournamentUpdateSuccess("An error occured while updating the deadline", MyException.ERROR);
+                throw new TournamentUpdateException("The deadline has to be before the tournament starts", MyException.ERROR);
             }
 
         } catch (SQLException ex) {
             Logger.getLogger(TournamentHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void kickTeam(Team team, Tournament tournament) throws DatabaseConnectionException, TournamentUpdateException {
+        
+        try {
+            Connection con = DatabaseHelper.connect();
+            Statement statement = con.createStatement();
+            
+            statement.execute("DELETE FROM team_tournament WHERE team = '" + team.getName() + "' AND tournament = '" + tournament.getName() + "'");
+
+        } catch (SQLException ex) {
+            Logger.getLogger(TournamentHelper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new TournamentUpdateException("Tournametn update failed unexpectedly with an SQL error " + ex.getSQLState(), MyException.ERROR);
+        }
+    }
 
     /**
-     *
-     * @param tournament_name
+     * 
+     * @param tournament
      * @param new_start_date
-     * @throws TournamentUpdateSuccess
-     * @throws DatabaseConnectionException
+     * @throws TournamentUpdateException
+     * @throws DatabaseConnectionException 
      */
-    public void editTournamentStartDate(String tournament_name, Date new_start_date) throws TournamentUpdateSuccess, DatabaseConnectionException {
+    public void editTournamentStartDate(Tournament tournament, Date new_start_date) throws TournamentUpdateException, DatabaseConnectionException {
         try {
             int result;
+            
+            if(new_start_date.before(tournament.getEnd_date())) {
+                Connection con = DatabaseHelper.connect();
+                Statement statement = con.createStatement();
+                result = statement.executeUpdate("UPDATE tournament "
+                        + "SET start_date = '" + new_start_date + "' "
+                        + "WHERE name = '" + tournament.getName() + "'");
 
-            Connection con = DatabaseHelper.connect();
-            Statement statement = con.createStatement();
-            result = statement.executeUpdate("UPDATE tournament "
-                    + "SET start_date = '" + new_start_date + "' "
-                    + "WHERE name = '" + tournament_name + "'");
-
-            if (result > 0) {
-                throw new TournamentUpdateSuccess("Start date update successful", MyException.SUCCESS);
+                if (result < 1) {
+                    throw new TournamentUpdateException("An error occured while updating the start date", MyException.ERROR);
+                }
             } else {
-                throw new TournamentUpdateSuccess("An error occured while updating the start date", MyException.ERROR);
+                throw new TournamentUpdateException("The start date has to be before the end date", MyException.ERROR);
             }
+            
 
         } catch (SQLException ex) {
             Logger.getLogger(TournamentHelper.class.getName()).log(Level.SEVERE, null, ex);
@@ -288,27 +300,30 @@ public class TournamentHelper {
     }
 
     /**
-     *
-     * @param tournament_name
+     * 
+     * @param tournament
      * @param new_end_date
      * @throws DatabaseConnectionException
-     * @throws TournamentUpdateSuccess
+     * @throws TournamentUpdateException 
      */
-    public void editTournamentEndDate(String tournament_name, Date new_end_date) throws DatabaseConnectionException, TournamentUpdateSuccess {
+    public void editTournamentEndDate(Tournament tournament, Date new_end_date) throws DatabaseConnectionException, TournamentUpdateException {
         try {
             int result;
 
-            Connection con = DatabaseHelper.connect();
-            Statement statement = con.createStatement();
-            result = statement.executeUpdate("UPDATE tournament "
-                    + "SET start_date = '" + new_end_date + "' "
-                    + "WHERE name = '" + tournament_name + "'");
+            if(new_end_date.after(tournament.getStart_date())) {
+                Connection con = DatabaseHelper.connect();
+                Statement statement = con.createStatement();
+                result = statement.executeUpdate("UPDATE tournament "
+                        + "SET start_date = '" + new_end_date + "' "
+                        + "WHERE name = '" + tournament.getName() + "'");
 
-            if (result > 0) {
-                throw new TournamentUpdateSuccess("End date update successful", MyException.SUCCESS);
+                if (result < 1) {
+                    throw new TournamentUpdateException("An error occured while updating the end date", MyException.ERROR);
+                }
             } else {
-                throw new TournamentUpdateSuccess("An error occured while updating the end date", MyException.ERROR);
+                throw new TournamentUpdateException("The end date has to be after the start date", MyException.ERROR);
             }
+                
 
         } catch (SQLException ex) {
             Logger.getLogger(TournamentHelper.class.getName()).log(Level.SEVERE, null, ex);
@@ -316,12 +331,12 @@ public class TournamentHelper {
     }
 
     /**
-     *
+     * 
      * @param tournament_name
-     * @throws TournamentUpdateSuccess
-     * @throws DatabaseConnectionException
+     * @throws TournamentUpdateException
+     * @throws DatabaseConnectionException 
      */
-    public void deleteTournament(String tournament_name) throws TournamentUpdateSuccess, DatabaseConnectionException {
+    public void deleteTournament(String tournament_name) throws TournamentUpdateException, DatabaseConnectionException {
         try {
             int result;
 
@@ -330,10 +345,8 @@ public class TournamentHelper {
             result = statement.executeUpdate("DELETE FROM tournament "
                     + "WHERE name = '" + tournament_name + "'");
 
-            if (result > 0) {
-                throw new TournamentUpdateSuccess("Delete tournament successful", MyException.SUCCESS);
-            } else {
-                throw new TournamentUpdateSuccess("An error occured while deleting the tournament", MyException.ERROR);
+            if (result < 1) {
+                throw new TournamentUpdateException("An error occured while deleting the tournament", MyException.ERROR);
             }
 
         } catch (SQLException ex) {
@@ -349,7 +362,7 @@ public class TournamentHelper {
      * @throws TournamentNotExistingException
      */
     public ArrayList<Team> getTeamsByTournament(String tournament_name) throws DatabaseConnectionException, TournamentNotExistingException {
-        ArrayList<Team> teams = new ArrayList<Team>();
+        ArrayList<Team> teams = new ArrayList<>();
         try {
 
             Connection con = DatabaseHelper.connect();
@@ -539,17 +552,23 @@ public class TournamentHelper {
             java.util.Date dateEnd = new java.util.Date();
             java.util.Date dateDeadline = new java.util.Date();
 
-            if (start_date != null) {
-                dateStart = FORMATTER_DATE.parse(start_date.substring(1, start_date.length() - 1));
+            if (start_date != null && !start_date.equals("")) {
+                dateStart = FORMATTER_DATE.parse(start_date);
             }
 
-            if (end_date != null) {
-                dateEnd = FORMATTER_DATE.parse(end_date.substring(1, end_date.length() - 1));
+            if (end_date != null && !end_date.equals("")) {
+                dateEnd = FORMATTER_DATE.parse(end_date);
             }
             
-            if (deadline != null) {
-                dateDeadline = FORMATTER_DATE.parse(deadline.substring(1, deadline.length() - 1));
+            if (deadline != null && !deadline.equals("")) {
+                dateDeadline = FORMATTER_DATE.parse(deadline);
             }
+            
+            venue = venue.equals("") ? null : "'" + venue + "'";;
+            start_date = (start_date != null && start_date.equals("")) ? null : "'" + start_date + "'";
+            end_date = (end_date != null && end_date.equals("")) ? null : "'" + end_date + "'";
+            deadline = (deadline != null && deadline.equals("")) ? null : "'" + deadline + "'";
+            description = (description != null && description.equals("")) ? null : "'" + description + "'";
             
             if (!isTournamentExisting(name)) {
                 if (dateEnd.after(dateStart) || dateEnd.equals(dateStart)) {
