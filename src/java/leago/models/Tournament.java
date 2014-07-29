@@ -1,6 +1,6 @@
 package leago.models;
 
-import java.sql.Date;
+import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -189,7 +189,7 @@ public class Tournament {
         if(create_date == null) {
             result = "";
         } else {
-            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm");
             result = formatter.format(create_date);
         }
         
@@ -202,7 +202,7 @@ public class Tournament {
         if(start_date == null) {
             result = "";
         } else {
-            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm");
             result = formatter.format(start_date);
         }
         
@@ -215,7 +215,7 @@ public class Tournament {
         if(end_date == null) {
             result = "";
         } else {
-            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm");
             result = formatter.format(end_date);
         }
         
@@ -228,7 +228,7 @@ public class Tournament {
         if(deadline == null) {
             result = "";
         } else {
-            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm");
             result = formatter.format(deadline);
         }
         

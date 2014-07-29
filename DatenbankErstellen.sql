@@ -16,9 +16,7 @@ CREATE TABLE tournament (
         name CHAR(30) NOT NULL,
         leader CHAR(30) NOT NULL,
         start_date DATETIME,
-        start_time TIME,
         end_date DATETIME,
-        end_time TIME,
         create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         description CHAR(255),
         rounds INT,
@@ -46,7 +44,7 @@ CREATE TABLE team (
 CREATE TABLE game (
         tournament CHAR(30) NOT NULL,
         game_id INT NOT NULL,
-        season_id INT NOT NULL,
+        round_id INT NOT NULL,
         team_home CHAR(30),
         team_away CHAR(30),
         goals_home TINYINT,
@@ -256,8 +254,3 @@ INSERT INTO team_tournament (team, tournament, goals, goals_conceded,
 INSERT INTO team_tournament (team, tournament, goals, goals_conceded, 
 					wins, defeats) 
 		  VALUES ("Team Louis Lorenz", "GDIS - alle", 52, 144, 1, 14);
-		  
-		  
-		  
-
-

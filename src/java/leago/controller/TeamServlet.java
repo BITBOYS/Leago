@@ -158,7 +158,6 @@ public class TeamServlet extends HttpServlet {
         try {
             TeamHelper teamHelper = new TeamHelper();
             team = teamHelper.getTeam(id);
-            request.getSession().removeAttribute("message");
             
             switch (setting_action) {
                 case "profile":
@@ -260,7 +259,6 @@ public class TeamServlet extends HttpServlet {
         try {
             teamHelper.updateName(team, input_name_new1, input_name_new2);
             team = teamHelper.getTeam(input_name_new1);
-            request.getSession().setAttribute("message", new MyException("Teamname update successful", MyException.SUCCESS));
             redirect = true;
         } catch (TeamUpdateException | TeamNotExistingException ex) {
             Logger.getLogger(TeamServlet.class.getName()).log(Level.SEVERE, null, ex);

@@ -104,7 +104,7 @@
     </filter-mapping>
     <filter-mapping>
         <filter-name>AuthenticatonFilter</filter-name>
-        <servlet-name>TurnamentServlet</servlet-name>
+        <servlet-name>TournamentServlet</servlet-name>
     </filter-mapping>
     
     <!-- T I M E O U T -->

@@ -42,7 +42,7 @@
 
                         <div class="form-group">
                             <label class="control-label">Beschreibung</label>
-                            <textarea class="form-control" style="max-width: 100%; resize: vertical" name="tournament_description" maxlength="255" placeholder="Beschreibe dein Turnier mit maximal 255 Zeichen..." rows="5"></textarea>
+                            <textarea class="form-control" style="max-width: 100%; resize: vertical" name="tournament_description" value="${description}" maxlength="255" placeholder="Beschreibe dein Turnier mit maximal 255 Zeichen..." rows="5"></textarea>
                         </div>
 
 <!--                        <div class="form-group">
