@@ -22,7 +22,7 @@ public class Schedule {
      */
     public Schedule() {
         super();
-        rounds = new ArrayList<Round>();
+        rounds = new ArrayList<>();
     }
 
     /**

@@ -1,7 +1,6 @@
 package leago.models;
 
 import java.sql.Date;
-import java.sql.Time;
 
 /**
  * Object-Klasse für das Match eines Turnieres
@@ -11,12 +10,15 @@ import java.sql.Time;
  */
 public class Match {
 
+    private Tournament tournament;
     private Team team1;
     private Team team2;
     private int points1;
     private int points2;
-    private Date date;
-    private Time time;
+    private Date played;
+    private int game_nr;
+    private int round_nr;
+    private int id;
 
     /**
      * Konstruktor
@@ -30,13 +32,12 @@ public class Match {
         this.team2 = team2;
     }
 
-    public Match(Team team1, Team team2, int points1, int points2, Date date, Time time) {
+    public Match(Team team1, Team team2, int points1, int points2, Date played) {
         this.team1 = team1;
         this.team2 = team2;
         this.points1 = points1;
         this.points2 = points2;
-        this.date = date;
-        this.time = time;
+        this.played = played;
     }
 
     public Match(Team team1, Team team2, int points1, int points2) {
@@ -44,6 +45,38 @@ public class Match {
         this.team2 = team2;
         this.points1 = points1;
         this.points2 = points2;
+    }
+
+    public Tournament getTournament() {
+        return tournament;
+    }
+
+    public void setTournament(Tournament tournament) {
+        this.tournament = tournament;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getRound_nr() {
+        return round_nr;
+    }
+
+    public void setRound_nr(int round_nr) {
+        this.round_nr = round_nr;
+    }
+
+    public int getGame_nr() {
+        return game_nr;
+    }
+
+    public void setGame_nr(int game_nr) {
+        this.game_nr = game_nr;
     }
 
     public Team getTeam1() {
@@ -78,25 +111,17 @@ public class Match {
         this.points2 = points2;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getPlayed() {
+        return played;
     }
 
-    public Time getTime() {
-        return time;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public void setTime(Time time) {
-        this.time = time;
+    public void setPlayed(Date played) {
+        this.played = played;
     }
 
     @Override
     public String toString() {
-        return "Match{" + "team1=" + team1 + ", team2=" + team2 + ", points1=" + points1 + ", points2=" + points2 + ", date=" + date + ", time=" + time + '}';
+        return "Match{" + "team1=" + team1 + ", team2=" + team2 + ", points1=" + points1 + ", points2=" + points2 + ", date=" + played + '}';
     }
 
 }

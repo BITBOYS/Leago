@@ -17,7 +17,6 @@
         <ul id="myTab" class="nav nav-tabs">
             <li class="active"><a href="#news" data-toggle="tab"><i class="fa fa-gamepad pull-left fa-2x"></i> Spielplan</a></li>
             <li><a href="#table" data-toggle="tab"><i class="fa fa-table pull-left fa-2x"></i> Tabelle</a></li>
-            <li><a href="#user" data-toggle="tab"> <i class="fa fa-arrow-circle-o-up pull-left fa-2x"></i> Spielerstatistiken</a></li>
         </ul>
         <div id="myTabContent" class="tab-content">
 
@@ -57,42 +56,94 @@
                     </div>
                 </div><!-- /.row -->
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <h2 class="page-header"></h2>
+                <c:choose>
+                    <c:when test="${tournament.schedule != null}">
 
-                        <div class="panel panel-leago">
-                            <!-- Default panel contents -->
-                            <div class="panel-heading"><i class="fa fa-gamepad"></i> Spielplan</div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-8 col-md-offset-2">
+                                <div class="panel panel-leago">
+                                    <!-- Default panel contents -->
+                                    <div class="panel-heading"><i class="fa fa-gamepad"></i> Spielplan</div>
 
-                            <!-- Table -->
-                            <div class="table-responsive">                                               
-                                <table class="table table-hover">  
-                                    <thead>  
-                                        <tr>  
-                                            <th><span class="label label-default">Datum</span></th> 
-                                            <th><span class="label label-default">Heim</span></th> 
-                                            <th><span class="label label-default">Gast</span></th> 
-                                            <th><span class="label label-default">Ergebnis</span></th> 
-                                        </tr>  
-                                    </thead>  
-                                    <tbody>  
-                                        <c:forEach items="${tournament.schedule.rounds}" var="round">
-                                            <c:forEach items="${round.matches}" var="match">
-                                                <tr>  
-                                                    <td>1</td>  
-                                                    <td><a href="${pageContext.request.contextPath}/team/${match.team1.name}">${match.team1.name}</a></td>  
-                                                    <td><a href="${pageContext.request.contextPath}/team/${match.team2.name}">${match.team2.name}</a></td>  
-                                                    <td>2</td> 
-                                                </tr>  
-                                            </c:forEach>
-                                        </c:forEach>
-                                    </tbody>  
-                                </table>  
-                            </div>
-                        </div><!-- /.panel -->  
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
+                                    <!-- Table -->
+                                    <div class="tab-content">
+                                    <c:forEach items="${tournament.schedule.rounds}" var="round" varStatus="loop">
+                                        <c:choose>
+                                            <c:when test="${loop.index == 0}">
+                                                <div class="table-responsive tab-pane active no-margin" id="round${loop.index + 1}">
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div class="table-responsive tab-pane no-margin" id="round${loop.index + 1}">
+                                            </c:otherwise>
+                                        </c:choose>
+                                            <table class="table table-hover">
+                                                <tbody>
+                                                    <tr class="text-center"><td colspan="3"><b>Runde ${round.round}</b></td></tr>
+                                                    <c:forEach items="${round.matches}" var="match">
+                                                        <c:choose>
+                                                            <c:when test="${tournament.leader.name == user.name}">
+                                                                <tr>
+                                                                    <td class="text-right"><a href="${pageContext.request.contextPath}/team/${match.team1.name}">${match.team1.name}</a></td>
+                                                                    <td class="text-center">
+                                                                        <form id="match${match.id}" action="${pageContext.request.contextPath}/tournament/${tournament.name}/match/${match.id}" method="POST">
+                                                                            <c:choose>
+                                                                                <c:when test="${match.played != null}">
+                                                                                    <a style="margin-right: 5px;" href="javascript:{}" onclick="toggleInputfield(${match.id});"><i id="lock${match.id}" class="fa fa-lock"></i><i id="unlock${match.id}" class="fa fa-unlock-alt" style="display:none"></i></a> 
+                                                                                </c:when>
+                                                                                <c:otherwise>
+                                                                                    <a style="margin-right: 5px;" href="javascript:{}" onclick="toggleInputfield2(${match.id});"><i id="lock${match.id}" class="fa fa-unlock-alt"></i><i id="unlock${match.id}" class="fa fa-lock" style="display:none"></i></a> 
+                                                                                </c:otherwise>
+                                                                            </c:choose>
+                                                                            <input <c:if test="${match.played != null}">disabled</c:if> type="number" min="0" value="${match.points1}"  name="input_points1" required id="points1${match.id}"> : 
+                                                                            <input <c:if test="${match.played != null}">disabled</c:if> type="number" min="0" value="${match.points2}" name="input_points2" required id="points2${match.id}">
+                                                                            <a href="javascript:{}" class="btn <c:if test="${match.played != null}">disabled</c:if>" style="padding:0; margin-left: 5px" id="submit${match.id}" onclick="document.getElementById('match${match.id}').submit(); return false;"><i class="fa fa-arrow-circle-right"></i></a>
+                                                                        </form>
+                                                                    </td>
+                                                                    <td><a href="${pageContext.request.contextPath}/team/${match.team2.name}">${match.team2.name}</a></td>
+                                                                </tr>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <tr>
+                                                                    <td class="text-right"><a href="${pageContext.request.contextPath}/team/${match.team1.name}">${match.team1.name}</a></td>
+                                                                    <td class="text-center">${match.points1} : ${match.points2}</td>
+                                                                    <td><a href="${pageContext.request.contextPath}/team/${match.team2.name}">${match.team2.name}</a></td>
+                                                                </tr>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:forEach>
+                                                </tbody>
+                                            </table>
+                                            </div>
+                                    </c:forEach>
+                                    </div>
+                                </div><!-- /.panel -->
+                            </div><!-- col-md-8 -->
+                        </div>
+
+                        <div class="text-center">
+                            <ul class="pagination">
+                                <c:forEach items="${tournament.schedule.rounds}" varStatus="loop">
+                                    <c:choose>
+                                        <c:when test="${loop.index+1 == param.round || (param.round == null && loop.index+1 == 1)}">
+                                            <li class="active"><a href="#round${loop.index + 1}" data-toggle="tab">${loop.index + 1}</a></li>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li><a href="#round${loop.index + 1}" data-toggle="tab">${loop.index + 1}</a></li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                            </ul>
+                        </div>
+                        
+                    </c:when>
+                    <c:otherwise>
+                        <hr>
+                        <h2>F&uuml;r das Turnier wurde noch kein Spielplan erstellt.</h2>
+                    </c:otherwise>
+                </c:choose>
+                        
+                       
 
             </div><!-- /.tab-pane -->
 
@@ -129,13 +180,13 @@
                                             <tr>  
                                                 <td># <c:out value="${status.count}" /></td> 
                                                 <td><a href="${pageContext.request.contextPath}/team/${placement.team}">${placement.team}</a></td>  
-                                                <td>${placement.tournament_team_matches}</td>  
-                                                <td>${placement.tournament_team_winrate}</td>  
-                                                <td>${placement.tournament_team_wins}</td>  
-                                                <td>${placement.tournament_team_defeats}</td>  
-                                                <td>${placement.tournament_team_goals}</td> 
-                                                <td>${placement.tournament_team_goals_conceded}</td> 
-                                                <td>${placement.tournament_team_goal_difference}</td>                                         
+                                                <td>${placement.amount_matches}</td>  
+                                                <td>${placement.winrate}</td>  
+                                                <td>${placement.wins}</td>  
+                                                <td>${placement.defeats}</td>  
+                                                <td>${placement.goals}</td> 
+                                                <td>${placement.goals_conceded}</td> 
+                                                <td>${placement.goal_difference}</td>                                         
                                             </tr>  
                                         </c:forEach>
                                     </tbody>  
@@ -145,46 +196,57 @@
                     </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.tab-pane -->
-
-            <div class="tab-pane fade" id="user">
-                <p>Hier siehst du das Ranking alle am Turnier teilnehmenden Spieler.</p>
-                <div class="row">
-
-                    <div class="col-lg-12">
-                        <h2 class="page-header"></h2>
-
-                        <div class="panel panel-leago">
-                            <!-- Default panel contents -->
-                            <div class="panel-heading"><i class="fa fa-arrow-circle-o-up"></i> Userstatistik</div>
-
-                            <!-- Table -->
-                            <div class="table-responsive">                                               
-                                <table class="table table-hover">  
-                                    <thead>  
-                                        <tr>  
-                                            <th><span class="label label-default">Platz</span></th> 
-                                            <th><span class="label label-default">Spieler</span></th> 
-                                            <th><span class="label label-default">Siege</span></th>
-                                            <th><span class="label label-default">Tore</span></th> 
-                                        </tr>  
-                                    </thead>  
-                                    <tbody>  
-                                        <c:forEach items="${tournament.member}" var="user" varStatus="status">
-                                            <tr>  
-                                                <td># ${status.count}</td> 
-
-                                                <td><a href="${pageContext.request.contextPath}/user/${user.name}">${user.name}</a></td>  
-                                                <td>${user.statistics.wins}</td> 
-                                                <td>${user.statistics.goals}</td>  
-                                            </tr> 
-                                        </c:forEach>
-                                    </tbody>  
-                                </table>  
-                            </div>
-                        </div><!-- /.panel -->
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.tab-pane -->
         </div><!-- /.tab-content -->
     </div><!-- /.col -->
 </div><!-- /.row -->
+
+
+<script type="text/javascript">
+//    function toggleInputfield(id) {
+//        var x = document.getElementById("points1"+id).disabled;
+//        var y = document.getElementById("points2"+id).disabled;
+//        
+//        if(x === true) {
+//            document.getElementById("points1"+id).disabled = false;
+//            document.getElementById("lock"+id).style.setProperty("display", "none");
+//            document.getElementById("unlock"+id).style.setProperty("display", "inline");
+//        } else {
+//            document.getElementById("points1"+id).disabled = true;
+//            document.getElementById("lock"+id).style.setProperty("display", "inline");
+//            document.getElementById("unlock"+id).style.setProperty("display", "none");
+//        }
+//        
+//        if(y === true) {
+//            document.getElementById("points2"+id).disabled = false;
+//        } else {
+//            document.getElementById("points2"+id).disabled = true;
+//        }
+//        
+//        $('#submit'+id).toggleClass('disabled');
+//    }
+//    
+//    function toggleInputfield2(id) {
+//        var x = document.getElementById("points1"+id).disabled;
+//        var y = document.getElementById("points2"+id).disabled;
+//        
+//        if(x === true) {
+//            document.getElementById("points1"+id).disabled = false;
+//            document.getElementById("lock"+id).style.setProperty("display", "inline");
+//            document.getElementById("unlock"+id).style.setProperty("display", "none");
+//        } else {
+//            document.getElementById("points1"+id).disabled = true;
+//            document.getElementById("lock"+id).style.setProperty("display", "none");
+//            document.getElementById("unlock"+id).style.setProperty("display", "inline");
+//        }
+//        
+//        if(y === true) {
+//            document.getElementById("points2"+id).disabled = false;
+//        } else {
+//            document.getElementById("points2"+id).disabled = true;
+//        }
+//        
+//        $('#submit'+id).toggleClass('disabled');
+//    }
+    
+    
+</script>

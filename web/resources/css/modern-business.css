@@ -43,7 +43,11 @@ footer {
 }
 
 .tab-pane {
-  margin-top: 15px;
+    margin-top: 15px;
+}
+
+.no-margin {
+    margin: 0;
 }
 
 /* Social Icons Styles */

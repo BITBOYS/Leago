@@ -23,7 +23,6 @@ import leago.error.exceptions.DatabaseConnectionException;
 import leago.error.exceptions.TournamentCreationException;
 import leago.error.exceptions.TournamentNotExistingException;
 import leago.error.exceptions.TournamentUpdateException;
-import leago.error.success.TournamentUpdateSuccess;
 import leago.models.Match;
 import leago.models.Round;
 import leago.models.Schedule;
@@ -75,6 +74,8 @@ public class TournamentHelper {
                 tournament.setTeams(getTeamsByTournament(tournament.getName()));
                 tournament.setMember(getMemberByTournament(tournament.getName()));
                 tournament.setTable(getTableByTournament(tournament.getName()));
+                // @todo --> spielplan aus DB auslesen
+                tournament.setSchedule(getTournamentSchedule(tournament.getName()));
 
             }
 
@@ -85,20 +86,181 @@ public class TournamentHelper {
 
         return tournament;
     }
+    
+    public static Schedule getTournamentSchedule(String tournament_name) throws DatabaseConnectionException {
+        Schedule schedule = new Schedule();
+        List<Round> rounds = new ArrayList<>();
+        Round round = new Round();
+        
+        int current_round = 0;
+        int last_round = 1;
+        
+        
+        try {
+            Connection con = DatabaseHelper.connect();
+            Statement statement = con.createStatement();            
+            ResultSet resultSet = statement.executeQuery("SELECT" +
+                    " CASE WHEN played != '0000-00-00 00:00:00' THEN played END AS played, match_id, round_nr, game_nr, team_home, team_away, goals_home, goals_away" +
+                    " FROM game" +
+                    " WHERE tournament = '" + tournament_name.trim() + "'");
+
+                    
+                    
+             while(resultSet.next()) {
+                current_round = resultSet.getInt("round_nr");
+                
+                if(current_round > last_round) {
+                    last_round = current_round;
+                    rounds.add(round);
+                    round = new Round();
+                    round.setRound(current_round);
+                    
+                    Match match = new Match();
+                    match.setId(resultSet.getInt("match_id"));
+                    match.setRound_nr(current_round);
+                    match.setGame_nr(resultSet.getInt("game_nr"));
+                    match.setTeam1(new Team(resultSet.getString("team_home")));
+                    match.setTeam2(new Team(resultSet.getString("team_away")));
+                    match.setPoints1(resultSet.getInt("goals_home"));
+                    match.setPoints2(resultSet.getInt("goals_away"));
+                    match.setPlayed(resultSet.getDate("played"));
+                    
+                    round.getMatches().add(match);
+                } else {
+                    Match match = new Match();
+                    match.setId(resultSet.getInt("match_id"));
+                    match.setRound_nr(current_round);
+                    match.setGame_nr(resultSet.getInt("game_nr"));
+                    match.setTeam1(new Team(resultSet.getString("team_home")));
+                    match.setTeam2(new Team(resultSet.getString("team_away")));
+                    match.setPoints1(resultSet.getInt("goals_home"));
+                    match.setPoints2(resultSet.getInt("goals_away"));
+                    match.setPlayed(resultSet.getDate("played"));
+                    
+                    round.getMatches().add(match);
+                }
+            }
+             
+             if(current_round != 0) {
+                rounds.add(round);
+                schedule.setRounds(rounds);
+             } else {
+                 schedule = null;
+             }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(TournamentHelper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DatabaseConnectionException("An error occured while getting the tournament schedule", MyException.ERROR);
+        }
+        
+        return schedule;
+    }
+    
+    public void editTournamentMatch(int match_id, int points_home, int points_away) throws DatabaseConnectionException {
+
+        try {
+            Connection con = DatabaseHelper.connect();
+            Statement statement = con.createStatement();            
+            statement.execute("UPDATE game"
+                            + " SET goals_home = " + points_home + ", goals_away = " + points_away
+                            + " WHERE match_id = " + match_id);
+
+         } catch (SQLException ex) {
+            Logger.getLogger(TournamentHelper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DatabaseConnectionException("An error occured while updating the match", MyException.ERROR);
+        }
+    }
+    
+    public void updateTournamentTable(Tournament tournament, String team_home, String team_away, int goals_home, int goals_away) throws DatabaseConnectionException {
+
+        int goals = -1, goals_conceded = -1, wins = -1, defeats = -1;
+        String team = "";
+        
+        try {
+            Connection con = DatabaseHelper.connect();
+            Statement statement = con.createStatement();
+            
+            for(int idx = 0; idx < 2; idx++) {
+        
+                for(Table table : tournament.getTable()) {
+                    if(idx == 0) 
+                        if(table.getTeam().equals(team_home)) {
+                            goals = table.getGoals() + goals_home;
+                            goals_conceded = table.getGoals_conceded() + goals_away;
+                            wins = (goals_home > goals_away)? table.getWins()+1 : table.getWins();
+                            defeats = (goals_home < goals_away)? table.getDefeats()+1 : table.getDefeats();
+                            team = team_home;
+                        }
+                    
+                    if(idx == 1)
+                        if(table.getTeam().equals(team_away)) {
+                            goals = table.getGoals() + goals_away;
+                            goals_conceded = table.getGoals_conceded() + goals_home;
+                            wins = (goals_home < goals_away)? table.getWins()+1 : table.getWins();
+                            defeats = (goals_home > goals_away)? table.getDefeats()+1 : table.getDefeats();
+                            team = team_away;
+                        }
+                }
+                
+                statement.execute("UPDATE team_tournament"
+                            + " SET goals = " + goals + ", goals_conceded = " + goals_conceded + ", wins = " + wins + ", defeats = " + defeats
+                            + " WHERE tournament = '" + tournament.getName() + "'"
+                            + "   AND team = '" + team + "'");
+                
+            }
+
+         } catch (SQLException ex) {
+            Logger.getLogger(TournamentHelper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DatabaseConnectionException("An error occured while updating the match", MyException.ERROR);
+        }
+    }
+    
+    public Match getMatch(int match_id) throws DatabaseConnectionException {
+        
+        Match match = null;
+        
+        try {
+            Connection con = DatabaseHelper.connect();
+            Statement statement = con.createStatement();            
+            ResultSet resultSet = statement.executeQuery("SELECT" +
+                " CASE WHEN played != '0000-00-00 00:00:00' THEN played END AS played, tournament, match_id, round_nr, game_nr, team_home, team_away, goals_home, goals_away" +
+                " FROM game" +
+                " WHERE match_id = " + match_id);
+            
+            while(resultSet.next()) {
+                match = new Match();
+                match.setId(match_id);
+                match.setTournament(new Tournament(resultSet.getString("tournament")));
+                match.setRound_nr(resultSet.getInt("round_nr"));
+                match.setGame_nr(resultSet.getInt("game_nr"));
+                match.setPoints1(resultSet.getInt("goals_home"));
+                match.setPoints2(resultSet.getInt("goals_away"));
+                match.setTeam1(new Team(resultSet.getString("team_home")));
+                match.setTeam2(new Team(resultSet.getString("team_away")));
+                match.setPlayed(resultSet.getDate("played"));
+            }
+
+         } catch (SQLException ex) {
+            Logger.getLogger(TournamentHelper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DatabaseConnectionException("An error occured while updating the match", MyException.ERROR);
+        }
+        
+        return match;
+    }
 
     /**
-     * 
+     *
      * @param tournament_name
      * @param new_name
      * @param name_new2
      * @throws DatabaseConnectionException
-     * @throws TournamentUpdateException 
+     * @throws TournamentUpdateException
      */
     public void editTournamentName(String tournament_name, String new_name, String name_new2) throws DatabaseConnectionException, TournamentUpdateException {
         try {
             int result;
             if (name_new2.equals(new_name)) {
-                if(!isTournamentExisting(new_name)) {
+                if (!isTournamentExisting(new_name)) {
                     Connection con = DatabaseHelper.connect();
                     Statement statement = con.createStatement();
                     result = statement.executeUpdate("UPDATE tournament "
@@ -121,11 +283,11 @@ public class TournamentHelper {
     }
 
     /**
-     * 
+     *
      * @param tournament_name
      * @param new_leader
      * @throws TournamentUpdateException
-     * @throws DatabaseConnectionException 
+     * @throws DatabaseConnectionException
      */
     public void editTournamentLeader(String tournament_name, String new_leader) throws TournamentUpdateException, DatabaseConnectionException {
         try {
@@ -147,11 +309,11 @@ public class TournamentHelper {
     }
 
     /**
-     * 
+     *
      * @param tournament_name
      * @param new_venue
      * @throws TournamentUpdateException
-     * @throws DatabaseConnectionException 
+     * @throws DatabaseConnectionException
      */
     public void editTournamentVenue(String tournament_name, String new_venue) throws TournamentUpdateException, DatabaseConnectionException {
         try {
@@ -173,11 +335,11 @@ public class TournamentHelper {
     }
 
     /**
-     * 
+     *
      * @param tournament_name
      * @param description
      * @throws TournamentUpdateException
-     * @throws DatabaseConnectionException 
+     * @throws DatabaseConnectionException
      */
     public void editTournamentDescription(String tournament_name, String description) throws TournamentUpdateException, DatabaseConnectionException {
         try {
@@ -199,11 +361,11 @@ public class TournamentHelper {
     }
 
     /**
-     * 
+     *
      * @param tournament_name
      * @param rounds
      * @throws TournamentUpdateException
-     * @throws DatabaseConnectionException 
+     * @throws DatabaseConnectionException
      */
     public void editTournamentRounds(String tournament_name, int rounds) throws TournamentUpdateException, DatabaseConnectionException {
         try {
@@ -235,7 +397,7 @@ public class TournamentHelper {
         try {
             int result;
 
-            if(new_deadline.before(tournament.getStart_date())) {            
+            if (new_deadline.before(tournament.getStart_date())) {
                 Connection con = DatabaseHelper.connect();
                 Statement statement = con.createStatement();
                 result = statement.executeUpdate("UPDATE tournament "
@@ -253,13 +415,13 @@ public class TournamentHelper {
             Logger.getLogger(TournamentHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void kickTeam(Team team, Tournament tournament) throws DatabaseConnectionException, TournamentUpdateException {
-        
+
         try {
             Connection con = DatabaseHelper.connect();
             Statement statement = con.createStatement();
-            
+
             statement.execute("DELETE FROM team_tournament WHERE team = '" + team.getName() + "' AND tournament = '" + tournament.getName() + "'");
 
         } catch (SQLException ex) {
@@ -269,17 +431,17 @@ public class TournamentHelper {
     }
 
     /**
-     * 
+     *
      * @param tournament
      * @param new_start_date
      * @throws TournamentUpdateException
-     * @throws DatabaseConnectionException 
+     * @throws DatabaseConnectionException
      */
     public void editTournamentStartDate(Tournament tournament, Date new_start_date) throws TournamentUpdateException, DatabaseConnectionException {
         try {
             int result;
-            
-            if(new_start_date.before(tournament.getEnd_date())) {
+
+            if (new_start_date.before(tournament.getEnd_date())) {
                 Connection con = DatabaseHelper.connect();
                 Statement statement = con.createStatement();
                 result = statement.executeUpdate("UPDATE tournament "
@@ -292,7 +454,6 @@ public class TournamentHelper {
             } else {
                 throw new TournamentUpdateException("The start date has to be before the end date", MyException.ERROR);
             }
-            
 
         } catch (SQLException ex) {
             Logger.getLogger(TournamentHelper.class.getName()).log(Level.SEVERE, null, ex);
@@ -300,17 +461,17 @@ public class TournamentHelper {
     }
 
     /**
-     * 
+     *
      * @param tournament
      * @param new_end_date
      * @throws DatabaseConnectionException
-     * @throws TournamentUpdateException 
+     * @throws TournamentUpdateException
      */
     public void editTournamentEndDate(Tournament tournament, Date new_end_date) throws DatabaseConnectionException, TournamentUpdateException {
         try {
             int result;
 
-            if(new_end_date.after(tournament.getStart_date())) {
+            if (new_end_date.after(tournament.getStart_date())) {
                 Connection con = DatabaseHelper.connect();
                 Statement statement = con.createStatement();
                 result = statement.executeUpdate("UPDATE tournament "
@@ -323,7 +484,6 @@ public class TournamentHelper {
             } else {
                 throw new TournamentUpdateException("The end date has to be after the start date", MyException.ERROR);
             }
-                
 
         } catch (SQLException ex) {
             Logger.getLogger(TournamentHelper.class.getName()).log(Level.SEVERE, null, ex);
@@ -331,10 +491,10 @@ public class TournamentHelper {
     }
 
     /**
-     * 
+     *
      * @param tournament_name
      * @throws TournamentUpdateException
-     * @throws DatabaseConnectionException 
+     * @throws DatabaseConnectionException
      */
     public void deleteTournament(String tournament_name) throws TournamentUpdateException, DatabaseConnectionException {
         try {
@@ -380,7 +540,7 @@ public class TournamentHelper {
                 team.setName(resultSet.getString("name"));
                 team.setTag(resultSet.getString("tag"));
                 team.setCreate_date(resultSet.getDate("create_date"));
-                
+
                 Statistics stats = new Statistics();
                 stats.setGoals(resultSet.getInt("team.goals"));
                 stats.setGoals_conceded(resultSet.getInt("team.goals_conceded"));
@@ -388,9 +548,9 @@ public class TournamentHelper {
                 stats.setDefeats(resultSet.getInt("team.defeats"));
                 stats.setTournament_wins(resultSet.getInt("tournament_wins"));
                 stats.setTournament_participations(resultSet.getInt("tournament_participations"));
-                
+
                 team.setStatistics(stats);
-                
+
                 teams.add(team);
             }
         } catch (SQLException ex) {
@@ -456,14 +616,14 @@ public class TournamentHelper {
                     + " ORDER BY (wins/(wins+defeats)) DESC");
 
             while (resultSet.next()) {
-                
+
                 Table entry = new Table();
                 entry.setTeam(resultSet.getString("team"));
-                entry.setTournament_team_wins(resultSet.getInt("wins"));
-                entry.setTournament_team_defeats(resultSet.getInt("defeats"));
-                entry.setTournament_team_goals(resultSet.getInt("goals"));
-                entry.setTournament_team_goals_conceded(resultSet.getInt("goals_conceded"));
-                
+                entry.setWins(resultSet.getInt("wins"));
+                entry.setDefeats(resultSet.getInt("defeats"));
+                entry.setGoals(resultSet.getInt("goals"));
+                entry.setGoals_conceded(resultSet.getInt("goals_conceded"));
+
                 table.add(entry);
             }
         } catch (SQLException ex) {
@@ -491,7 +651,7 @@ public class TournamentHelper {
                 user.setName(resultSet.getString("username"));
                 teammember.add(user);
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(TournamentHelper.class.getName()).log(Level.SEVERE, null, ex);
             throw new DatabaseConnectionException("An error occured while getting the member of " + team.getName(), MyException.ERROR);
@@ -501,14 +661,36 @@ public class TournamentHelper {
 
     }
 
-    public Schedule createTournamentSchedule(Tournament tournament) throws DatabaseConnectionException, TournamentNotExistingException {
+    public Schedule createTournamentSchedule(Tournament tournament) throws TournamentNotExistingException, DatabaseConnectionException, TournamentUpdateException {
 
-//        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-//        Date date = new Date();
-        List<Team> teams = getTeamsByTournament(tournament.getName());
+        Schedule schedule = generateSchedule(tournament);
+        try {            
+            Connection con = DatabaseHelper.connect();
+            Statement statement = con.createStatement();
+            
+            for(int round_idx = 0; round_idx < schedule.getRounds().size(); round_idx++) {
+                Round round = schedule.getRounds().get(round_idx);
+                
+                for(int match_idx = 0; match_idx < round.getMatches().size(); match_idx++) {
+                    Match match = round.getMatches().get(match_idx);
+                    statement.execute("INSERT INTO game"
+                            + " (tournament, game_nr, round_nr, team_home, team_away)"
+                            + " VALUES ('" + tournament.getName() + "'," + (match_idx+1) + "," + (round_idx+1) + ",'" + match.getTeam1().getName() + "','" + match.getTeam2().getName() + "')");
+                }
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(TournamentHelper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new TournamentUpdateException("Schedule creation failed unexpectedly with an SQL error " + ex.getSQLState(), MyException.ERROR);
+        }
+        
+        return schedule;
+    }
+
+    public Schedule generateSchedule(Tournament tournament) throws DatabaseConnectionException, TournamentNotExistingException {
+
+        List<Team> teams = tournament.getTeams();
         List<Match> matches = new ArrayList<>();
         Schedule schedule = new Schedule();
-        int nr_rounds = tournament.getRounds();
         List<Round> rounds = new ArrayList<>();
 
         for (int i = 0; i < teams.size(); i++) {
@@ -533,15 +715,13 @@ public class TournamentHelper {
             }
         }
 
-        for (int i = 0; i <= tournament.getRounds(); i++) {
-            rounds.add(new Round(matches));
+        Collections.shuffle(matches);
+
+        for (int i = 0; i < tournament.getRounds(); i++) {
+            rounds.add(new Round(matches, i + 1));
         }
         schedule.setRounds(rounds);
-
-        for (Match match : matches) {
-            System.out.println(match.getTeam1().getName() + " vs. " + match.getTeam2().getName());
-        }
-
+        
         return schedule;
     }
 
@@ -559,20 +739,20 @@ public class TournamentHelper {
             if (end_date != null && !end_date.equals("")) {
                 dateEnd = FORMATTER_DATE.parse(end_date);
             }
-            
+
             if (deadline != null && !deadline.equals("")) {
                 dateDeadline = FORMATTER_DATE.parse(deadline);
             }
-            
+
             venue = venue.equals("") ? null : "'" + venue + "'";;
             start_date = (start_date != null && start_date.equals("")) ? null : "'" + start_date + "'";
             end_date = (end_date != null && end_date.equals("")) ? null : "'" + end_date + "'";
             deadline = (deadline != null && deadline.equals("")) ? null : "'" + deadline + "'";
             description = (description != null && description.equals("")) ? null : "'" + description + "'";
-            
+
             if (!isTournamentExisting(name)) {
                 if (dateEnd.after(dateStart) || dateEnd.equals(dateStart)) {
-                    if(dateDeadline.before(dateStart)) {
+                    if (dateDeadline.before(dateStart)) {
                         Connection con = DatabaseHelper.connect();
                         Statement statement = con.createStatement();
 
@@ -588,7 +768,7 @@ public class TournamentHelper {
             } else {
                 throw new TournamentCreationException("Name already taken", MyException.ERROR);
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(UserHelper.class.getName()).log(Level.SEVERE, null, ex);
             throw new TournamentCreationException("Tournament creation failed unexpectedly with an SQL error " + ex.getSQLState(), MyException.ERROR);
@@ -597,22 +777,22 @@ public class TournamentHelper {
 
     private boolean isTournamentExisting(String name) throws DatabaseConnectionException {
         boolean result = false;
-        
+
         try {
-            
+
             Connection con = DatabaseHelper.connect();
             Statement statement = con.createStatement();
             ResultSet resultSet = statement.executeQuery("select COUNT(*) as count from tournament where name='" + name + "'");
             resultSet.next();
-            
+
             if (resultSet.getInt("count") > 0) {
                 result = true;
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(TournamentHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return result;
     }
 }
