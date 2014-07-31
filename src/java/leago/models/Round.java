@@ -6,6 +6,7 @@
 
 package leago.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,12 +16,16 @@ import java.util.List;
 public class Round {
     
     List<Match> matches;
+    int round;
 
-    public Round(List<Match> matches) {
+    public Round(List<Match> matches, int round) {
         this.matches = matches;
+        this.round = round;
     }
 
     public Round() {
+        matches = new ArrayList<>();
+        this.round = 1;
     }
 
     public List<Match> getMatches() {
@@ -31,9 +36,12 @@ public class Round {
         this.matches = matches;
     }
 
-    @Override
-    public String toString() {
-        return "Rounds{" + "matches=" + matches + '}';
+    public int getRound() {
+        return round;
+    }
+
+    public void setRound(int round) {
+        this.round = round;
     }
         
 }

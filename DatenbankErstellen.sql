@@ -42,14 +42,16 @@ CREATE TABLE team (
 );
 
 CREATE TABLE game (
+		match_id INT NOT NULL auto_increment,
         tournament CHAR(30) NOT NULL,
-        game_id INT NOT NULL,
-        round_id INT NOT NULL,
+        round_nr INT NOT NULL,
+        game_nr INT NOT NULL,
         team_home CHAR(30),
         team_away CHAR(30),
         goals_home TINYINT,
         goals_away TINYINT,
-        PRIMARY KEY (tournament, game_id),
+		played TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        PRIMARY KEY (match_id),
         FOREIGN KEY (tournament) REFERENCES tournament(name) ON DELETE CASCADE ON UPDATE CASCADE,
         FOREIGN KEY (team_home) REFERENCES team(name) ON DELETE RESTRICT ON UPDATE CASCADE,
         FOREIGN KEY (team_away) REFERENCES team(name) ON DELETE RESTRICT ON UPDATE CASCADE

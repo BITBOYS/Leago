@@ -14,4 +14,5 @@
             <p class="list-group-item-text">Change the leader or delete the tournament</p>
         </a>
     </div>
+    <p><a href="${pageContext.request.contextPath}/tournament/${tournament.name}"><span class="fa fa-long-arrow-left"></span> zurück zum Turnierprofil</a></p>
 </div>

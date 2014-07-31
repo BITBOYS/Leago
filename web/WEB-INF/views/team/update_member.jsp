@@ -1,15 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div class="row">
-
-    <div class="col-md-3">
-        <div class="list-group">
-            <a href="${pageContext.request.contextPath}/team/${team.name}/settings/profile" class="list-group-item"><span class="fa fa-info"> </span> Teameinstellungen</a>
-            <a href="${pageContext.request.contextPath}/team/${team.name}/settings/member" class="list-group-item active"><span class="fa fa-users"> </span> Mitglieder</a>
-            <a href="${pageContext.request.contextPath}/team/${team.name}/settings/tournaments" class="list-group-item"><span class="fa fa-sitemap"> </span> Aktuelle Turniere</a>
-        </div>
-        <a href="${pageContext.request.contextPath}/team/${team.name}"><span class="fa fa-long-arrow-left"></span> zurück zum Teamprofil</a>
-    </div>
+    <%@include file="link_list.jsp" %>
             
     <c:forEach var="member" items="${team.member}" varStatus="loop">
         <c:if test="${member.name != team.leader.name}">
@@ -18,7 +10,7 @@
                     <div class="col-md-8 ">
                 </c:when>
                 <c:when test="${loop.index > 0}">  
-                    <div class="col-md-8 col-md-offset-3">
+                    <div class="col-md-8 col-md-offset-4">
                 </c:when>
             </c:choose> 
                         <!-- Default panel contents -->

@@ -197,6 +197,10 @@ input[type="search"]::-webkit-search-decoration {
     -webkit-appearance: none;
 }
 
+table input[type="number"] {
+    width: 70px;
+}
+
 button::-moz-focus-inner,
 input::-moz-focus-inner {
     padding: 0;
@@ -4708,8 +4712,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
     z-index: 2;
     color: #ffffff;
     cursor: default;
-    background-color: #428bca;
-    border-color: #428bca;
+    background-color: #6BBC86;
+    border-color: #6BBC86;
 }
 
 .pagination > .disabled > span,

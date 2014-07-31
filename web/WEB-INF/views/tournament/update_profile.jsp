@@ -2,13 +2,22 @@
 
 <div class="row">
     <%@include file="link_list.jsp" %>
-
+                
+    <c:if test="${tournament.schedule == null}">
+        <div class="col-md-8">
+            <div class=" alert alert-info">
+            Dieses Turnier hat noch keinen Spielplan. Wenn du einen generieren m&ouml;chtest, klicke <a href="${pageContext.request.contextPath}/tournament/${tournament.name}/settings/schedule">hier</a>
+            </div>
+        </div>
+    </c:if>
+    
 
     <div class="col-md-8">
         <div class="panel panel-default">
             <!-- Default panel contents -->
             <div class="panel-heading"><i class="fa fa-sitemap"></i> Name &auml;ndern</div>
             <div class="panel-body">
+                
                 <div class="col-xs-8">
                     <form role="form" name="name_form" action="${pageContext.request.contextPath}/tournament/${tournament.name}/settings/profile" method="POST">
 
@@ -28,8 +37,8 @@
 
                     </form>
                 </div>
-            </div> <!-- /.panel-body --> 
-        </div> <!-- /.panel --> 
+            </div> <!-- /.panel-body -->
+        </div> <!-- /.panel -->
     </div> <!-- /.col -->
 
 

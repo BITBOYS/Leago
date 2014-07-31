@@ -73,6 +73,15 @@
         <servlet-name>SearchServlet</servlet-name>
         <url-pattern>/search/*</url-pattern>
     </servlet-mapping>
+    <!-- ################ J Q U E R Y ################ -->
+    <servlet>
+        <servlet-name>JQueryServlet</servlet-name>
+        <servlet-class>leago.controller.JQueryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>JQueryServlet</servlet-name>
+        <url-pattern>/jquery</url-pattern>
+    </servlet-mapping>
     
     
     <!-- F I L T E R -->

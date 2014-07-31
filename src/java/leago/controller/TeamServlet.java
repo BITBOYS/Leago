@@ -54,7 +54,7 @@ public class TeamServlet extends HttpServlet {
         String[] pathinfo = (request.getPathInfo() == null)? new String[0] : request.getPathInfo().substring(1).split("/");
         String id = "";
         boolean settings = false;
-        String setting_action = "";
+        String settings_action = "";
         
         for(int idx = 0; idx < pathinfo.length; idx++) {
 
@@ -67,7 +67,8 @@ public class TeamServlet extends HttpServlet {
                         settings = true;
                     break;
                 case 2: 
-                    setting_action = pathinfo[idx];
+                    settings_action = pathinfo[idx];
+                    request.setAttribute("settings_action", settings_action);
                     break;
                 default: 
                     break;
@@ -78,10 +79,10 @@ public class TeamServlet extends HttpServlet {
             _create();
         else if (servletPath.equals("new/team") && id.trim().equals(""))
             _new();
-        else if (servletPath.equals("team") && !id.trim().equals("") && settings && setting_action.equals("delete"))
+        else if (servletPath.equals("team") && !id.trim().equals("") && settings && settings_action.equals("delete"))
             _destroy(id);
         else if (servletPath.equals("team") && !id.trim().equals("") && settings)
-            _change(id, setting_action);
+            _change(id, settings_action);
         else if(servletPath.equals("team") && !id.trim().equals(""))
             _show(id);
         else 
