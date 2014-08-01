@@ -85,9 +85,9 @@
 <script>
     // pie chart data
     var matchesData = [
-        { value: ${profileuser.statistics.matches}, color: "#428bca", label: "Matches"},
-        { value: ${profileuser.statistics.wins}, color: "#5cb85c", label: "Wins"},
-        { value : ${profileuser.statistics.defeats}, color : "#d9534f", label: "Defeats" }
+        { value: ${profileuser.statistics.matches}, color: "#6B69E0", label: "Matches"},
+        { value: ${profileuser.statistics.wins}, color: "#68C999", label: "Wins"},
+        { value : ${profileuser.statistics.defeats}, color : "#D66464", label: "Defeats" }
     ];
     // pie chart options
     var matchesOptions = {
@@ -103,9 +103,9 @@
 <script>
     // pie chart data
     var goalsData = [
-        { value: ${profileuser.statistics.goal_difference}, color: "#428bca", label: "Goal difference"},
-        { value: ${profileuser.statistics.goals}, color: "#5cb85c", label: "Goals"},
-        { value : ${profileuser.statistics.goals_conceded}, color : "#d9534f", label: "Goals conceded" }
+        { value: ${profileuser.statistics.goal_difference}, color: "#6B69E0", label: "Goal difference"},
+        { value: ${profileuser.statistics.goals}, color: "#68C999", label: "Goals"},
+        { value : ${profileuser.statistics.goals_conceded}, color : "#D66464", label: "Goals conceded" }
     ];
     
     // pie chart options

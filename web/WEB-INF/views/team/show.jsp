@@ -61,7 +61,7 @@
     <div class="col-md-12">
         <div class="pull-right need-help">
             <c:if test="${user.name == team.leader.name}">
-                <a href="${pageContext.request.contextPath}/team/${team.name}/settings/profile" class="btn btn-leago"><i class="fa fa-pencil"></i> Turnier bearbeiten</a>
+                <a href="${pageContext.request.contextPath}/team/${team.name}/settings/profile" class="btn btn-leago"><i class="fa fa-pencil"></i> Team bearbeiten</a>
             </c:if>
         </div>
         <h2 class="page-header">Mitgleider von ${team.name}</h2>
@@ -105,9 +105,9 @@
 <script>
     // pie chart data
     var matchesData = [
-        { value: ${team.statistics.matches}, color: "#428bca", label: "Matches"},
-        { value: ${team.statistics.wins}, color: "#5cb85c", label: "Wins"},
-        { value : ${team.statistics.defeats}, color : "#d9534f", label: "Defeats" }
+        { value: ${team.statistics.matches}, color: "#6B69E0", label: "Matches"},
+        { value: ${team.statistics.wins}, color: "#68C999", label: "Wins"},
+        { value : ${team.statistics.defeats}, color : "#D66464", label: "Defeats" }
     ];
     // pie chart options
     var matchesOptions = {
@@ -123,9 +123,9 @@
 <script>
     // pie chart data
     var goalsData = [
-        { value: ${team.statistics.goal_difference}, color: "#428bca", label: "Goal difference"},
-        { value: ${team.statistics.goals}, color: "#5cb85c", label: "Goals"},
-        { value: ${team.statistics.goals_conceded}, color : "#d9534f", label: "Goals conceded" }
+        { value: ${team.statistics.goal_difference}, color: "#6B69E0", label: "Goal difference"},
+        { value: ${team.statistics.goals}, color: "#68C999", label: "Goals"},
+        { value: ${team.statistics.goals_conceded}, color : "#D66464", label: "Goals conceded" }
     ];
     
     // pie chart options
@@ -142,8 +142,8 @@
 <script>
     // pie chart data
     var tournamentData = [
-        { value: ${team.statistics.tournament_participations}, color: "#428bca", label: "Participations"},
-        { value: ${team.statistics.tournament_wins}, color: "#5cb85c", label: "Wins"}
+        { value: ${team.statistics.tournament_participations}, color: "#6B69E0", label: "Participations"},
+        { value: ${team.statistics.tournament_wins}, color: "#568C999", label: "Wins"}
     ];
     
     // pie chart options
