@@ -111,9 +111,11 @@ small {
 sub,
 sup {
     position: relative;
-    font-size: 75%;
+    font-size: 50%;
     line-height: 0;
     vertical-align: baseline;
+    color: #68C999;
+    font-weight: bold;
 }
 
 sup {

@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
-<fmt:setLocale value="${language}" />
+<%--<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />--%>
+<%--<fmt:setLocale value="${language}" />--%>
 <fmt:setBundle basename="leago.i18n.bundle" />
 
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -13,7 +13,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="${pageContext.request.contextPath}"> <i class="fa fa-home"></i> Leago</a>
+            <a class="navbar-brand" href="${pageContext.request.contextPath}">Leago<sup>BETA</sup></a>
 
         </div>
 
@@ -36,8 +36,8 @@
                             <ul class="dropdown-menu">
                                 <li role="presentation" class="dropdown-header">Create:</li>
                                 <li role="presentation" class="divider"></li>
-                                <li><a href="${pageContext.request.contextPath}/new/tournament"><i class="fa fa-sitemap"></i> Turnier</a></li> 
-                                <li><a href="${pageContext.request.contextPath}/new/team"><i class="fa fa-users"></i> Team</a></li> 
+                                <li><a href="${pageContext.request.contextPath}/new/tournament"><i class="fa fa-sitemap"></i> <fmt:message key="navi.create.tournament"/></a></li> 
+                                <li><a href="${pageContext.request.contextPath}/new/team"><i class="fa fa-users"></i> <fmt:message key="navi.create.team"/></a></li> 
                             </ul>
                         </li>
                         
@@ -45,8 +45,8 @@
                         <li><a href="${pageContext.request.contextPath}/logout"><i class="glyphicon glyphicon-log-out"></i></a></li>
                     </c:when>
                     <c:when test="${user == null}">
-                        <li><form action="${pageContext.request.contextPath}/login" method="post"><input type="submit" value="Sign In" class="btn btn-leago navbar-btn"/></form></li>
-                        <li><a href="${pageContext.request.contextPath}/register">Sign Up</a></li>
+                        <li><form action="${pageContext.request.contextPath}/login" method="post"><input type="submit" value="<fmt:message key="navi.link.signin"/>" class="btn btn-leago navbar-btn"/></form></li>
+                        <li><a href="${pageContext.request.contextPath}/register"><fmt:message key="navi.link.signup"/></a></li>
                     </c:when>
                 </c:choose>
             </ul>

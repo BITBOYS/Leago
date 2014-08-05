@@ -226,6 +226,7 @@ public class UserHelper {
             while(resultSet.next()) {
                 Team team = new Team();
                 team.setName(resultSet.getString("name"));
+                team.setLeader(new User(resultSet.getString("leader")));
                 teams.add(team);
             }
             

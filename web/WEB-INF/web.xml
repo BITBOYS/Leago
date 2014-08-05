@@ -73,14 +73,47 @@
         <servlet-name>SearchServlet</servlet-name>
         <url-pattern>/search/*</url-pattern>
     </servlet-mapping>
-    <!-- ################ J Q U E R Y ################ -->
+    
+    <!-- S T A T I C # P A G E S -->
+    
+    <!-- ################ F A Q ################ -->
     <servlet>
-        <servlet-name>JQueryServlet</servlet-name>
-        <servlet-class>leago.controller.JQueryServlet</servlet-class>
+        <servlet-name>faq</servlet-name>
+        <jsp-file>/faq.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
-        <servlet-name>JQueryServlet</servlet-name>
-        <url-pattern>/jquery</url-pattern>
+        <servlet-name>faq</servlet-name>
+        <url-pattern>/faq/*</url-pattern>
+    </servlet-mapping>
+    
+    <!-- ################ C O N T A C T ################ -->
+    <servlet>
+        <servlet-name>contact</servlet-name>
+        <jsp-file>/contact.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>contact</servlet-name>
+        <url-pattern>/contact/*</url-pattern>
+    </servlet-mapping>
+    
+    <!-- ################ T E R M S ################ -->
+    <servlet>
+        <servlet-name>terms</servlet-name>
+        <jsp-file>/terms.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>terms</servlet-name>
+        <url-pattern>/terms/*</url-pattern>
+    </servlet-mapping>
+    
+    <!-- ################ A B O U T ################ -->
+    <servlet>
+        <servlet-name>about</servlet-name>
+        <jsp-file>/about.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>about</servlet-name>
+        <url-pattern>/about/*</url-pattern>
     </servlet-mapping>
     
     
@@ -98,7 +131,7 @@
     </filter-mapping>
     <filter-mapping>
         <filter-name>loginFilter</filter-name>
-        <url-pattern>/settings/profile/*</url-pattern>
+        <url-pattern>/settings/*</url-pattern>
     </filter-mapping>
     
     <!-- ################ A U T H E N T I F I C A T I O N ################ -->

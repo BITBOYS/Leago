@@ -172,6 +172,8 @@ public class UserServlet extends HttpServlet {
                 default: 
                     page = "user/update_profile";
             }
+            
+            request.setAttribute("settings_action", id);
 
             forward();
         } catch (DatabaseConnectionException ex) {

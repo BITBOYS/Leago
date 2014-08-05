@@ -27,7 +27,7 @@
         <div class="fade in active search-tab" id="user">
             <div class="col-md-8">
                 <c:forEach var="user_entry" items="${user_found}" >
-                    <a href="${pageContext.request.contextPath}/user/${user_entry.name}">${user_entry.name}</a>
+                    <h3><a href="${pageContext.request.contextPath}/user/${user_entry.name}">${user_entry.name}</a></h3>
                     <hr>
                 </c:forEach>
                     

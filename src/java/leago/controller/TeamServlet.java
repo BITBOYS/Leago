@@ -183,6 +183,8 @@ public class TeamServlet extends HttpServlet {
                     page = "team/update_member";
                     if(request.getParameter("action") != null && request.getParameter("action").equals("kick"))
                         kickUser();
+                    if(request.getParameter("action") != null && request.getParameter("action").equals("invite"))
+                        inviteUser();
                     break;
                     
                 case "tournaments":
@@ -292,6 +294,26 @@ public class TeamServlet extends HttpServlet {
         }
         
         
+    }
+    
+    private void inviteUser() throws DatabaseConnectionException {
+
+        // P A R A M E T E R S
+        String new_user = request.getParameter("new_user");
+        
+        // O P E R A T I O N
+        TeamHelper teamHelper = new TeamHelper();
+        
+        try {
+            teamHelper.inviteUser(new_user, team);
+            team = teamHelper.getTeam(team.getName());
+            request.setAttribute("message", new MyException("User invited successfully", MyException.SUCCESS));
+            request.setAttribute("team", team);
+            
+        } catch (TeamUpdateException | TeamNotExistingException ex) {
+            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("message", ex);
+        }
     }
     
     private void kickUser() throws DatabaseConnectionException {

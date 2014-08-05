@@ -2,7 +2,7 @@
 
 <div class="row">
     <div class="col-md-8 col-md-offset-2 text-center" style="margin-bottom: 20px;">
-        <h1><i class="fa fa-sitemap"></i><b>${tournament.name}</b></h1>
+        <h1><i class="fa fa-sitemap"></i> <b>${tournament.name}</b></h1>
         <h2>${tournament.description}</h2>
     </div>
 </div>
@@ -30,7 +30,7 @@
             </div>
         </div>
         
-        <div class="row" style="margin-top: 50px;">
+        <div class="row">
             <div class="col-md-8 col-md-offset-2">
 
                 <div class="panel panel-leago">
@@ -87,7 +87,7 @@
                                     <c:when test="${tournament.leader.name == user.name}">  
                                         <tr>  
                                             <td>Adminbereich</td> 
-                                            <td><b><a href="${pageContext.request.contextPath}/tournament/${tournament.name}/settings/profile">Turnier bearbeiten</a></b></td>                                        
+                                            <td><b><a href="${pageContext.request.contextPath}/tournament/${tournament.name}/settings/profile"><i class="fa fa-pencil"></i> Turnier bearbeiten</a></b></td>                                        
                                         </tr>    
                                     </c:when>
                                 </c:choose>
@@ -108,6 +108,9 @@
                     </a>
                 </div> 
             </c:forEach>   
+            <c:if test="${empty tournament.teams}">
+                Es sind noch keine Teams angemeldet.
+            </c:if>
             </div>
         </div>
         
@@ -149,13 +152,13 @@
                                                                 <form id="match${match.id}" action="${pageContext.request.contextPath}/tournament/${tournament.name}/match/${match.id}" method="POST">
                                                                     <c:choose>
                                                                         <c:when test="${match.played != null}">
-                                                                            <a style="margin-right: 5px;" href="javascript:{}" onclick="toggleInputfield(${match.id});"><i id="lock${match.id}" class="fa fa-lock"></i><i id="unlock${match.id}" class="fa fa-unlock-alt" style="display:none"></i></a> 
+                                                                            <a style="margin-right: 5px;" href="javascript:{}" onclick="toggleInputfield(${match.id});"><i id="lock${match.id}" class="fa fa-lock"></i><i id="unlock${match.id}" class="fa fa-unlock-alt hidden"></i></a> 
                                                                         </c:when>
                                                                         <c:otherwise>
-                                                                            <a style="margin-right: 5px;" href="javascript:{}" onclick="toggleInputfield2(${match.id});"><i id="lock${match.id}" class="fa fa-unlock-alt"></i><i id="unlock${match.id}" class="fa fa-lock" style="display:none"></i></a> 
+                                                                            <i style="margin-right: 5px; color: #68C999" id="lock${match.id}" class="fa fa-unlock-alt"></i>
                                                                         </c:otherwise>
                                                                     </c:choose>
-                                                                    <input <c:if test="${match.played != null}">disabled</c:if> type="number" min="0" value="${match.points1}"  name="input_points1" required id="points1${match.id}"> : 
+                                                                    <input <c:if test="${match.played != null}">disabled</c:if> type="number" min="0" value="${match.points1}" name="input_points1" required id="points1${match.id}"> : 
                                                                     <input <c:if test="${match.played != null}">disabled</c:if> type="number" min="0" value="${match.points2}" name="input_points2" required id="points2${match.id}">
                                                                     <a href="javascript:{}" class="btn <c:if test="${match.played != null}">disabled</c:if>" style="padding:0; margin-left: 5px" id="submit${match.id}" onclick="document.getElementById('match${match.id}').submit(); return false;"><i class="fa fa-arrow-circle-right"></i></a>
                                                                 </form>
@@ -258,10 +261,20 @@
 </div>
         
     
-    <script>
-        function googlemaps() {
-            e.preventDefault();
-            var $collapse = $('#googlemaps');
-            $collapse.collapse('toggle');
-        }
-    </script>
+<script>
+    function googlemaps() {
+        e.preventDefault();
+        var $collapse = $('#googlemaps');
+        $collapse.collapse('toggle');
+    }
+
+    function toggleInputfield(id) {
+        $("#lock"+id).toggleClass("hidden");
+        $("#unlock"+id).toggleClass("hidden");
+        
+        $("#points1"+id).prop("disabled",!$("#points1"+id).prop("disabled"));
+        $("#points2"+id).prop("disabled",!$("#points2"+id).prop("disabled"));
+        
+        $("#submit"+id).toggleClass("disabled");
+    }
+</script>

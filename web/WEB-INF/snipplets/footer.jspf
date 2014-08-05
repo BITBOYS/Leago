@@ -13,13 +13,13 @@
             <ul class="list-inline">
                 <li><a href="${pageContext.request.contextPath}"><fmt:message key="footer.link.home"/></a></li>
                 <li class="footer-menu-divider">&sdot;</li>
-                <li><a href="${pageContext.request.contextPath}/about.jsp"><fmt:message key="footer.link.about"/></a></li>
+                <li><a href="${pageContext.request.contextPath}/about"><fmt:message key="footer.link.about"/></a></li>
                 <li class="footer-menu-divider">&sdot;</li>
-                <li><a href="${pageContext.request.contextPath}/terms.jsp"><fmt:message key="footer.link.terms"/></a></li>
+                <li><a href="${pageContext.request.contextPath}/terms"><fmt:message key="footer.link.terms"/></a></li>
                 <li class="footer-menu-divider">&sdot;</li>
-                <li><a href="${pageContext.request.contextPath}/contact.jsp"><fmt:message key="footer.link.contact"/></a></li>
+                <li><a href="${pageContext.request.contextPath}/contact"><fmt:message key="footer.link.contact"/></a></li>
                 <li class="footer-menu-divider">&sdot;</li>
-                <li><a href="${pageContext.request.contextPath}/faq.jsp">FAQ</a></li>
+                <li><a href="${pageContext.request.contextPath}/faq">FAQ</a></li>
             </ul>
             <p class="copyright text-muted small">&copy; 2013-2014 BITBOYS <fmt:message key="footer.lable.rights"/></p>
         </div>

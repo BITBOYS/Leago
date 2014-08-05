@@ -1,27 +1,29 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setBundle basename="leago.i18n.bundle" />
 
-            
+
 <div class="row">
     <div class="col-md-2">
         <h2>${profileuser.name}</h2>
         <img src="http://placehold.it/150x150">
     </div>
-
+ 
     <div class="col-md-4">
-        <p style="margin-top: 50px;">Mitglied seit ${profileuser.create_date_web}</p>
+        <p style="margin-top: 50px;"><fmt:message key="user.info.member_since"/> ${profileuser.create_date_web}</p>
     </div>
     
     <div class="col-md-6">
         <c:choose>
             <c:when test="${profileuser.statistics.goal_difference != 0 && profileuser.statistics.goals != 0}">    
                 <div class="pull-right text-center stats">
-                    <h2>Match Stats</h2>
+                    <h2><fmt:message key="user.stats.match"/></h2>
                     <canvas id="matches" width="200" height="150"></canvas>
                 </div>
             </c:when>
             <c:when test="${profileuser.statistics.goal_difference == 0 && profileuser.statistics.goals == 0}">
                 <div class="pull-right text-center stats">
-                    <h2>Match Stats</h2>
+                    <h2><fmt:message key="user.stats.match"/></h2>
                     <p style="margin-top: 30px">No stats recorded</p>
                 </div>
             </c:when>
@@ -30,13 +32,13 @@
         <c:choose>
             <c:when test="${profileuser.statistics.wins != 0 && profileuser.statistics.defeats != 0}">    
                 <div class="pull-right text-center stats">
-                    <h2>Goal Stats</h2>
+                    <h2><fmt:message key="user.stats.goal"/></h2>
                     <canvas id="goals" width="200" height="150"></canvas>
                 </div>
             </c:when>
             <c:when test="${profileuser.statistics.goal_difference == 0 && profileuser.statistics.goals == 0}">
                 <div class="pull-right text-center stats">
-                    <h2>Goal Stats</h2>
+                    <h2><fmt:message key="user.stats.goal"/></h2>
                     <p style="margin-top: 30px">No stats recorded</p>
                 </div>
             </c:when>
@@ -50,7 +52,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h2 class="page-header">Teams in denen ${profileuser.name} Mitglied ist</h2>
+        <h2 class="page-header"><fmt:message key="user.info.teams1"/> ${profileuser.name} <fmt:message key="user.info.teams2"/></h2>
         <!-- Schleife zum Anzeigen aller Teams in denen man sich befindet -->
         <c:forEach var="team" items="${profileuser.teams}">
             <div class="col-md-2" style="margin: 0 0 20px -15px;">
@@ -67,7 +69,7 @@
 
 <div class="row">       
     <div class="col-md-12">
-        <h2 class="page-header">Turniere an denen ${profileuser.name} teilnimmt</h2>
+        <h2 class="page-header"><fmt:message key="user.info.tournaments1"/> ${profileuser.name} <fmt:message key="user.info.tournaments2"/></h2>
         <!-- Schleife zum Anzeigen aller Teams in denen man sich befindet -->
         <c:forEach var="tournament" items="${profileuser.tournaments}">
             <div class="col-md-3" style="margin: 0 0 20px -15px;">
@@ -85,9 +87,9 @@
 <script>
     // pie chart data
     var matchesData = [
-        { value: ${profileuser.statistics.matches}, color: "#6B69E0", label: "Matches"},
-        { value: ${profileuser.statistics.wins}, color: "#68C999", label: "Wins"},
-        { value : ${profileuser.statistics.defeats}, color : "#D66464", label: "Defeats" }
+        { value: ${profileuser.statistics.matches}, color: "#6B69E0", label: "<fmt:message key="user.stats.matches"/>"},
+        { value: ${profileuser.statistics.wins}, color: "#68C999", label: "<fmt:message key="user.stats.wins"/>"},
+        { value : ${profileuser.statistics.defeats}, color : "#D66464", label: "<fmt:message key="user.stats.defeats"/>" }
     ];
     // pie chart options
     var matchesOptions = {
@@ -103,9 +105,9 @@
 <script>
     // pie chart data
     var goalsData = [
-        { value: ${profileuser.statistics.goal_difference}, color: "#6B69E0", label: "Goal difference"},
-        { value: ${profileuser.statistics.goals}, color: "#68C999", label: "Goals"},
-        { value : ${profileuser.statistics.goals_conceded}, color : "#D66464", label: "Goals conceded" }
+        { value: ${profileuser.statistics.goal_difference}, color: "#6B69E0", label: "<fmt:message key="user.stats.goal_difference"/>"},
+        { value: ${profileuser.statistics.goals}, color: "#68C999", label: "<fmt:message key="user.stats.goals"/>"},
+        { value : ${profileuser.statistics.goals_conceded}, color : "#D66464", label: "<fmt:message key="user.stats.goals_conceded"/>" }
     ];
     
     // pie chart options

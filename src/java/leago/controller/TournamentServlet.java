@@ -28,7 +28,6 @@ import leago.models.User;
  *
  * @author v094702
  */
-@WebServlet(name = "TournamentServlet", urlPatterns = {"/tournament"})
 public class TournamentServlet extends HttpServlet {
 
     private static final DateFormat FORMATTER_DATE = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -267,14 +266,18 @@ public class TournamentServlet extends HttpServlet {
                 TournamentHelper tournamentHelper = new TournamentHelper();
                 tournament = tournamentHelper.getTournament(id);
                 User user = (User) request.getSession().getAttribute("user");
+                
 
                 if(user.getName().equals(tournament.getLeader().getName())) {
-                    // Match in die DB schreiben
-                    tournamentHelper.editTournamentMatch(Integer.valueOf(match_id), points_home, points_away);
                     // Aktualisiertes Match-Objekt aus der DB lesen
                     Match match = tournamentHelper.getMatch(Integer.valueOf(match_id));
                     // Tabelle aktualisieren
-                    tournamentHelper.updateTournamentTable(tournament, match.getTeam1().getName(), match.getTeam2().getName(), points_home, points_away);
+                    tournamentHelper.updateTournamentTable(tournament, match, points_home, points_away);
+                    // Match in die DB schreiben
+                    tournamentHelper.editTournamentMatch(Integer.valueOf(match_id), points_home, points_away);
+                    // Aktualisiertes Match-Objekt aus der DB lesen
+                    match = tournamentHelper.getMatch(Integer.valueOf(match_id));
+                    
                     // Neue Tabelle aus der DB lesen und ins Objekt schreiben, ums es auf der Profilseite anzuzeigen
                     tournament.setTable(tournamentHelper.getTableByTournament(tournament.getName()));
                     // Neues Match objekt ins Turnier schreiben, damit es auf der Profilseite aktuell angezeigt wird

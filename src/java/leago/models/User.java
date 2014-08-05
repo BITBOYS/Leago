@@ -16,7 +16,7 @@ public class User {
     private Statistics statistics;
     private List<Team> teams;
     private List<Tournament> tournaments;
-
+    
     public User() {
         super();
     }

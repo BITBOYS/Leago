@@ -54,9 +54,9 @@
                     <h3>Maik Schmaddebeck <small>Backend Developer und System Designer</small></h3>
                     <p>Maik mag Kappies.</p>
                     <ul class="list-unstyled list-inline list-social-icons">
-                        <li class="tooltip-social"><a href="#xing-profile" data-toggle="tooltip" target="blank" data-placement="bottom" title="Xing"><i class="fa fa-xing fa-2x"></i></a></li>
-                        <li class="tooltip-social"><a href="#github-profile" target="blank" data-toggle="tooltip" data-placement="bottom" title="GitHub"><i class="fa fa-github fa-2x"></i></i></a></li>
-                        <li class="tooltip-social facebook-link"><a href="#facebook-profile" target="blank" data-toggle="tooltip" data-placement="bottom" title="Facebook"><i class="fa fa-facebook-square fa-2x"></i></a></li>                       
+                        <li class="tooltip-social"><a href="https://www.xing.com/profile/Maik_Schmaddebeck" data-toggle="tooltip" target="blank" data-placement="bottom" title="Xing"><i class="fa fa-xing fa-2x"></i></a></li>
+                        <li class="tooltip-social"><a href="https://github.com/Smadback" target="blank" data-toggle="tooltip" data-placement="bottom" title="GitHub"><i class="fa fa-github fa-2x"></i></i></a></li>
+                        <li class="tooltip-social facebook-link"><a href="https://www.facebook.com/maik.ma.3" target="blank" data-toggle="tooltip" data-placement="bottom" title="Facebook"><i class="fa fa-facebook-square fa-2x"></i></a></li>                       
                     </ul>
                 </div>
 

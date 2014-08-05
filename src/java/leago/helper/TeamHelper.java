@@ -302,6 +302,25 @@ public class TeamHelper {
             throw new TeamUpdateException("User update failed unexpectedly with an SQL error " + ex.getSQLState(), MyException.ERROR);
         }
     }
+    
+    public void inviteUser(String username, Team team) throws TeamUpdateException, DatabaseConnectionException {
+        UserHelper userHelper = new UserHelper();
+        
+        try {
+            if(userHelper.isUserExisting(username)) {
+                Connection con = DatabaseHelper.connect();
+                Statement statement = con.createStatement();
+
+                statement.execute("INSERT INTO user_team (user, team) VALUES ('" + username + "','" + team.getName() + "')");
+            } else {
+                throw new TeamUpdateException("A user with this name couldn't be found", MyException.ERROR);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(TeamHelper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new TeamUpdateException("User update failed unexpectedly with an SQL error " + ex.getSQLState(), MyException.ERROR);
+        }
+    }
        
     
 }

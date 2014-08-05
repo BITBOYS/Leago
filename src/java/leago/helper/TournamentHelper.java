@@ -156,6 +156,30 @@ public class TournamentHelper {
         return schedule;
     }
     
+    public boolean isMatchPlayed(int match_id) throws DatabaseConnectionException {
+        boolean result = false;
+        
+        
+        try {
+            Connection con = DatabaseHelper.connect();
+            Statement statement = con.createStatement();            
+            ResultSet resultSet = statement.executeQuery("SELECT" +
+                " CASE WHEN played != '0000-00-00 00:00:00' THEN played END AS played" +
+                " FROM game" +
+                " WHERE match_id = " + match_id);
+
+            if(resultSet.getDate("played") != null) {
+                result = true;
+            }
+            
+         } catch (SQLException ex) {
+            Logger.getLogger(TournamentHelper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DatabaseConnectionException("An error occured while updating the match", MyException.ERROR);
+        }
+        
+        return result;
+    }
+    
     public void editTournamentMatch(int match_id, int points_home, int points_away) throws DatabaseConnectionException {
 
         try {
@@ -171,10 +195,12 @@ public class TournamentHelper {
         }
     }
     
-    public void updateTournamentTable(Tournament tournament, String team_home, String team_away, int goals_home, int goals_away) throws DatabaseConnectionException {
+    public void updateTournamentTable(Tournament tournament, Match match, int goals_home, int goals_away) throws DatabaseConnectionException {
 
         int goals = -1, goals_conceded = -1, wins = -1, defeats = -1;
         String team = "";
+        String team_home = match.getTeam1().getName();
+        String team_away = match.getTeam2().getName();
         
         try {
             Connection con = DatabaseHelper.connect();
@@ -190,6 +216,13 @@ public class TournamentHelper {
                             wins = (goals_home > goals_away)? table.getWins()+1 : table.getWins();
                             defeats = (goals_home < goals_away)? table.getDefeats()+1 : table.getDefeats();
                             team = team_home;
+                            
+                            if(match.getPlayed() != null) {
+                                goals -= match.getPoints1();
+                                goals_conceded -= match.getPoints2();
+                                wins += (match.getPoints1() > match.getPoints2())? -1 : 0;
+                                defeats += (match.getPoints1() < match.getPoints2())? -1 : 0;
+                            }
                         }
                     
                     if(idx == 1)
@@ -199,6 +232,13 @@ public class TournamentHelper {
                             wins = (goals_home < goals_away)? table.getWins()+1 : table.getWins();
                             defeats = (goals_home > goals_away)? table.getDefeats()+1 : table.getDefeats();
                             team = team_away;
+                            
+                            if(match.getPlayed() != null) {
+                                goals -= match.getPoints2();
+                                goals_conceded -= match.getPoints1();
+                                wins += (match.getPoints2() > match.getPoints1())? -1 : 0;
+                                defeats += (match.getPoints2() < match.getPoints1())? -1 : 0;
+                            }
                         }
                 }
                 
@@ -752,7 +792,7 @@ public class TournamentHelper {
 
             if (!isTournamentExisting(name)) {
                 if (dateEnd.after(dateStart) || dateEnd.equals(dateStart)) {
-                    if (dateDeadline.before(dateStart)) {
+                    if (dateDeadline.before(dateStart) || dateDeadline.equals(dateStart)) {
                         Connection con = DatabaseHelper.connect();
                         Statement statement = con.createStatement();
 
