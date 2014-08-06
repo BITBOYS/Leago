@@ -6,7 +6,7 @@ package leago.models;
  */
 public class Table {
     
-    private String team;
+    private Team team;
     private int amount_matches;
     private int wins;
     private int defeats;
@@ -19,7 +19,7 @@ public class Table {
         super();
     }
 
-    public Table(String team, int tournament_team_wins, int tournament_team_defeats, int tournament_team_goals, int tournament_team_goals_conceded) {
+    public Table(Team team, int tournament_team_wins, int tournament_team_defeats, int tournament_team_goals, int tournament_team_goals_conceded) {
         this.team = team;
         this.wins = tournament_team_wins;
         this.defeats = tournament_team_defeats;
@@ -29,11 +29,11 @@ public class Table {
         this.winrate = (double)tournament_team_wins / (double)amount_matches;
     }
 
-    public String getTeam() {
+    public Team getTeam() {
         return team;
     }
 
-    public void setTeam(String team) {
+    public void setTeam(Team team) {
         this.team = team;
     }
 

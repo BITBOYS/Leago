@@ -658,7 +658,7 @@ public class TournamentHelper {
             while (resultSet.next()) {
 
                 Table entry = new Table();
-                entry.setTeam(resultSet.getString("team"));
+                entry.setTeam(new Team(resultSet.getString("team")));
                 entry.setWins(resultSet.getInt("wins"));
                 entry.setDefeats(resultSet.getInt("defeats"));
                 entry.setGoals(resultSet.getInt("goals"));
