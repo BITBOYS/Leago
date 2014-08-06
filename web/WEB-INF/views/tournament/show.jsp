@@ -1,4 +1,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="/WEB-INF/tlds/custom_functions.tld" %>
+
+
+<div id="googlemaps" class="collapse">
+    <div class="row">
+        <div class="col-md-12">
+            <iframe width="100%" height="600dpx" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.de/maps?hl=de&q=${tournament.venue}+(${tournament.venue})&ie=UTF8&t=&z=12&iwloc=B&output=embed"></iframe>
+            <a onclick="googlemaps();" href="#googlemaps" data-toggle="collapse"><i class="glyphicon glyphicon-collapse-up"></i>Einklappen</a>
+        </div>
+    </div>
+</div>
 
 <div class="row">
     <div class="col-md-8 col-md-offset-2 text-center" style="margin-bottom: 20px;">
@@ -20,15 +31,6 @@
 <div id="myTabContent" class="tab-content">
 
     <div class="tab-pane fade in active" id="info">
-        
-        <div id="googlemaps" class="collapse">
-            <div class="row">
-                <div class="col-md-12">
-                    <iframe width="100%" height="600dpx" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.de/maps?hl=de&q=${tournament.venue}+(${tournament.venue})&ie=UTF8&t=&z=12&iwloc=B&output=embed"></iframe>
-                    <a onclick="googlemaps();" href="#googlemaps" data-toggle="collapse"><i class="glyphicon glyphicon-collapse-up"></i>Einklappen</a>
-                </div>
-            </div>
-        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
@@ -76,7 +78,7 @@
                                     <td> 
                                         <c:choose>
                                             <c:when test="${tournament.venue != null}">
-                                                <b><a onclick="googlemaps();" href="#googlemaps" data-toggle="collapse">${tournament.venue}</a></b>
+                                                <div id="googlelink"><b><a href="#googlemaps" data-toggle="collapse">${tournament.venue}</a></b></div>
 <!--                                                https://maps.google.com/maps?q=${tournament.venue}&hl=de&sll=28.149503,-71.71875&sspn=88.855059,173.144531&hnear=${tournament.venue}&t=m&z=10-->
                                             </c:when>
                                             <c:otherwise><b>Keine Angabe</b></c:otherwise>
@@ -147,7 +149,7 @@
                                                 <c:choose>
                                                     <c:when test="${tournament.leader.name == user.name}">
                                                         <tr>
-                                                            <td class="text-right"><a href="${pageContext.request.contextPath}/team/${match.team1.name}">${match.team1.name}</a></td>
+                                                            <td class="text-right"><a href="${pageContext.request.contextPath}/team/${match.team1.name}" <c:if test="${fn:isUserInTeam(match.team1, user.teams)}"> style="font-weight: bold;"</c:if>>${match.team1.name}</a></td>
                                                             <td class="text-center">
                                                                 <form id="match${match.id}" action="${pageContext.request.contextPath}/tournament/${tournament.name}/match/${match.id}" method="POST">
                                                                     <c:choose>
@@ -163,14 +165,14 @@
                                                                     <a href="javascript:{}" class="btn <c:if test="${match.played != null}">disabled</c:if>" style="padding:0; margin-left: 5px" id="submit${match.id}" onclick="document.getElementById('match${match.id}').submit(); return false;"><i class="fa fa-arrow-circle-right"></i></a>
                                                                 </form>
                                                             </td>
-                                                            <td><a href="${pageContext.request.contextPath}/team/${match.team2.name}">${match.team2.name}</a></td>
+                                                            <td><a href="${pageContext.request.contextPath}/team/${match.team2.name}" <c:if test="${fn:isUserInTeam(match.team2, user.teams)}"> style="font-weight: bold;"</c:if>>${match.team2.name}</a></td>
                                                         </tr>
                                                     </c:when>
                                                     <c:otherwise>
                                                         <tr>
-                                                            <td class="text-right"><a href="${pageContext.request.contextPath}/team/${match.team1.name}">${match.team1.name}</a></td>
+                                                            <td class="text-right"><a href="${pageContext.request.contextPath}/team/${match.team1.name}" <c:if test="${fn:isUserInTeam(match.team1, user.teams)}"> style="font-weight: bold;"</c:if>>${match.team1.name}</a></td>
                                                             <td class="text-center">${match.points1} : ${match.points2}</td>
-                                                            <td><a href="${pageContext.request.contextPath}/team/${match.team2.name}">${match.team2.name}</a></td>
+                                                            <td><a href="${pageContext.request.contextPath}/team/${match.team2.name}" <c:if test="${fn:isUserInTeam(match.team2, user.teams)}"> style="font-weight: bold;"</c:if>>${match.team2.name}</a></td>
                                                         </tr>
                                                     </c:otherwise>
                                                 </c:choose>
@@ -239,7 +241,7 @@
                                 <c:forEach items="${tournament.table}" var="placement" varStatus="status">
                                     <tr>  
                                         <td># <c:out value="${status.count}" /></td> 
-                                        <td><a href="${pageContext.request.contextPath}/team/${placement.team}">${placement.team}</a></td>  
+                                        <td><a href="${pageContext.request.contextPath}/team/${placement.team.name}" <c:if test="${fn:isUserInTeam(placement.team, user.teams)}"> style="font-weight: bold;"</c:if>>${placement.team.name}</a></td>  
                                         <td>${placement.amount_matches}</td>  
                                         <td>${placement.winrate}</td>  
                                         <td>${placement.wins}</td>  
@@ -262,11 +264,6 @@
         
     
 <script>
-    function googlemaps() {
-        e.preventDefault();
-        var $collapse = $('#googlemaps');
-        $collapse.collapse('toggle');
-    }
 
     function toggleInputfield(id) {
         $("#lock"+id).toggleClass("hidden");
@@ -277,4 +274,5 @@
         
         $("#submit"+id).toggleClass("disabled");
     }
+    
 </script>
