@@ -126,8 +126,8 @@
                 <div class="col-xs-8">
                     <form role="form" name="start_date_form" action="${pageContext.request.contextPath}/tournament/${tournament.name}/settings/profile" method="POST">
                         <div class="form-group">
-                            <label>Startdatum <small class="text-muted">(aktuell: '${tournament.start_date_web}')</small></label>
-                            <input type="datetime-local" class="form-control" name="input_startdate_new" value="${value_start_date}" required>
+                            <label>Startdatum <small class="text-muted">(aktuell: ${tournament.start_date_web})</small></label>
+                            <input type="datetime-local" class="form-control" name="input_startdate_new" value="${tournament.start_date}" required>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-primary btn-leago" type="submit">Startdatum aktualisieren</button>
@@ -136,7 +136,7 @@
 
                     <form role="form" name="end_date_form" action="${pageContext.request.contextPath}/tournament/${tournament.name}/settings/profile" method="POST">
                         <div class="form-group">
-                            <label>Enddatum <small class="text-muted">(aktuell: '${tournament.end_date_web}')</small></label>
+                            <label>Enddatum <small class="text-muted">(aktuell: ${tournament.end_date_web})</small></label>
                             <input type="datetime-local" class="form-control" name="input_enddate_new" value="${value_end_date}" required>
                         </div>
                         <div class="form-group">
@@ -146,11 +146,11 @@
 
                     <form role="form" name="deadline_form" action="${pageContext.request.contextPath}/tournament/${tournament.name}/settings/profile" method="POST">
                         <div class="form-group">
-                            <label>Deadline <small class="text-muted">(aktuell: '${tournament.deadline_web}')</small></label>
+                            <label>Anmeldefrist <small class="text-muted">(aktuell: ${tournament.deadline_web})</small></label>
                             <input type="datetime-local" class="form-control" name="input_deadline_new" value="${value_deadline}" required>
                         </div>
                         <div class="form-group">
-                            <button class="btn btn-primary btn-leago" type="submit">Deadline aktualisieren</button>
+                            <button class="btn btn-primary btn-leago" type="submit">Anmeldefrist aktualisieren</button>
                         </div>
                     </form>
 

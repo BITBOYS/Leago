@@ -2,7 +2,7 @@
 
 <div class="row">
     <%@include file="link_list.jsp" %>
-    
+
     <div class="col-md-8">
 
         <div class="panel panel-danger">
@@ -14,12 +14,13 @@
 
                         <div class="form-group">
                             <label class="control-label">Neuer Leader</label>
-                            <input list="leaderAuswahl" name="input_leader_new" class="form-control" autocomplete="off" placeholder="${tournament.leader.name}" value="${value_leader}" required>
-                            <datalist id="userAuswahl">
-                                <c:forEach items="${tournament.teams}" var="team">
-                                    <option value="${team.leader.name}"> 
-                                    </c:forEach>
-                            </datalist>
+                            <p>&Uuml;bergibt die Besitzerrechte an einen anderen User, der bereits Leader eines Turnier-Teams ist.</p> 
+
+                            <select class="form-control" name="input_leader_new">
+                                <c:forEach var="team" items="${tournament.teams}">
+                                    <option>${team.leader.name}</option>
+                                </c:forEach>
+                            </select>
                         </div>
 
                         <div class="form-group">

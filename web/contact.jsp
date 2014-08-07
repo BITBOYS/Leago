@@ -6,6 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="Kontaktinformationen">
         <meta name="author" content="Malte Dammann">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="HandheldFriendly" content="true" />
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/img/favicon.ico">
         <title>Leago - Contact</title>
 
@@ -44,17 +46,17 @@
                     <h3>Let's Get In Touch!</h3>
                     <p>Wenn du Fragen zum Tool oder uns hast, einfach mal 'Hallo' sagen willst oder dir was auf dem Herzen liegt, schreib uns! Das kannst du einfach über das Formaular machen. Wir w&uuml;rden uns sehr &uuml;ber Anregungen oder W&uuml;nsche freuen! Nat&uuml;rlich trefft ihr uns auch auf Facebook und Konsorten. Aber nicht auf Twiddrr! </p>
                     <p>Euer Leago-Team <strong> Malte, Maik und Alex</strong></p>
-                    <form role="form" method="POST" action="#">
+                    <form role="form" name="contact_form" method="POST" action="#">
                         <div class="row">
                             <div class="form-group col-lg-4">
                                 <label for="input1">Name</label>
-                                <input type="text" name="contact_name" class="form-control" id="input1">
+                                <input type="text" name="contact_name" class="form-control" id="input1" required>
                             </div>
                             <div class="form-group col-lg-4">
                                 <label for="input2">E-mail Adresse</label>
                                 <div class="input-group">
                                     <span class="input-group-addon">@</span>
-                                    <input type="email" name="contact_email" class="form-control" id="input2">
+                                    <input type="email" name="contact_email" class="form-control" id="input2" required>
                                 </div>
                             </div>
                             <div class="form-group col-lg-4">
@@ -65,7 +67,7 @@
                             <br>
                             <div class="form-group col-lg-12">
                                 <label for="input4">Message</label>
-                                <textarea style="max-width: 100%; resize: vertical" name="contact_message" class="form-control" rows="6" id="input4"></textarea>
+                                <textarea style="max-width: 100%; resize: vertical" name="contact_message" class="form-control" rows="6" id="input4" required></textarea>
                             </div>
                             <div class="form-group col-lg-12">
                                 <input type="hidden" name="save" value="contact">
