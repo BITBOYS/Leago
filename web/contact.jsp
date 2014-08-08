@@ -29,17 +29,18 @@
 
             <div class="row">
 
-                <div class="col-lg-12">
+                <div class="col-md-12">
                     <h1 class="page-header">Contact <small>We'd Love to Hear From You!</small></h1>
                 </div>
 
-                <div class="col-lg-12">
-                    <!-- Embedded Google Map using an iframe - to select your location find it on Google maps and paste the link as the iframe src. If you want to use the Google Maps API instead then have at it! -->
-                    <iframe width="100%" height="400px" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.de/maps?hl=de&q=hamburg+(Hamburg City Bitch)&ie=UTF8&t=&z=12&iwloc=B&output=embed"></iframe>
+                <div class="col-md-12">
+                    <div id="map-canvas" style="width: 100%; height: 400px"></div>
                 </div>
 
             </div><!-- /.row -->
+            
             <hr>
+            
             <div class="row">
 
                 <div class="col-sm-8">
@@ -97,13 +98,16 @@
 
         </div><!-- /.container -->
 
-            <footer>
-                <%@include file="WEB-INF/snipplets/footer.jspf" %>
-            </footer>
+        <footer>
+            <%@include file="WEB-INF/snipplets/footer.jspf" %>
+        </footer>
 
         <!-- JavaScript -->
         <script src="resources/js/jquery-1.10.2.js"></script>
         <script src="resources/js/bootstrap.js"></script>
+        <!-- Google maps -->
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+        <script src="resources/js/contactMap.js"></script>
 
     </body>
 

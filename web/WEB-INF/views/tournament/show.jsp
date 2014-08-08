@@ -1,12 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="/WEB-INF/tlds/custom_functions.tld" %>
 
-
-<div id="googlemaps" class="collapse">
+<div id="googlemaps">
     <div class="row">
         <div class="col-md-12">
-            <iframe width="100%" height="400dpx" frameborder="0" scrollwheel="false" marginheight="0" marginwidth="0" src="http://maps.google.de/maps?hl=de&q=${tournament.venue}+(${tournament.venue})&ie=UTF8&t=&z=12&iwloc=B&output=embed"></iframe>
-            <a onclick="googlemaps();" href="#googlemaps" data-toggle="collapse"><i class="glyphicon glyphicon-collapse-up"></i>Einklappen</a>
+            <div style="width: 100%; height: 300px;" id="map-canvas" class="map-content"></div>      
+<!--<iframe width="100%" height="400dpx" frameborder="0" scrollwheel="false" marginheight="0" marginwidth="0" src="http://maps.google.de/maps?hl=de&q=${tournament.venue}+(${tournament.venue})&ie=UTF8&t=&z=12&iwloc=B&output=embed"></iframe>-->
+            <a href="#googlemaps" data-toggle="collapse"><i class="glyphicon glyphicon-collapse-up"></i>Einklappen</a>
         </div>
     </div>
 </div>
@@ -72,6 +72,10 @@
                                 <tr>  
                                     <td>Spieltage</td> 
                                     <td><b>${tournament.rounds}</b></td>                                        
+                                </tr>  
+                                <tr>  
+                                    <td>Wetter</td> 
+                                    <td><b><div id="weather"></div></b></td>                                        
                                 </tr>  
                                 <tr>  
                                     <td>Austragungsort</td> 
@@ -263,7 +267,7 @@
 
     </div>
 
-
+    <!-- JavaScript -->
     <script>
 
         function toggleInputfield(id) {
@@ -275,5 +279,139 @@
 
             $("#submit" + id).toggleClass("disabled");
         }
+
+    </script>
+
+    <!-- Weather -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.simpleWeather/3.0.2/jquery.simpleWeather.min.js"></script>
+    <script>
+// Docs at http://simpleweatherjs.com
+        $(document).ready(function() {
+            $.simpleWeather({
+                location: '${tournament.venue}',
+                unit: 'c',
+                success: function(weather) {
+                    html = '<a target="_blank" href="' + weather.link + '">' + weather.temp + '&deg;' + weather.units.temp + '</a><img height="25" src="' + weather.thumbnail + '"></img>';
+
+                    $("#weather").html(html);
+                },
+                error: function(error) {
+                    $("#weather").html('<p>' + error + '</p>');
+                }
+            });
+        });
+    </script>
+
+    <!-- Google maps -->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script>
+        var directionsDisplay;
+        var directionsService = new google.maps.DirectionsService();
+        var map;
+        var venue = '${tournament.venue}';
+        var geocoder = new google.maps.Geocoder();
+
+        function initialize() {
+            directionsDisplay = new google.maps.DirectionsRenderer();
+            var mapOptions = {
+                zoom: 12,
+                draggable: false,
+                panControl: true,
+                zoomControl: true,
+                scaleControl: true
+            };
+
+            map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+            directionsDisplay.setMap(map);
+
+
+            // Try HTML5 geolocation
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var pos = new google.maps.LatLng(position.coords.latitude,
+                            position.coords.longitude);
+
+                    var infowindow = new google.maps.InfoWindow({
+                        map: map,
+                        position: pos,
+                        content: 'Du bist hier.'
+                    });
+
+                    calcRoute(pos);
+
+                }, function() {
+                    handleNoGeolocation(true);
+
+                });
+            } else {
+                // Browser doesn't support Geolocation
+                handleNoGeolocation(false);
+            }
+        }
+
+        // Handelt die Route vom aktuellen Standort zum Venue
+        function calcRoute(pos) {
+            var start = pos;
+            var end = venue;
+            var request = {
+                origin: start,
+                destination: end,
+                travelMode: google.maps.TravelMode.DRIVING
+            };
+            directionsService.route(request, function(response, status) {
+                if (status == google.maps.DirectionsStatus.OK) {
+                    directionsDisplay.setDirections(response);
+                }
+            });
+        }
+
+        // Errorhandling, setzt Karte automatisch auf Venue
+        function handleNoGeolocation(errorFlag) {
+            if (errorFlag) {
+                var content = 'The Geolocation service failed.';
+            } else {
+                var content = 'Error: Your browser doesn\'t support geolocation.';
+            }
+
+            geocoder.geocode({'address': venue}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    map.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        draggable: false,
+                        position: results[0].geometry.location,
+                        title: content + ' Venue: ' + venue,
+                        animation: google.maps.Animation.DROP
+                    });
+                } else {
+                    alert("Geocode was not successful for the following reason: " + status);
+                }
+            });
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+
+        //Script zum neuladen der google-map, da durch das collpase die map nicht richtig angezeigt wird --> Buggy
+//        $(document).on("pageshow", "#googlemaps", function() {
+//            alert("pageshow event fired");
+//            var center = map.getCenter();
+//            google.maps.event.trigger(map, "resize");
+//            map.setCenter(center);
+//        });
+//
+//// oder so:
+//        $(document).ready(function() {
+//
+//            $('#googlelink').click(function(e) {
+//                e.preventDefault();
+//                //we have to set center for map after resize, but we need to know center BEFORE we resize it
+//                var center = map.getCenter();
+//                google.maps.event.trigger(map, "resize"); //this fix the problem with not completely map
+//                map.setCenter(center);
+//                alert('ja man');
+//
+//            });
+//        });
 
     </script>
