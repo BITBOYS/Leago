@@ -120,7 +120,7 @@ public class UserHelper {
             Statement statement = con.createStatement();         
             ResultSet resultSet = statement.executeQuery("SELECT * FROM user WHERE email = '" + email + "'");
 
-            if(!resultSet.isBeforeFirst()) {
+            if(resultSet.isBeforeFirst()) {
                 alreadyTaken = true;
             }
         } catch (SQLException ex) {
