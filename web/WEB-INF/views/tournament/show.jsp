@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="/WEB-INF/tlds/custom_functions.tld" %>
 
-<div id="googlemaps">
+<div id="googlemaps" class="collapse">
     <div class="row">
         <div class="col-md-12">
             <div style="width: 100%; height: 300px;" id="map-canvas" class="map-content"></div>      
@@ -209,7 +209,7 @@
                 </c:when>
                 <c:otherwise>
                     <div class="row">
-                        <div class="col-md-8 col-md-offset-2 text-center" style="margin-top: 100px">
+                        <div class="col-md-8 col-md-offset-2 text-center">
                             <h2>F&uuml;r dieses Turnier wurde noch kein Spielplan erstellt.</h2>
                         </div>
                     </div>
