@@ -1,10 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="/WEB-INF/tlds/custom_functions.tld" %>
 
-<div id="googlemaps">
+<div id="googlemaps" class="collapse">
     <div class="row">
         <div class="col-md-12">
-            <div style="width: 100%; height: 300px;" id="map-canvas" class="map-content"></div>      
+            <div style="width: 100%; height: 400px;" id="map-canvas"></div>      
 <!--<iframe width="100%" height="400dpx" frameborder="0" scrollwheel="false" marginheight="0" marginwidth="0" src="http://maps.google.de/maps?hl=de&q=${tournament.venue}+(${tournament.venue})&ie=UTF8&t=&z=12&iwloc=B&output=embed"></iframe>-->
             <a href="#googlemaps" data-toggle="collapse"><i class="glyphicon glyphicon-collapse-up"></i>Einklappen</a>
         </div>
@@ -311,11 +311,13 @@
         var venue = '${tournament.venue}';
         var geocoder = new google.maps.Geocoder();
 
+
         function initialize() {
+            google.maps.visualRefresh = true;
             directionsDisplay = new google.maps.DirectionsRenderer();
             var mapOptions = {
                 zoom: 12,
-                draggable: false,
+                draggable: true,
                 panControl: true,
                 zoomControl: true,
                 scaleControl: true
@@ -331,11 +333,11 @@
                     var pos = new google.maps.LatLng(position.coords.latitude,
                             position.coords.longitude);
 
-                    var infowindow = new google.maps.InfoWindow({
-                        map: map,
-                        position: pos,
-                        content: 'Du bist hier.'
-                    });
+//                    var infowindow = new google.maps.InfoWindow({
+//                        map: map,
+//                        position: pos,
+//                        content: 'Du bist hier.'
+//                    });
 
                     calcRoute(pos);
 
@@ -347,6 +349,7 @@
                 // Browser doesn't support Geolocation
                 handleNoGeolocation(false);
             }
+
         }
 
         // Handelt die Route vom aktuellen Standort zum Venue
@@ -391,27 +394,29 @@
 
         google.maps.event.addDomListener(window, 'load', initialize);
 
+        google.maps.event.addDomListener(window, "resize", resizingMap());
 
-        //Script zum neuladen der google-map, da durch das collpase die map nicht richtig angezeigt wird --> Buggy
-//        $(document).on("pageshow", "#googlemaps", function() {
-//            alert("pageshow event fired");
-//            var center = map.getCenter();
-//            google.maps.event.trigger(map, "resize");
-//            map.setCenter(center);
-//        });
-//
-//// oder so:
-//        $(document).ready(function() {
-//
-//            $('#googlelink').click(function(e) {
-//                e.preventDefault();
-//                //we have to set center for map after resize, but we need to know center BEFORE we resize it
-//                var center = map.getCenter();
-//                google.maps.event.trigger(map, "resize"); //this fix the problem with not completely map
-//                map.setCenter(center);
-//                alert('ja man');
-//
-//            });
-//        });
+
+        $('#googlemaps').on('show.bs.collapse', function() {
+            //Must wait until the render of the modal appear, thats why we use the resizeMap and NOT resizingMap!! ;-)
+            resizeMap();
+        })
+
+        function resizeMap() {
+            if (typeof map == "undefined")
+                return;
+            setTimeout(function() {
+                resizingMap();
+            }, 400);
+        }
+
+        function resizingMap() {
+            if (typeof map == "undefined")
+                return;
+            var center = map.getCenter();
+            google.maps.event.trigger(map, "resize");
+            map.setCenter(center);
+            map.setZoom(5);
+        }
 
     </script>

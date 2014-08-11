@@ -154,6 +154,7 @@
         <!-- JavaScript -->
         <script src="resources/js/jquery-1.10.2.js"></script>
         <script src="resources/js/bootstrap.js"></script>
+        <script src="resources/js/offline.js"></script>
 
     </body>
 

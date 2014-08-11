@@ -3948,8 +3948,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .nav-pills > li > a {
-   font-family: LeagoFlat;
-   font-size: 20px;
+    font-family: LeagoFlat;
+    font-size: 20px;
 }
 
 .nav-pills > li + li {
@@ -4030,9 +4030,9 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .tab-content > .search-tab {
-  padding: 0;
-  margin: 0;
-  display: none;
+    padding: 0;
+    margin: 0;
+    display: none;
 }
 
 .tab-content > .active,
@@ -5421,12 +5421,12 @@ a.list-group-item:focus {
 }
 
 .panel-heading {
-  padding: 10px 15px;
-  border-bottom: 1px solid transparent;
-  border-top-right-radius: 3px;
-  border-top-left-radius: 3px;
-  font-family: "Lato";
-  font-size: 17px;
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    font-family: "Lato";
+    font-size: 17px;
 }
 
 .panel-title {
@@ -6967,7 +6967,7 @@ a:hover .full-caption {
     background-color: #fff;
     color: #68C999;
 }
-                
+
 
 .stats {
     width: 230px;
@@ -7006,983 +7006,1521 @@ a:hover .full-caption {
 
 
 .links a {
-	position: relative;
+    position: relative;
 }
 
 .links a:hover,
 .links a:focus {
-	outline: none;
+    outline: none;
 }
 
 /* Effect 1: Brackets */
 .effect-1 a::before,
 .effect-1 a::after {
-	display: inline-block;
-	opacity: 0;
-	-webkit-transition: -webkit-transform 0.3s, opacity 0.2s;
-	-moz-transition: -moz-transform 0.3s, opacity 0.2s;
-	transition: transform 0.3s, opacity 0.2s;
+    display: inline-block;
+    opacity: 0;
+    -webkit-transition: -webkit-transform 0.3s, opacity 0.2s;
+    -moz-transition: -moz-transform 0.3s, opacity 0.2s;
+    transition: transform 0.3s, opacity 0.2s;
 }
 
 .effect-1 a::before {
-	margin-right: 10px;
-	content: '[';
-	-webkit-transform: translateX(20px);
-	-moz-transform: translateX(20px);
-	transform: translateX(20px);
+    margin-right: 10px;
+    content: '[';
+    -webkit-transform: translateX(20px);
+    -moz-transform: translateX(20px);
+    transform: translateX(20px);
 }
 
 .effect-1 a::after {
-	margin-left: 10px;
-	content: ']';
-	-webkit-transform: translateX(-20px);
-	-moz-transform: translateX(-20px);
-	transform: translateX(-20px);
+    margin-left: 10px;
+    content: ']';
+    -webkit-transform: translateX(-20px);
+    -moz-transform: translateX(-20px);
+    transform: translateX(-20px);
 }
 
 .effect-1 a:hover::before,
 .effect-1 a:hover::after,
 .effect-1 a:focus::before,
 .effect-1 a:focus::after {
-	opacity: 1;
-	-webkit-transform: translateX(0px);
-	-moz-transform: translateX(0px);
-	transform: translateX(0px);
+    opacity: 1;
+    -webkit-transform: translateX(0px);
+    -moz-transform: translateX(0px);
+    transform: translateX(0px);
 }
 
 /* Effect 2: 3D rolling links, idea from http://hakim.se/thoughts/rolling-links */
 .effect-2 a {
-	line-height: 44px;
-	-webkit-perspective: 1000px;
-	-moz-perspective: 1000px;
-	perspective: 1000px;
+    line-height: 44px;
+    -webkit-perspective: 1000px;
+    -moz-perspective: 1000px;
+    perspective: 1000px;
 }
 
 .effect-2 a span {
-	position: relative;
-	display: inline-block;
-	padding: 0 14px;
-	background: #2195de;
-	-webkit-transition: -webkit-transform 0.3s;
-	-moz-transition: -moz-transform 0.3s;
-	transition: transform 0.3s;
-	-webkit-transform-origin: 50% 0;
-	-moz-transform-origin: 50% 0;
-	transform-origin: 50% 0;
-	-webkit-transform-style: preserve-3d;
-	-moz-transform-style: preserve-3d;
-	transform-style: preserve-3d;
+    position: relative;
+    display: inline-block;
+    padding: 0 14px;
+    background: #2195de;
+    -webkit-transition: -webkit-transform 0.3s;
+    -moz-transition: -moz-transform 0.3s;
+    transition: transform 0.3s;
+    -webkit-transform-origin: 50% 0;
+    -moz-transform-origin: 50% 0;
+    transform-origin: 50% 0;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
 }
 
 .csstransforms3d .effect-2 a span::before {
-	position: absolute;
-	top: 100%;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background: #0965a0;
-	content: attr(data-hover);
-	-webkit-transition: background 0.3s;
-	-moz-transition: background 0.3s;
-	transition: background 0.3s;
-	-webkit-transform: rotateX(-90deg);
-	-moz-transform: rotateX(-90deg);
-	transform: rotateX(-90deg);
-	-webkit-transform-origin: 50% 0;
-	-moz-transform-origin: 50% 0;
-	transform-origin: 50% 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0965a0;
+    content: attr(data-hover);
+    -webkit-transition: background 0.3s;
+    -moz-transition: background 0.3s;
+    transition: background 0.3s;
+    -webkit-transform: rotateX(-90deg);
+    -moz-transform: rotateX(-90deg);
+    transform: rotateX(-90deg);
+    -webkit-transform-origin: 50% 0;
+    -moz-transform-origin: 50% 0;
+    transform-origin: 50% 0;
 }
 
 .effect-2 a:hover span,
 .effect-2 a:focus span {
-	-webkit-transform: rotateX(90deg) translateY(-22px);
-	-moz-transform: rotateX(90deg) translateY(-22px);
-	transform: rotateX(90deg) translateY(-22px);
+    -webkit-transform: rotateX(90deg) translateY(-22px);
+    -moz-transform: rotateX(90deg) translateY(-22px);
+    transform: rotateX(90deg) translateY(-22px);
 }
 
 .csstransforms3d .effect-2 a:hover span::before,
 .csstransforms3d .effect-2 a:focus span::before {
-	background: #28a2ee;	
+    background: #28a2ee;	
 }
 
 /* Effect 3: bottom line slides/fades in */
 .effect-3 a {
-	padding: 8px 0;
+    padding: 8px 0;
 }
 
 .effect-3 a::after {
-	position: absolute;
-	top: 100%;
-	left: 0;
-	width: 100%;
-	height: 4px;
-	background: rgba(0,0,0,0.1);
-	content: '';
-	opacity: 0;
-	-webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
-	-moz-transition: opacity 0.3s, -moz-transform 0.3s;
-	transition: opacity 0.3s, transform 0.3s;
-	-webkit-transform: translateY(10px);
-	-moz-transform: translateY(10px);
-	transform: translateY(10px);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: rgba(0,0,0,0.1);
+    content: '';
+    opacity: 0;
+    -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+    -moz-transition: opacity 0.3s, -moz-transform 0.3s;
+    transition: opacity 0.3s, transform 0.3s;
+    -webkit-transform: translateY(10px);
+    -moz-transform: translateY(10px);
+    transform: translateY(10px);
 }
 
 .effect-3 a:hover::after,
 .effect-3 a:focus::after {
-	opacity: 1;
-	-webkit-transform: translateY(0px);
-	-moz-transform: translateY(0px);
-	transform: translateY(0px);
+    opacity: 1;
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    transform: translateY(0px);
 }
 
 /* Effect 4: bottom border enlarge */
 .effect-4 a {
-	padding: 0 0 10px;
+    padding: 0 0 10px;
 }
 
 .effect-4 a::after {
-	position: absolute;
-	top: 100%;
-	left: 0;
-	width: 100%;
-	height: 1px;
-	background: #fff;
-	content: '';
-	opacity: 0;
-	-webkit-transition: height 0.3s, opacity 0.3s, -webkit-transform 0.3s;
-	-moz-transition: height 0.3s, opacity 0.3s, -moz-transform 0.3s;
-	transition: height 0.3s, opacity 0.3s, transform 0.3s;
-	-webkit-transform: translateY(-10px);
-	-moz-transform: translateY(-10px);
-	transform: translateY(-10px);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: #fff;
+    content: '';
+    opacity: 0;
+    -webkit-transition: height 0.3s, opacity 0.3s, -webkit-transform 0.3s;
+    -moz-transition: height 0.3s, opacity 0.3s, -moz-transform 0.3s;
+    transition: height 0.3s, opacity 0.3s, transform 0.3s;
+    -webkit-transform: translateY(-10px);
+    -moz-transform: translateY(-10px);
+    transform: translateY(-10px);
 }
 
 .effect-4 a:hover::after,
 .effect-4 a:focus::after {
-	height: 5px;
-	opacity: 1;
-	-webkit-transform: translateY(0px);
-	-moz-transform: translateY(0px);
-	transform: translateY(0px);
+    height: 5px;
+    opacity: 1;
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    transform: translateY(0px);
 }
 
 /* Effect 5: same word slide in */
 .effect-5 a {
-	overflow: hidden;
-	padding: 0 4px;
-	height: 1em;
+    overflow: hidden;
+    padding: 0 4px;
+    height: 1em;
 }
 
 .effect-5 a span {
-	position: relative;
-	display: inline-block;
-	-webkit-transition: -webkit-transform 0.3s;
-	-moz-transition: -moz-transform 0.3s;
-	transition: transform 0.3s;
+    position: relative;
+    display: inline-block;
+    -webkit-transition: -webkit-transform 0.3s;
+    -moz-transition: -moz-transform 0.3s;
+    transition: transform 0.3s;
 }
 
 .effect-5 a span::before {
-	position: absolute;
-	top: 100%;
-	content: attr(data-hover);
-	font-weight: 700;
-	-webkit-transform: translate3d(0,0,0);
-	-moz-transform: translate3d(0,0,0);
-	transform: translate3d(0,0,0);
+    position: absolute;
+    top: 100%;
+    content: attr(data-hover);
+    font-weight: 700;
+    -webkit-transform: translate3d(0,0,0);
+    -moz-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
 }
 
 .effect-5 a:hover span,
 .effect-5 a:focus span {
-	-webkit-transform: translateY(-100%);
-	-moz-transform: translateY(-100%);
-	transform: translateY(-100%);
+    -webkit-transform: translateY(-100%);
+    -moz-transform: translateY(-100%);
+    transform: translateY(-100%);
 }
 
 /* Effect 5: same word slide in and border bottom */
 .effect-6 a {
-	margin: 0 10px;
-	padding: 10px 20px;
+    margin: 0 10px;
+    padding: 10px 20px;
 }
 
 .effect-6 a::before {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 2px;
-	background: #fff;
-	content: '';
-	-webkit-transition: top 0.3s;
-	-moz-transition: top 0.3s;
-	transition: top 0.3s;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #fff;
+    content: '';
+    -webkit-transition: top 0.3s;
+    -moz-transition: top 0.3s;
+    transition: top 0.3s;
 }
 
 .effect-6 a::after {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 2px;
-	height: 2px;
-	background: #fff;
-	content: '';
-	-webkit-transition: height 0.3s;
-	-moz-transition: height 0.3s;
-	transition: height 0.3s;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 2px;
+    background: #fff;
+    content: '';
+    -webkit-transition: height 0.3s;
+    -moz-transition: height 0.3s;
+    transition: height 0.3s;
 }
 
 .effect-6 a:hover::before {
-	top: 100%;
-	opacity: 1;
+    top: 100%;
+    opacity: 1;
 }
 
 .effect-6 a:hover::after {
-	height: 100%;
+    height: 100%;
 } 
 
 /* Effect 7: second border slides up */
 .effect-7 a {
-	padding: 12px 10px 10px;
-	color: #566473;
-	text-shadow: none;
-	font-weight: 700;
+    padding: 12px 10px 10px;
+    color: #566473;
+    text-shadow: none;
+    font-weight: 700;
 }
 
 .effect-7 a::before,
 .effect-7 a::after {
-	position: absolute;
-	top: 100%;
-	left: 0;
-	width: 100%;
-	height: 3px;
-	background: #566473;
-	content: '';
-	-webkit-transition: -webkit-transform 0.3s;
-	-moz-transition: -moz-transform 0.3s;
-	transition: transform 0.3s;
-	-webkit-transform: scale(0.85);
-	-moz-transform: scale(0.85);
-	transform: scale(0.85);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: #566473;
+    content: '';
+    -webkit-transition: -webkit-transform 0.3s;
+    -moz-transition: -moz-transform 0.3s;
+    transition: transform 0.3s;
+    -webkit-transform: scale(0.85);
+    -moz-transform: scale(0.85);
+    transform: scale(0.85);
 }
 
 .effect-7 a::after {
-	opacity: 0;
-	-webkit-transition: top 0.3s, opacity 0.3s, -webkit-transform 0.3s;
-	-moz-transition: top 0.3s, opacity 0.3s, -moz-transform 0.3s;
-	transition: top 0.3s, opacity 0.3s, transform 0.3s;
+    opacity: 0;
+    -webkit-transition: top 0.3s, opacity 0.3s, -webkit-transform 0.3s;
+    -moz-transition: top 0.3s, opacity 0.3s, -moz-transform 0.3s;
+    transition: top 0.3s, opacity 0.3s, transform 0.3s;
 }
 
 .effect-7 a:hover::before,
 .effect-7 a:hover::after,
 .effect-7 a:focus::before,
 .effect-7 a:focus::after {
-	-webkit-transform: scale(1);
-	-moz-transform: scale(1);
-	transform: scale(1);
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    transform: scale(1);
 }
 
 .effect-7 a:hover::after,
 .effect-7 a:focus::after {
-	top: 0%;
-	opacity: 1;
+    top: 0%;
+    opacity: 1;
 }
 
 /* Effect 8: border slight translate */
 .effect-8 a {
-	padding: 10px 20px;
+    padding: 10px 20px;
 }
 
 .effect-8 a::before,
 .effect-8 a::after  {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	border: 3px solid #354856;
-	content: '';
-	-webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
-	-moz-transition: -moz-transform 0.3s, opacity 0.3s;
-	transition: transform 0.3s, opacity 0.3s;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 3px solid #354856;
+    content: '';
+    -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+    -moz-transition: -moz-transform 0.3s, opacity 0.3s;
+    transition: transform 0.3s, opacity 0.3s;
 }
 
 .effect-8 a::after  {
-	border-color: #fff;
-	opacity: 0;
-	-webkit-transform: translateY(-7px) translateX(6px);
-	-moz-transform: translateY(-7px) translateX(6px);
-	transform: translateY(-7px) translateX(6px);
+    border-color: #fff;
+    opacity: 0;
+    -webkit-transform: translateY(-7px) translateX(6px);
+    -moz-transform: translateY(-7px) translateX(6px);
+    transform: translateY(-7px) translateX(6px);
 }
 
 .effect-8 a:hover::before,
 .effect-8 a:focus::before {
-	opacity: 0;
-	-webkit-transform: translateY(5px) translateX(-5px);
-	-moz-transform: translateY(5px) translateX(-5px);
-	transform: translateY(5px) translateX(-5px);
+    opacity: 0;
+    -webkit-transform: translateY(5px) translateX(-5px);
+    -moz-transform: translateY(5px) translateX(-5px);
+    transform: translateY(5px) translateX(-5px);
 }
 
 .effect-8 a:hover::after,
 .effect-8 a:focus::after  {
-	opacity: 1;
-	-webkit-transform: translateY(0px) translateX(0px);
-	-moz-transform: translateY(0px) translateX(0px);
-	transform: translateY(0px) translateX(0px);
+    opacity: 1;
+    -webkit-transform: translateY(0px) translateX(0px);
+    -moz-transform: translateY(0px) translateX(0px);
+    transform: translateY(0px) translateX(0px);
 }
 
 /* Effect 9: second text and borders */
 .effect-9 a {
-	margin: 0 20px;
-	padding: 18px 20px;
+    margin: 0 20px;
+    padding: 18px 20px;
 }
 
 .effect-9 a::before,
 .effect-9 a::after {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 1px;
-	background: #fff;
-	content: '';
-	opacity: 0.2;
-	-webkit-transition: opacity 0.3s, height 0.3s;
-	-moz-transition: opacity 0.3s, height 0.3s;
-	transition: opacity 0.3s, height 0.3s;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: #fff;
+    content: '';
+    opacity: 0.2;
+    -webkit-transition: opacity 0.3s, height 0.3s;
+    -moz-transition: opacity 0.3s, height 0.3s;
+    transition: opacity 0.3s, height 0.3s;
 }
 
 .effect-9 a::after {
-	top: 100%;
-	opacity: 0;
-	-webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
-	-moz-transition: -moz-transform 0.3s, opacity 0.3s;
-	transition: transform 0.3s, opacity 0.3s;
-	-webkit-transform: translateY(-10px);
-	-moz-transform: translateY(-10px);
-	transform: translateY(-10px);
+    top: 100%;
+    opacity: 0;
+    -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+    -moz-transition: -moz-transform 0.3s, opacity 0.3s;
+    transition: transform 0.3s, opacity 0.3s;
+    -webkit-transform: translateY(-10px);
+    -moz-transform: translateY(-10px);
+    transform: translateY(-10px);
 }
 
 .effect-9 a span:first-child {
-	z-index: 2;
-	display: block;
-	font-weight: 300;
+    z-index: 2;
+    display: block;
+    font-weight: 300;
 }
 
 .effect-9 a span:last-child {
-	z-index: 1;
-	display: block;
-	padding: 8px 0 0 0;
-	color: rgba(0,0,0,0.4);
-	text-shadow: none;
-	text-transform: none;
-	font-style: italic;
-	font-size: 0.75em;
-	font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
-	opacity: 0;
-	-webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
-	-moz-transition: -moz-transform 0.3s, opacity 0.3s;
-	transition: transform 0.3s, opacity 0.3s;
-	-webkit-transform: translateY(-100%);
-	-moz-transform: translateY(-100%);
-	transform: translateY(-100%);
+    z-index: 1;
+    display: block;
+    padding: 8px 0 0 0;
+    color: rgba(0,0,0,0.4);
+    text-shadow: none;
+    text-transform: none;
+    font-style: italic;
+    font-size: 0.75em;
+    font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
+    opacity: 0;
+    -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+    -moz-transition: -moz-transform 0.3s, opacity 0.3s;
+    transition: transform 0.3s, opacity 0.3s;
+    -webkit-transform: translateY(-100%);
+    -moz-transform: translateY(-100%);
+    transform: translateY(-100%);
 }
 
 .effect-9 a:hover::before,
 .effect-9 a:focus::before {
-	height: 6px;
+    height: 6px;
 }
 
 .effect-9 a:hover::before,
 .effect-9 a:hover::after,
 .effect-9 a:focus::before,
 .effect-9 a:focus::after {
-	opacity: 1;
-	-webkit-transform: translateY(0px);
-	-moz-transform: translateY(0px);
-	transform: translateY(0px);
+    opacity: 1;
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    transform: translateY(0px);
 }
 
 .effect-9 a:hover span:last-child,
 .effect-9 a:focus span:last-child {
-	opacity: 1;
-	-webkit-transform: translateY(0%);
-	-moz-transform: translateY(0%);
-	transform: translateY(0%);
+    opacity: 1;
+    -webkit-transform: translateY(0%);
+    -moz-transform: translateY(0%);
+    transform: translateY(0%);
 }
 
 /* Effect 10: reveal, push out */
 .effect-10  {
-	position: relative;
-	z-index: 1;
+    position: relative;
+    z-index: 1;
 }
 
 .effect-10 a {
-	overflow: hidden;
-	margin: 0 15px;
+    overflow: hidden;
+    margin: 0 15px;
 }
 
 .effect-10 a span {
-	display: block;
-	padding: 10px 20px;
-	background: #0f7c67;
-	-webkit-transition: -webkit-transform 0.3s;
-	-moz-transition: -moz-transform 0.3s;
-	transition: transform 0.3s;
+    display: block;
+    padding: 10px 20px;
+    background: #0f7c67;
+    -webkit-transition: -webkit-transform 0.3s;
+    -moz-transition: -moz-transform 0.3s;
+    transition: transform 0.3s;
 }
 
 .effect-10 a::before {
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: -1;
-	padding: 10px 20px;
-	width: 100%;
-	height: 100%;
-	background: #fff;
-	color: #0f7c67;
-	content: attr(data-hover);
-	-webkit-transition: -webkit-transform 0.3s;
-	-moz-transition: -moz-transform 0.3s;
-	transition: transform 0.3s;
-	-webkit-transform: translateX(-25%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    padding: 10px 20px;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    color: #0f7c67;
+    content: attr(data-hover);
+    -webkit-transition: -webkit-transform 0.3s;
+    -moz-transition: -moz-transform 0.3s;
+    transition: transform 0.3s;
+    -webkit-transform: translateX(-25%);
 }
 
 .effect-10 a:hover span,
 .effect-10 a:focus span {
-	-webkit-transform: translateX(100%);
-	-moz-transform: translateX(100%);
-	transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    transform: translateX(100%);
 }
 
 .effect-10 a:hover::before,
 .effect-10 a:focus::before {
-	-webkit-transform: translateX(0%);
-	-moz-transform: translateX(0%);
-	transform: translateX(0%);
+    -webkit-transform: translateX(0%);
+    -moz-transform: translateX(0%);
+    transform: translateX(0%);
 }
 
 /* Effect 11: text fill based on Lea Verou's animation http://dabblet.com/gist/6046779 */
 .effect-11 a {
-	padding: 10px 0;
-	border-top: 2px solid #0972b4;
-	color: #0972b4;
-	text-shadow: none;
+    padding: 10px 0;
+    border-top: 2px solid #0972b4;
+    color: #0972b4;
+    text-shadow: none;
 } 
 
 .effect-11 a::before {
-	position: absolute;
-	top: 0;
-	left: 0;
-	overflow: hidden;
-	padding: 10px 0;
-	max-width: 0;
-	border-bottom: 2px solid #fff;
-	color: #fff;
-	content: attr(data-hover);
-	-webkit-transition: max-width 0.5s;
-	-moz-transition: max-width 0.5s;
-	transition: max-width 0.5s;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    padding: 10px 0;
+    max-width: 0;
+    border-bottom: 2px solid #fff;
+    color: #fff;
+    content: attr(data-hover);
+    -webkit-transition: max-width 0.5s;
+    -moz-transition: max-width 0.5s;
+    transition: max-width 0.5s;
 }
 
 .effect-11 a:hover::before,
 .effect-11 a:focus::before {
-	max-width: 100%;
+    max-width: 100%;
 }
 
 /* Effect 12: circle */
 .effect-12 a::before,
 .effect-12 a::after {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: 55px;
-	height: 55px;
-	border: 2px solid rgba(0,0,0,0.1);
-	border-radius: 50%;
-	content: '';
-	opacity: 0;
-	-webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
-	-moz-transition: -moz-transform 0.3s, opacity 0.3s;
-	transition: transform 0.3s, opacity 0.3s;
-	-webkit-transform: translateX(-50%) translateY(-50%) scale(0.2);
-	-moz-transform: translateX(-50%) translateY(-50%) scale(0.2);
-	transform: translateX(-50%) translateY(-50%) scale(0.2);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 55px;
+    height: 55px;
+    border: 2px solid rgba(0,0,0,0.1);
+    border-radius: 50%;
+    content: '';
+    opacity: 0;
+    -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+    -moz-transition: -moz-transform 0.3s, opacity 0.3s;
+    transition: transform 0.3s, opacity 0.3s;
+    -webkit-transform: translateX(-50%) translateY(-50%) scale(0.2);
+    -moz-transform: translateX(-50%) translateY(-50%) scale(0.2);
+    transform: translateX(-50%) translateY(-50%) scale(0.2);
 }
 
 .effect-12 a::after {
-	width: 45px;
-	height: 45px;
-	border-width: 4px;
-	-webkit-transform: translateX(-50%) translateY(-50%) scale(0.8);
-	-moz-transform: translateX(-50%) translateY(-50%) scale(0.8);
-	transform: translateX(-50%) translateY(-50%) scale(0.8);
+    width: 45px;
+    height: 45px;
+    border-width: 4px;
+    -webkit-transform: translateX(-50%) translateY(-50%) scale(0.8);
+    -moz-transform: translateX(-50%) translateY(-50%) scale(0.8);
+    transform: translateX(-50%) translateY(-50%) scale(0.8);
 }
 
 .effect-12 a:hover::before,
 .effect-12 a:hover::after,
 .effect-12 a:focus::before,
 .effect-12 a:focus::after {
-	opacity: 1;
-	-webkit-transform: translateX(-50%) translateY(-50%) scale(1);
-	-moz-transform: translateX(-50%) translateY(-50%) scale(1);
-	transform: translateX(-50%) translateY(-50%) scale(1);
+    opacity: 1;
+    -webkit-transform: translateX(-50%) translateY(-50%) scale(1);
+    -moz-transform: translateX(-50%) translateY(-50%) scale(1);
+    transform: translateX(-50%) translateY(-50%) scale(1);
 }
 
 /* Effect 13: three circles */
 .effect-13 a {
-	-webkit-transition: color 0.3s;
-	-moz-transition: color 0.3s;
-	transition: color 0.3s;
+    -webkit-transition: color 0.3s;
+    -moz-transition: color 0.3s;
+    transition: color 0.3s;
 }
 
 .effect-13 a::before {
-	position: absolute;
-	top: 100%;
-	left: 50%;
-	color: transparent;
-	content: '•';
-	text-shadow: 0 0 transparent;
-	font-size: 1.2em;
-	-webkit-transition: text-shadow 0.3s, color 0.3s;
-	-moz-transition: text-shadow 0.3s, color 0.3s;
-	transition: text-shadow 0.3s, color 0.3s;
-	-webkit-transform: translateX(-50%);
-	-moz-transform: translateX(-50%);
-	transform: translateX(-50%);
-	pointer-events: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    color: transparent;
+    content: '•';
+    text-shadow: 0 0 transparent;
+    font-size: 1.2em;
+    -webkit-transition: text-shadow 0.3s, color 0.3s;
+    -moz-transition: text-shadow 0.3s, color 0.3s;
+    transition: text-shadow 0.3s, color 0.3s;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    transform: translateX(-50%);
+    pointer-events: none;
 }
 
 .effect-13 a:hover::before,
 .effect-13 a:focus::before {
-	color: #fff;
-	text-shadow: 10px 0 #fff, -10px 0 #fff;
+    color: #fff;
+    text-shadow: 10px 0 #fff, -10px 0 #fff;
 }
 
 .effect-13 a:hover,
 .effect-13 a:focus {
-	color: #ba7700;
+    color: #ba7700;
 }
 
 /* Effect 14: border switch */
 .effect-14 a {
-	padding: 0 20px;
-	height: 45px;
-	line-height: 45px;
+    padding: 0 20px;
+    height: 45px;
+    line-height: 45px;
 }
 
 .effect-14 a::before,
 .effect-14 a::after {
-	position: absolute;
-	width: 45px;
-	height: 2px;
-	background: #fff;
-	content: '';
-	opacity: 0.2;
-	-webkit-transition: all 0.3s;
-	-moz-transition: all 0.3s;
-	transition: all 0.3s;
-	pointer-events: none;
+    position: absolute;
+    width: 45px;
+    height: 2px;
+    background: #fff;
+    content: '';
+    opacity: 0.2;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+    pointer-events: none;
 }
 
 .effect-14 a::before {
-	top: 0;
-	left: 0;
-	-webkit-transform: rotate(90deg);
-	-moz-transform: rotate(90deg);
-	transform: rotate(90deg);
-	-webkit-transform-origin: 0 0;
-	-moz-transform-origin: 0 0;
-	transform-origin: 0 0;
+    top: 0;
+    left: 0;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    transform: rotate(90deg);
+    -webkit-transform-origin: 0 0;
+    -moz-transform-origin: 0 0;
+    transform-origin: 0 0;
 }
 
 .effect-14 a::after {
-	right: 0;
-	bottom: 0;
-	-webkit-transform: rotate(90deg);
-	-moz-transform: rotate(90deg);
-	transform: rotate(90deg);
-	-webkit-transform-origin: 100% 0;
-	-moz-transform-origin: 100% 0;
-	transform-origin: 100% 0;
+    right: 0;
+    bottom: 0;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    transform: rotate(90deg);
+    -webkit-transform-origin: 100% 0;
+    -moz-transform-origin: 100% 0;
+    transform-origin: 100% 0;
 }
 
 .effect-14 a:hover::before,
 .effect-14 a:hover::after,
 .effect-14 a:focus::before,
 .effect-14 a:focus::after {
-	opacity: 1;
+    opacity: 1;
 }
 
 .effect-14 a:hover::before,
 .effect-14 a:focus::before {
-	left: 50%;
-	-webkit-transform: rotate(0deg) translateX(-50%);
-	-moz-transform: rotate(0deg) translateX(-50%);
-	transform: rotate(0deg) translateX(-50%);
+    left: 50%;
+    -webkit-transform: rotate(0deg) translateX(-50%);
+    -moz-transform: rotate(0deg) translateX(-50%);
+    transform: rotate(0deg) translateX(-50%);
 }
 
 .effect-14 a:hover::after,
 .effect-14 a:focus::after {
-	right: 50%;
-	-webkit-transform: rotate(0deg) translateX(50%);
-	-moz-transform: rotate(0deg) translateX(50%);
-	transform: rotate(0deg) translateX(50%);
+    right: 50%;
+    -webkit-transform: rotate(0deg) translateX(50%);
+    -moz-transform: rotate(0deg) translateX(50%);
+    transform: rotate(0deg) translateX(50%);
 }
 
 /* Effect 15: scale down, reveal */
 .effect-15 a {
-	color: rgba(0,0,0,0.2);
-	font-weight: 700;
-	text-shadow: none;
+    color: rgba(0,0,0,0.2);
+    font-weight: 700;
+    text-shadow: none;
 }
 
 .effect-15 a::before {
-	color: #fff;
-	content: attr(data-hover);
-	position: absolute;
-	-webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
-	-moz-transition: -moz-transform 0.3s, opacity 0.3s;
-	transition: transform 0.3s, opacity 0.3s;
+    color: #fff;
+    content: attr(data-hover);
+    position: absolute;
+    -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+    -moz-transition: -moz-transform 0.3s, opacity 0.3s;
+    transition: transform 0.3s, opacity 0.3s;
 }
 
 .effect-15 a:hover::before,
 .effect-15 a:focus::before {
-	-webkit-transform: scale(0.9);
-	-moz-transform: scale(0.9);
-	transform: scale(0.9);
-	opacity: 0;
+    -webkit-transform: scale(0.9);
+    -moz-transform: scale(0.9);
+    transform: scale(0.9);
+    opacity: 0;
 }
 
 /* Effect 16: fall down */
 .effect-16 a {
-	color: #6f8686;
-	text-shadow: 0 0 1px rgba(111,134,134,0.3);
+    color: #6f8686;
+    text-shadow: 0 0 1px rgba(111,134,134,0.3);
 }
 
 .effect-16 a::before {
-	color: #fff;
-	content: attr(data-hover);
-	position: absolute;
-	opacity: 0;
-	text-shadow: 0 0 1px rgba(255,255,255,0.3);
-	-webkit-transform: scale(1.1) translateX(10px) translateY(-10px) rotate(4deg);
-	-moz-transform: scale(1.1) translateX(10px) translateY(-10px) rotate(4deg);
-	transform: scale(1.1) translateX(10px) translateY(-10px) rotate(4deg);
-	-webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
-	-moz-transition: -moz-transform 0.3s, opacity 0.3s;
-	transition: transform 0.3s, opacity 0.3s;
-	pointer-events: none;
+    color: #fff;
+    content: attr(data-hover);
+    position: absolute;
+    opacity: 0;
+    text-shadow: 0 0 1px rgba(255,255,255,0.3);
+    -webkit-transform: scale(1.1) translateX(10px) translateY(-10px) rotate(4deg);
+    -moz-transform: scale(1.1) translateX(10px) translateY(-10px) rotate(4deg);
+    transform: scale(1.1) translateX(10px) translateY(-10px) rotate(4deg);
+    -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+    -moz-transition: -moz-transform 0.3s, opacity 0.3s;
+    transition: transform 0.3s, opacity 0.3s;
+    pointer-events: none;
 }
 
 .effect-16 a:hover::before,
 .effect-16 a:focus::before {
-	-webkit-transform: scale(1) translateX(0px) translateY(0px) rotate(0deg);
-	-moz-transform: scale(1) translateX(0px) translateY(0px) rotate(0deg);
-	transform: scale(1) translateX(0px) translateY(0px) rotate(0deg);
-	opacity: 1;
+    -webkit-transform: scale(1) translateX(0px) translateY(0px) rotate(0deg);
+    -moz-transform: scale(1) translateX(0px) translateY(0px) rotate(0deg);
+    transform: scale(1) translateX(0px) translateY(0px) rotate(0deg);
+    opacity: 1;
 }
 
 /* Effect 17: move up fade out, push border */
 .effect-17 a {
-	color: #10649b;
-	text-shadow: none;
-	padding: 10px 0;
+    color: #10649b;
+    text-shadow: none;
+    padding: 10px 0;
 }
 
 .effect-17 a::before {
-	color: #fff;
-	text-shadow: 0 0 1px rgba(255,255,255,0.3);
-	content: attr(data-hover);
-	position: absolute;
-	-webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
-	-moz-transition: -moz-transform 0.3s, opacity 0.3s;
-	transition: transform 0.3s, opacity 0.3s;
-	pointer-events: none;
+    color: #fff;
+    text-shadow: 0 0 1px rgba(255,255,255,0.3);
+    content: attr(data-hover);
+    position: absolute;
+    -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+    -moz-transition: -moz-transform 0.3s, opacity 0.3s;
+    transition: transform 0.3s, opacity 0.3s;
+    pointer-events: none;
 }
 
 .effect-17 a::after {
-	content: '';
-	position: absolute;
-	left: 0;
-	bottom: 0;
-	width: 100%;
-	height: 2px;
-	background: #fff;
-	opacity: 0;
-	-webkit-transform: translateY(5px);
-	-moz-transform: translateY(5px);
-	transform: translateY(5px);
-	-webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
-	-moz-transition: -moz-transform 0.3s, opacity 0.3s;
-	transition: transform 0.3s, opacity 0.3s;
-	pointer-events: none;
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background: #fff;
+    opacity: 0;
+    -webkit-transform: translateY(5px);
+    -moz-transform: translateY(5px);
+    transform: translateY(5px);
+    -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+    -moz-transition: -moz-transform 0.3s, opacity 0.3s;
+    transition: transform 0.3s, opacity 0.3s;
+    pointer-events: none;
 }
 
 .effect-17 a:hover::before,
 .effect-17 a:focus::before {
-	opacity: 0;
-	-webkit-transform: translateY(-2px);
-	-moz-transform: translateY(-2px);
-	transform: translateY(-2px);
+    opacity: 0;
+    -webkit-transform: translateY(-2px);
+    -moz-transform: translateY(-2px);
+    transform: translateY(-2px);
 }
 
 .effect-17 a:hover::after,
 .effect-17 a:focus::after {
-	opacity: 1;
-	-webkit-transform: translateY(0px);
-	-moz-transform: translateY(0px);
-	transform: translateY(0px);
+    opacity: 1;
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    transform: translateY(0px);
 }
 
 /* Effect 18: cross */
 .effect-18 {
-	position: relative;
-	z-index: 1;
+    position: relative;
+    z-index: 1;
 }
 
 .effect-18 a {
-	padding: 0 5px;
-	color: #68C999;
-	font-weight: 700;
-	-webkit-transition: color 0.3s;
-	-moz-transition: color 0.3s;
-	transition: color 0.3s;
+    padding: 0 5px;
+    color: #68C999;
+    font-weight: 700;
+    -webkit-transition: color 0.3s;
+    -moz-transition: color 0.3s;
+    transition: color 0.3s;
 }
 
 .effect-18 a::before,
 .effect-18 a::after {
-	position: absolute;
-	width: 100%;
-	left: 0;
-	top: 50%;
-	height: 2px;
-	margin-top: -1px;
-	background: #68C999;
-	content: '';
-	z-index: -1;
-	-webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
-	-moz-transition: -moz-transform 0.3s, opacity 0.3s;
-	transition: transform 0.3s, opacity 0.3s;
-	pointer-events: none;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 50%;
+    height: 2px;
+    margin-top: -1px;
+    background: #68C999;
+    content: '';
+    z-index: -1;
+    -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+    -moz-transition: -moz-transform 0.3s, opacity 0.3s;
+    transition: transform 0.3s, opacity 0.3s;
+    pointer-events: none;
 }
 
 .effect-18 a::before {
-	-webkit-transform: translateY(-10px);
-	-moz-transform: translateY(-10px);
-	transform: translateY(-10px);
+    -webkit-transform: translateY(-10px);
+    -moz-transform: translateY(-10px);
+    transform: translateY(-10px);
 }
 
 .effect-18 a::after {
-	-webkit-transform: translateY(10px);
-	-moz-transform: translateY(10px);
-	transform: translateY(10px);
+    -webkit-transform: translateY(10px);
+    -moz-transform: translateY(10px);
+    transform: translateY(10px);
 }
 
 .effect-18 a:hover,
 .effect-18 a:focus {
-	color: black;
+    color: black;
 }
 
 .effect-18 a:hover::before,
 .effect-18 a:hover::after,
 .effect-18 a:focus::before,
 .effect-18 a:focus::after {
-	opacity: 0.6;
+    opacity: 0.6;
 }
 
 .effect-18 a:hover::before,
 .effect-18 a:focus::before {
-	-webkit-transform: rotate(45deg);
-	-moz-transform: rotate(45deg);
-	transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    transform: rotate(45deg);
 }
 
 .effect-18 a:hover::after,
 .effect-18 a:focus::after {
-	-webkit-transform: rotate(-45deg);
-	-moz-transform: rotate(-45deg);
-	transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    transform: rotate(-45deg);
 }
 
 /* Effect 19: 3D side */
 .effect-19 a {
-	line-height: 2em;
-	margin: 15px;
-	-webkit-perspective: 800px;
-	-moz-perspective: 800px;
-	perspective: 800px;
-	width: 200px;
+    line-height: 2em;
+    margin: 15px;
+    -webkit-perspective: 800px;
+    -moz-perspective: 800px;
+    perspective: 800px;
+    width: 200px;
 }
 
 .effect-19 a span {
-	position: relative;
-	display: inline-block;
-	width: 100%;
-	padding: 0 14px;
-	background: #e35041;
-	-webkit-transition: -webkit-transform 0.4s, background 0.4s;
-	-moz-transition: -moz-transform 0.4s, background 0.4s;
-	transition: transform 0.4s, background 0.4s;
-	-webkit-transform-style: preserve-3d;
-	-moz-transform-style: preserve-3d;
-	transform-style: preserve-3d;
-	-webkit-transform-origin: 50% 50% -100px;
-	-moz-transform-origin: 50% 50% -100px;
-	transform-origin: 50% 50% -100px;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    padding: 0 14px;
+    background: #e35041;
+    -webkit-transition: -webkit-transform 0.4s, background 0.4s;
+    -moz-transition: -moz-transform 0.4s, background 0.4s;
+    transition: transform 0.4s, background 0.4s;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-transform-origin: 50% 50% -100px;
+    -moz-transform-origin: 50% 50% -100px;
+    transform-origin: 50% 50% -100px;
 }
 
 .csstransforms3d .effect-19 a span::before {
-	position: absolute;
-	top: 0;
-	left: 100%;
-	width: 100%;
-	height: 100%;
-	background: #b53a2d;
-	content: attr(data-hover);
-	-webkit-transition: background 0.4s;
-	-moz-transition: background 0.4s;
-	transition: background 0.4s;
-	-webkit-transform: rotateY(90deg);
-	-moz-transform: rotateY(90deg);
-	transform: rotateY(90deg);
-	-webkit-transform-origin: 0 50%;
-	-moz-transform-origin: 0 50%;
-	transform-origin: 0 50%;
-	pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 100%;
+    height: 100%;
+    background: #b53a2d;
+    content: attr(data-hover);
+    -webkit-transition: background 0.4s;
+    -moz-transition: background 0.4s;
+    transition: background 0.4s;
+    -webkit-transform: rotateY(90deg);
+    -moz-transform: rotateY(90deg);
+    transform: rotateY(90deg);
+    -webkit-transform-origin: 0 50%;
+    -moz-transform-origin: 0 50%;
+    transform-origin: 0 50%;
+    pointer-events: none;
 }
 
 .effect-19 a:hover span,
 .effect-19 a:focus span {
-	background: #b53a2d;
-	-webkit-transform: rotateY(-90deg);
-	-moz-transform: rotateY(-90deg);
-	transform: rotateY(-90deg);
+    background: #b53a2d;
+    -webkit-transform: rotateY(-90deg);
+    -moz-transform: rotateY(-90deg);
+    transform: rotateY(-90deg);
 }
 
 .csstransforms3d .effect-19 a:hover span::before,
 .csstransforms3d .effect-19 a:focus span::before {
-	background: #ef5e50;	
+    background: #ef5e50;	
 }
 
 /* Effect 20: 3D side */
 .effect-20 a {
-	line-height: 2em;
-	-webkit-perspective: 800px;
-	-moz-perspective: 800px;
-	perspective: 800px;
+    line-height: 2em;
+    -webkit-perspective: 800px;
+    -moz-perspective: 800px;
+    perspective: 800px;
 }
 
 .effect-20 a span {
-	position: relative;
-	display: inline-block;
-	padding: 3px 15px 0;
-	background: #587285;
-	box-shadow: inset 0 3px #2f4351;
-	-webkit-transition: background 0.6s;
-	-moz-transition: background 0.6s;
-	transition: background 0.6s;
-	-webkit-transform-origin: 50% 0;
-	-moz-transform-origin: 50% 0;
-	transform-origin: 50% 0;
-	-webkit-transform-style: preserve-3d;
-	-moz-transform-style: preserve-3d;
-	transform-style: preserve-3d;
-	-webkit-transform-origin: 0% 50%;
-	-moz-transform-origin: 0% 50%;
-	transform-origin: 0% 50%;
+    position: relative;
+    display: inline-block;
+    padding: 3px 15px 0;
+    background: #587285;
+    box-shadow: inset 0 3px #2f4351;
+    -webkit-transition: background 0.6s;
+    -moz-transition: background 0.6s;
+    transition: background 0.6s;
+    -webkit-transform-origin: 50% 0;
+    -moz-transform-origin: 50% 0;
+    transform-origin: 50% 0;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-transform-origin: 0% 50%;
+    -moz-transform-origin: 0% 50%;
+    transform-origin: 0% 50%;
 }
 
 .effect-20 a span::before {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background: #fff;
-	color: #2f4351;
-	content: attr(data-hover);
-	-webkit-transform: rotateX(270deg);
-	-moz-transform: rotateX(270deg);
-	transform: rotateX(270deg);
-	-webkit-transition: -webkit-transform 0.6s;
-	-moz-transition: -moz-transform 0.6s;
-	transition: transform 0.6s;
-	-webkit-transform-origin: 0 0;
-	-moz-transform-origin: 0 0;
-	transform-origin: 0 0;
-	pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    color: #2f4351;
+    content: attr(data-hover);
+    -webkit-transform: rotateX(270deg);
+    -moz-transform: rotateX(270deg);
+    transform: rotateX(270deg);
+    -webkit-transition: -webkit-transform 0.6s;
+    -moz-transition: -moz-transform 0.6s;
+    transition: transform 0.6s;
+    -webkit-transform-origin: 0 0;
+    -moz-transform-origin: 0 0;
+    transform-origin: 0 0;
+    pointer-events: none;
 }
 
 .effect-20 a:hover span,
 .effect-20 a:focus span {
-	background: #2f4351;
+    background: #2f4351;
 }
 
 .effect-20 a:hover span::before,
 .effect-20 a:focus span::before {
-	-webkit-transform: rotateX(10deg);	
-	-moz-transform: rotateX(10deg);
-	transform: rotateX(10deg);
+    -webkit-transform: rotateX(10deg);	
+    -moz-transform: rotateX(10deg);
+    transform: rotateX(10deg);
 }
 
 /* Effect 21: borders slight translate */
 .effect-21 a {
-	padding: 10px;
-	color: #68C999;
-	font-weight: 700;
-	text-shadow: none;
-	-webkit-transition: color 0.3s;
-	-moz-transition: color 0.3s;
-	transition: color 0.3s;
+    padding: 10px;
+    color: #68C999;
+    font-weight: 700;
+    text-shadow: none;
+    -webkit-transition: color 0.3s;
+    -moz-transition: color 0.3s;
+    transition: color 0.3s;
 }
 
 .effect-21 a::before,
 .effect-21 a::after {
-	position: absolute;
-	left: 0;
-	width: 100%;
-	height: 2px;
-	background: #68C999;
-	content: '';
-	opacity: 0;
-	-webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
-	-moz-transition: opacity 0.3s, -moz-transform 0.3s;
-	transition: opacity 0.3s, transform 0.3s;
-	-webkit-transform: translateY(-10px);
-	-moz-transform: translateY(-10px);
-	transform: translateY(-10px);
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #68C999;
+    content: '';
+    opacity: 0;
+    -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+    -moz-transition: opacity 0.3s, -moz-transform 0.3s;
+    transition: opacity 0.3s, transform 0.3s;
+    -webkit-transform: translateY(-10px);
+    -moz-transform: translateY(-10px);
+    transform: translateY(-10px);
 }
 
 .effect-21 a::before {
-	top: 0;
-	-webkit-transform: translateY(-10px);
-	-moz-transform: translateY(-10px);
-	transform: translateY(-10px);
+    top: 0;
+    -webkit-transform: translateY(-10px);
+    -moz-transform: translateY(-10px);
+    transform: translateY(-10px);
 }
 
 .effect-21 a::after {
-	bottom: 0;
-	-webkit-transform: translateY(10px);
-	-moz-transform: translateY(10px);
-	transform: translateY(10px);
+    bottom: 0;
+    -webkit-transform: translateY(10px);
+    -moz-transform: translateY(10px);
+    transform: translateY(10px);
 }
 
 .effect-21 a:hover,
 .effect-21 a:focus {
-	color: black;
+    color: black;
 }
 
 .effect-21 a:hover::before,
 .effect-21 a:focus::before,
 .effect-21 a:hover::after,
 .effect-21 a:focus::after {
-	opacity: 1;
-	-webkit-transform: translateY(0px);
-	-moz-transform: translateY(0px);
-	transform: translateY(0px);
+    opacity: 1;
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    transform: translateY(0px);
 }
 //################ L E A G O  L I N K S ################
 
 
+
+//################ O F F L I N E ################
+
+/* line 4, ../sass/_offline-theme-base.sass */
+.offline-ui, .offline-ui *, .offline-ui:before, .offline-ui:after, .offline-ui *:before, .offline-ui *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 7, ../sass/_offline-theme-base.sass */
+.offline-ui {
+  display: none;
+  position: fixed;
+  background: white;
+  z-index: 2000;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+/* line 17, ../sass/_offline-theme-base.sass */
+.offline-ui .offline-ui-content:before {
+  display: inline;
+}
+/* line 20, ../sass/_offline-theme-base.sass */
+.offline-ui .offline-ui-retry {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  display: none;
+}
+/* line 24, ../sass/_offline-theme-base.sass */
+.offline-ui .offline-ui-retry:before {
+  display: inline;
+}
+/* line 29, ../sass/_offline-theme-base.sass */
+.offline-ui.offline-ui-up.offline-ui-up-5s {
+  display: block;
+}
+/* line 32, ../sass/_offline-theme-base.sass */
+.offline-ui.offline-ui-down {
+  display: block;
+}
+/* line 37, ../sass/_offline-theme-base.sass */
+.offline-ui.offline-ui-down.offline-ui-waiting .offline-ui-retry {
+  display: block;
+}
+/* line 42, ../sass/_offline-theme-base.sass */
+.offline-ui.offline-ui-down.offline-ui-reconnect-failed-2s.offline-ui-waiting .offline-ui-retry {
+  display: none;
+}
+
+@-webkit-keyframes offline-fadein {
+  /* line 6, ../sass/_keyframes.sass */
+  0% {
+    opacity: 0;
+  }
+
+  /* line 8, ../sass/_keyframes.sass */
+  100% {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes offline-fadein {
+  /* line 6, ../sass/_keyframes.sass */
+  0% {
+    opacity: 0;
+  }
+
+  /* line 8, ../sass/_keyframes.sass */
+  100% {
+    opacity: 1;
+  }
+}
+
+@-ms-keyframes offline-fadein {
+  /* line 6, ../sass/_keyframes.sass */
+  0% {
+    opacity: 0;
+  }
+
+  /* line 8, ../sass/_keyframes.sass */
+  100% {
+    opacity: 1;
+  }
+}
+
+@-o-keyframes offline-fadein {
+  /* line 6, ../sass/_keyframes.sass */
+  0% {
+    opacity: 0;
+  }
+
+  /* line 8, ../sass/_keyframes.sass */
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes offline-fadein {
+  /* line 6, ../sass/_keyframes.sass */
+  0% {
+    opacity: 0;
+  }
+
+  /* line 8, ../sass/_keyframes.sass */
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes offline-fadeout-and-hide {
+  /* line 20, ../sass/_keyframes.sass */
+  0% {
+    opacity: 1;
+    display: block;
+  }
+
+  /* line 23, ../sass/_keyframes.sass */
+  99% {
+    opacity: 0;
+    display: block;
+  }
+
+  /* line 26, ../sass/_keyframes.sass */
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
+@-moz-keyframes offline-fadeout-and-hide {
+  /* line 20, ../sass/_keyframes.sass */
+  0% {
+    opacity: 1;
+    display: block;
+  }
+
+  /* line 23, ../sass/_keyframes.sass */
+  99% {
+    opacity: 0;
+    display: block;
+  }
+
+  /* line 26, ../sass/_keyframes.sass */
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
+@-ms-keyframes offline-fadeout-and-hide {
+  /* line 20, ../sass/_keyframes.sass */
+  0% {
+    opacity: 1;
+    display: block;
+  }
+
+  /* line 23, ../sass/_keyframes.sass */
+  99% {
+    opacity: 0;
+    display: block;
+  }
+
+  /* line 26, ../sass/_keyframes.sass */
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
+@-o-keyframes offline-fadeout-and-hide {
+  /* line 20, ../sass/_keyframes.sass */
+  0% {
+    opacity: 1;
+    display: block;
+  }
+
+  /* line 23, ../sass/_keyframes.sass */
+  99% {
+    opacity: 0;
+    display: block;
+  }
+
+  /* line 26, ../sass/_keyframes.sass */
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
+@keyframes offline-fadeout-and-hide {
+  /* line 20, ../sass/_keyframes.sass */
+  0% {
+    opacity: 1;
+    display: block;
+  }
+
+  /* line 23, ../sass/_keyframes.sass */
+  99% {
+    opacity: 0;
+    display: block;
+  }
+
+  /* line 26, ../sass/_keyframes.sass */
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
+@-webkit-keyframes offline-rotation {
+  /* line 64, ../sass/_keyframes.sass */
+  0% {
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+  }
+
+  /* line 66, ../sass/_keyframes.sass */
+  100% {
+    transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    -moz-transform: rotate(359deg);
+    -ms-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+  }
+}
+
+@-moz-keyframes offline-rotation {
+  /* line 64, ../sass/_keyframes.sass */
+  0% {
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+  }
+
+  /* line 66, ../sass/_keyframes.sass */
+  100% {
+    transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    -moz-transform: rotate(359deg);
+    -ms-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+  }
+}
+
+@-ms-keyframes offline-rotation {
+  /* line 64, ../sass/_keyframes.sass */
+  0% {
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+  }
+
+  /* line 66, ../sass/_keyframes.sass */
+  100% {
+    transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    -moz-transform: rotate(359deg);
+    -ms-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+  }
+}
+
+@-o-keyframes offline-rotation {
+  /* line 64, ../sass/_keyframes.sass */
+  0% {
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+  }
+
+  /* line 66, ../sass/_keyframes.sass */
+  100% {
+    transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    -moz-transform: rotate(359deg);
+    -ms-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+  }
+}
+
+@keyframes offline-rotation {
+  /* line 64, ../sass/_keyframes.sass */
+  0% {
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+  }
+
+  /* line 66, ../sass/_keyframes.sass */
+  100% {
+    transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    -moz-transform: rotate(359deg);
+    -ms-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+  }
+}
+
+/* line 21, ../sass/offline-theme-default.sass */
+.offline-ui {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  font-family: "Helvetica Neue", sans-serif;
+  padding: 1em;
+  top: 1em;
+  width: 38em;
+  max-width: 100%;
+  overflow: hidden;
+}
+@media (max-width: 38em) {
+  /* line 21, ../sass/offline-theme-default.sass */
+  .offline-ui {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    -o-border-radius: 0;
+    border-radius: 0;
+    top: 0;
+  }
+}
+/* line 34, ../sass/offline-theme-default.sass */
+.offline-ui .offline-ui-content:before {
+  line-height: 1.25em;
+}
+/* line 37, ../sass/offline-theme-default.sass */
+.offline-ui .offline-ui-retry {
+  position: absolute;
+  right: 3em;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  color: inherit;
+  line-height: 3.5em;
+  height: 3.5em;
+  margin: auto;
+  padding: 0 1em;
+}
+/* line 50, ../sass/offline-theme-default.sass */
+.offline-ui.offline-ui-up {
+  -webkit-animation: offline-fadeout-and-hide forwards 0.5s 2s;
+  -moz-animation: offline-fadeout-and-hide forwards 0.5s 2s;
+  -ms-animation: offline-fadeout-and-hide forwards 0.5s 2s;
+  -o-animation: offline-fadeout-and-hide forwards 0.5s 2s;
+  animation: offline-fadeout-and-hide forwards 0.5s 2s;
+  -webkit-backface-visibility: hidden;
+  background: #d6e9c6;
+  color: #468847;
+}
+/* line 55, ../sass/offline-theme-default.sass */
+.offline-ui.offline-ui-down {
+  -webkit-animation: offline-fadein 0.5s;
+  -moz-animation: offline-fadein 0.5s;
+  -ms-animation: offline-fadein 0.5s;
+  -o-animation: offline-fadein 0.5s;
+  animation: offline-fadein 0.5s;
+  -webkit-backface-visibility: hidden;
+  background: #ec8787;
+  color: #551313;
+}
+/* line 60, ../sass/offline-theme-default.sass */
+.offline-ui.offline-ui-down.offline-ui-connecting, .offline-ui.offline-ui-down.offline-ui-waiting {
+  background: #f8ecad;
+  color: #7c6d1f;
+  padding-right: 3em;
+}
+/* line 65, ../sass/offline-theme-default.sass */
+.offline-ui.offline-ui-down.offline-ui-connecting:after, .offline-ui.offline-ui-down.offline-ui-waiting:after {
+  -webkit-animation: offline-rotation 0.7s linear infinite;
+  -moz-animation: offline-rotation 0.7s linear infinite;
+  -ms-animation: offline-rotation 0.7s linear infinite;
+  -o-animation: offline-rotation 0.7s linear infinite;
+  animation: offline-rotation 0.7s linear infinite;
+  -webkit-backface-visibility: hidden;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  border-radius: 50%;
+  content: " ";
+  display: block;
+  position: absolute;
+  right: 1em;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  height: 1em;
+  width: 1em;
+  border: 2px solid rgba(0, 0, 0, 0);
+  border-top-color: #7c6d1f;
+  border-left-color: #7c6d1f;
+  opacity: 0.7;
+}
+/* line 82, ../sass/offline-theme-default.sass */
+.offline-ui.offline-ui-down.offline-ui-waiting {
+  padding-right: 11em;
+}
+/* line 85, ../sass/offline-theme-default.sass */
+.offline-ui.offline-ui-down.offline-ui-waiting.offline-ui-reconnect-failed-2s {
+  padding-right: 0;
+}
+
+/* line 5, ../sass/offline-language-english-indicator.sass */
+.offline-ui.offline-ui-up .offline-ui-content:before {
+  content: "Online";
+}
+/* line 10, ../sass/offline-language-english-indicator.sass */
+.offline-ui.offline-ui-down .offline-ui-content:before {
+  content: "Offline";
+}
+/* line 6, ../sass/_content.sass */
+.offline-ui .offline-ui-retry:before {
+  content: "Reconnect";
+}
+/* line 11, ../sass/_content.sass */
+.offline-ui.offline-ui-up .offline-ui-content:before {
+  content: "Your computer is connected to the internet.";
+}
+@media (max-width: 1024px) {
+  /* line 11, ../sass/_content.sass */
+  .offline-ui.offline-ui-up .offline-ui-content:before {
+    content: "Your device is connected to the internet.";
+  }
+}
+@media (max-width: 568px) {
+  /* line 11, ../sass/_content.sass */
+  .offline-ui.offline-ui-up .offline-ui-content:before {
+    content: "Your device is connected.";
+  }
+}
+/* line 22, ../sass/_content.sass */
+.offline-ui.offline-ui-down .offline-ui-content:before {
+  content: "Your computer lost its internet connection.";
+}
+@media (max-width: 1024px) {
+  /* line 22, ../sass/_content.sass */
+  .offline-ui.offline-ui-down .offline-ui-content:before {
+    content: "Your device lost its internet connection.";
+  }
+}
+@media (max-width: 568px) {
+  /* line 22, ../sass/_content.sass */
+  .offline-ui.offline-ui-down .offline-ui-content:before {
+    content: "Your device isn't connected.";
+  }
+}
+/* line 33, ../sass/_content.sass */
+.offline-ui.offline-ui-down.offline-ui-connecting .offline-ui-content:before, .offline-ui.offline-ui-down.offline-ui-connecting-2s .offline-ui-content:before {
+  content: "Attempting to reconnect...";
+}
+/* line 42, ../sass/_content.sass */
+.offline-ui.offline-ui-down.offline-ui-waiting .offline-ui-content[data-retry-in-unit="second"]:before {
+  content: "Connection lost. Reconnecting in " attr(data-retry-in-value) " seconds...";
+}
+@media (max-width: 568px) {
+  /* line 42, ../sass/_content.sass */
+  .offline-ui.offline-ui-down.offline-ui-waiting .offline-ui-content[data-retry-in-unit="second"]:before {
+    content: "Reconnecting in " attr(data-retry-in-value) "s...";
+  }
+}
+/* line 50, ../sass/_content.sass */
+.offline-ui.offline-ui-down.offline-ui-waiting .offline-ui-content[data-retry-in-unit="second"][data-retry-in-value="1"]:before {
+  content: "Connection lost. Reconnecting in " attr(data-retry-in-value) " second...";
+}
+@media (max-width: 568px) {
+  /* line 50, ../sass/_content.sass */
+  .offline-ui.offline-ui-down.offline-ui-waiting .offline-ui-content[data-retry-in-unit="second"][data-retry-in-value="1"]:before {
+    content: "Reconnecting in " attr(data-retry-in-value) "s...";
+  }
+}
+/* line 58, ../sass/_content.sass */
+.offline-ui.offline-ui-down.offline-ui-waiting .offline-ui-content[data-retry-in-unit="minute"]:before {
+  content: "Connection lost. Reconnecting in " attr(data-retry-in-value) " minutes...";
+}
+@media (max-width: 568px) {
+  /* line 58, ../sass/_content.sass */
+  .offline-ui.offline-ui-down.offline-ui-waiting .offline-ui-content[data-retry-in-unit="minute"]:before {
+    content: "Reconnecting in " attr(data-retry-in-value) "m...";
+  }
+}
+/* line 66, ../sass/_content.sass */
+.offline-ui.offline-ui-down.offline-ui-waiting .offline-ui-content[data-retry-in-unit="minute"][data-retry-in-value="1"]:before {
+  content: "Connection lost. Reconnecting in " attr(data-retry-in-value) " minute...";
+}
+@media (max-width: 568px) {
+  /* line 66, ../sass/_content.sass */
+  .offline-ui.offline-ui-down.offline-ui-waiting .offline-ui-content[data-retry-in-unit="minute"][data-retry-in-value="1"]:before {
+    content: "Reconnecting in " attr(data-retry-in-value) "m...";
+  }
+}
+/* line 74, ../sass/_content.sass */
+.offline-ui.offline-ui-down.offline-ui-waiting .offline-ui-content[data-retry-in-unit="hour"]:before {
+  content: "Connection lost. Reconnecting in " attr(data-retry-in-value) " hours...";
+}
+@media (max-width: 568px) {
+  /* line 74, ../sass/_content.sass */
+  .offline-ui.offline-ui-down.offline-ui-waiting .offline-ui-content[data-retry-in-unit="hour"]:before {
+    content: "Reconnecting in " attr(data-retry-in-value) "h...";
+  }
+}
+/* line 82, ../sass/_content.sass */
+.offline-ui.offline-ui-down.offline-ui-waiting .offline-ui-content[data-retry-in-unit="hour"][data-retry-in-value="1"]:before {
+  content: "Connection lost. Reconnecting in " attr(data-retry-in-value) " hour...";
+}
+@media (max-width: 568px) {
+  /* line 82, ../sass/_content.sass */
+  .offline-ui.offline-ui-down.offline-ui-waiting .offline-ui-content[data-retry-in-unit="hour"][data-retry-in-value="1"]:before {
+    content: "Reconnecting in " attr(data-retry-in-value) "h...";
+  }
+}
+/* line 90, ../sass/_content.sass */
+.offline-ui.offline-ui-down.offline-ui-reconnect-failed-2s.offline-ui-waiting .offline-ui-retry {
+  display: none;
+}
+/* line 93, ../sass/_content.sass */
+.offline-ui.offline-ui-down.offline-ui-reconnect-failed-2s .offline-ui-content:before {
+  content: "Connection attempt failed.";
+}
+
+//################ O F F L I N E ################
 
 
 /*LEAGO FARBEN
