@@ -209,7 +209,7 @@
                 </c:when>
                 <c:otherwise>
                     <div class="row">
-                        <div class="col-md-8 col-md-offset-2 text-center">
+                        <div class="col-md-8 col-md-offset-2 text-center" style="margin-top: 100px">
                             <h2>F&uuml;r dieses Turnier wurde noch kein Spielplan erstellt.</h2>
                         </div>
                     </div>
