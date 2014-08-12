@@ -6,7 +6,7 @@
             
     <div class="col-md-8 ">
         <!-- Default panel contents -->
-        <div class="panel panel-default">
+        <div class="panel panel-danger">
             <div class="panel-heading"><span class="glyphicon glyphicon-remove"></span> User aus dem Team entfernen</div>
             <div class="panel-body">
 
@@ -34,7 +34,7 @@
     <div class="col-md-8 ">
         <!-- Default panel contents -->
         <div class="panel panel-default">
-            <div class="panel-heading"><span class="glyphicon glyphicon-remove"></span> Jemanden ins Team einladen</div>
+            <div class="panel-heading"><span class="glyphicon glyphicon-plus"></span> Jemanden ins Team einladen</div>
             <div class="panel-body">
 
                 <p>Lade einen User ein, Mitglied in deinem Team zu werden. Er wird im Anschluss benachrichtigt und kann die Einladung akzeptieren.</p> 

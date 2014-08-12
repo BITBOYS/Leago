@@ -251,18 +251,20 @@ public class UserHelper {
             Connection con = DatabaseHelper.connect();
             Statement statement = con.createStatement();
             
-            ResultSet resultSet = statement.executeQuery("SELECT distinct tou.name"
+            ResultSet resultSet = statement.executeQuery("SELECT distinct tou.name, tou.leader"
                                             + " FROM  tournament tou, team_tournament teto, team te, user_team ut, user u"
-                                            + " WHERE tou.name = teto.tournament"
+                                            + " WHERE (tou.name = teto.tournament"
                                             + "   AND teto.team = te.name" 
                                             + "   AND te.name = ut.team" 
                                             + "   AND ut.user = u.username" 
-                                            + "   AND username = '" + username + "'"
+                                            + "   AND username = '" + username + "')"
+                                            + "   OR  tou.leader = '" + username + "'"
                                             + " ORDER BY tou.name, tou.start_date");            
             
             while(resultSet.next()) {
                 Tournament tournament = new Tournament();
                 tournament.setName(resultSet.getString("tou.name"));
+                tournament.setLeader(new User(resultSet.getString("tou.leader")));
                 tournaments.add(tournament);
             }
         } catch (SQLException ex) {
