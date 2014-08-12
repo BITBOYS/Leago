@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-12 text-center links effect-12">
+        <div class="col-md-12 text-center">
             <ul class="list-inline">
                 <li><a href="${pageContext.request.contextPath}"><i class="fa fa-facebook fa-2x"></i></a></li>
                 <li class="footer-menu-divider"></li>
@@ -10,7 +10,7 @@
                 <li class="footer-menu-divider"></li>
                 <li><a href="https://github.com/BITBOYS/Leago"><i class="fa fa-2x fa-github"></i></a></li>
             </ul>
-            <ul class="list-inline">
+            <ul class="list-inline links effect-1">
                 <li><a href="${pageContext.request.contextPath}"><fmt:message key="footer.link.home"/></a></li>
                 <li class="footer-menu-divider">&sdot;</li>
                 <li><a href="${pageContext.request.contextPath}/about"><fmt:message key="footer.link.about"/></a></li>

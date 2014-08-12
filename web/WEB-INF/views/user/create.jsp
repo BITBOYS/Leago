@@ -27,7 +27,9 @@
                         <button class="btn btn-lg btn-leago btn-block" type="submit"><fmt:message key="register.button.submit"/></button>
                     </div>
                 </form>
-                <a href="${pageContext.request.contextPath}/faq" class="pull-right need-help"><fmt:message key="register.link.help"/> </a><span class="clearfix"></span>
+                <div class="links effect-1">
+                    <a href="${pageContext.request.contextPath}/faq" class="pull-right need-help"><fmt:message key="register.link.help"/> </a><span class="clearfix"></span>
+                </div>
                 <hr>
                 <p class="text-center"><fmt:message key="register.info.already"/> <b><a href="${pageContext.request.contextPath}/login" class="text-center new-account"><fmt:message key="register.link.signin"/></a></b></p>
             </div>

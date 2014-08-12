@@ -18,13 +18,17 @@
                     </div>
                     <div class="form-group">
                         <!-- modal caller -->
-                        <a href="#modal-dialog-user" data-toggle="modal" data-modal-title="Reset Password" data-modal-text="Enter your email" data-modal-confirm-url="#" data-modal-type="confirm" class="model-toggle pull-right need-help"><fmt:message key="login.link.password"/> </a><span class="clearfix"></span>
+                        <div class="links effect-1">
+                            <a href="#modal-dialog-user" data-toggle="modal" data-modal-title="Reset Password" data-modal-text="Enter your email" data-modal-confirm-url="#" data-modal-type="confirm" class="model-toggle pull-right need-help"><fmt:message key="login.link.password"/> </a><span class="clearfix"></span>
+                        </div>
                     </div>
                     <div class="form-group">
                         <button class="btn btn-lg btn-leago btn-block" type="submit"><fmt:message key="login.button.submit"/></button>
                     </div>
                 </form>
-                <a href="${pageContext.request.contextPath}/faq.jsp" class="pull-right need-help"><fmt:message key="login.link.help"/> </a><span class="clearfix"></span>
+                <div class="links effect-1">
+                    <a href="${pageContext.request.contextPath}/faq.jsp" class="pull-right need-help"><fmt:message key="login.link.help"/> </a><span class="clearfix"></span>
+                </div>
                 <hr>
                 <p class="text-center"><fmt:message key="login.info.new"/> <b><a href="${pageContext.request.contextPath}/register"><fmt:message key="login.link.signup"/> </a></b></p>
             </div>

@@ -431,6 +431,10 @@ cite {
     color: #428bca;
 }
 
+.text-default {
+    color: #fff;
+}
+
 .text-warning {
     color: #c09853;
 }
@@ -2230,9 +2234,20 @@ fieldset[disabled] .btn-danger.active {
     border: 1px solid;
     border-color: #68C999;
 }
+.btn-leago-circle {
+    font-weight:bold;
+    color: #68C999;
+    background-color: transparent;
+    border: 0px;
+    border-radius: 15px;
+}
 .btn-leago:hover{
     color: white;
     background-color: #68C999;
+    border-color: #68C999;
+}
+.btn-leago-circle:hover{
+    color: #68C999;
     border-color: #68C999;
 }
 
@@ -3657,6 +3672,13 @@ input[type="button"].btn-block {
     position: relative;
     display: table;
     border-collapse: separate;
+}
+
+.input-group-leago {
+    position: relative;
+    display: table;
+    border-collapse: separate;
+    background: transparent;
 }
 
 .input-group.col {
