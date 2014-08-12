@@ -296,7 +296,7 @@
                     $("#weather").html(html);
                 },
                 error: function(error) {
-                    $("#weather").html('<p>' + error + '</p>');
+                    $("#weather").html('Keine Angabe');
                 }
             });
         });

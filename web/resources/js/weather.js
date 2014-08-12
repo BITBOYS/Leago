@@ -1,19 +1,15 @@
-    alert('de');
 // Docs at http://simpleweatherjs.com
 $(document).ready(function() {
-  $.simpleWeather({
-    location: 'Hamburg',
-    woeid: '',
-    unit: 'c',
-    success: function(weather) {
-      html = '<h2><i class="icon-'+weather.code+'"></i> '+weather.temp+'&deg;'+weather.units.temp+'</h2>';
-      html += '<ul><li>'+weather.city+', '+weather.region+'</li>';
-      html += '<li class="currently">'+weather.currently+'</li>';
-  
-      $("#weather").html(html);
-    },
-    error: function(error) {
-      $("#weather").html('<p>'+error+'</p>');
-    }
-  });
+    $.simpleWeather({
+        location: '${tournament.venue}',
+        unit: 'c',
+        success: function(weather) {
+            html = '<a target="_blank" href="' + weather.link + '">' + weather.temp + '&deg;' + weather.units.temp + '</a><img height="25" src="' + weather.thumbnail + '"></img>';
+
+            $("#weather").html(html);
+        },
+        error: function(error) {
+            $("#weather").html('Keine Angabe');
+        }
+    });
 });
