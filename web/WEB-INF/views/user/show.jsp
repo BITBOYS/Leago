@@ -72,7 +72,7 @@
         <h2 class="page-header"><fmt:message key="user.info.tournaments1"/> ${profileuser.name} <fmt:message key="user.info.tournaments2"/></h2>
         <!-- Schleife zum Anzeigen aller Teams in denen man sich befindet -->
         <c:forEach var="tournament" items="${profileuser.tournaments}">
-            <div class="col-md-3" style="margin: 0 0 20px -15px;">
+            <div class="col-md-2" style="margin: 0 0 20px -15px;">
                 <a href="${pageContext.request.contextPath}/tournament/${tournament.name}">
                     <div class="caption">  
                         <h4>${tournament.name}</h4>  
