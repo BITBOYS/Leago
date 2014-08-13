@@ -33,6 +33,10 @@
         <servlet-name>UserServlet</servlet-name>
         <url-pattern>/settings/*</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>/password</url-pattern>
+    </servlet-mapping>
     <!-- ################ T O U R N A M E N T ################ -->
     <servlet>
         <servlet-name>TournamentServlet</servlet-name>
