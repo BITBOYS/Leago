@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>index</welcome-file>
     </welcome-file-list>
+    
+    <!-- ################ L A N D I N G P A G E ################ -->
+    <servlet>
+        <servlet-name>IndexServlet</servlet-name>
+        <servlet-class>leago.controller.IndexServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>IndexServlet</servlet-name>
+        <url-pattern>/index</url-pattern>
+    </servlet-mapping>    
+    
     <!-- ################ S E S S I O N ################ -->
     <servlet>
         <servlet-name>SessionServlet</servlet-name>

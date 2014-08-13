@@ -4,45 +4,45 @@
 
 
 <div class="row">
-    <div class="col-md-2">
+    <div class="col-md-3">
         <h2>${profileuser.name}</h2>
         <p><fmt:message key="user.info.member_since"/> ${profileuser.create_date_web}</p>
         <img src="http://placehold.it/150x150">
     </div>
 
-        <div class="col-md-2 col-md-offset-6">
-            <c:choose>
-                <c:when test="${profileuser.statistics.goal_difference != 0 && profileuser.statistics.goals != 0}">    
-                    <div class="pull-right text-center stats">
-                        <h2><fmt:message key="user.stats.match"/></h2>
-                        <canvas id="matches" width="200" height="150"></canvas>
-                    </div>
-                </c:when>
-                <c:when test="${profileuser.statistics.goal_difference == 0 && profileuser.statistics.goals == 0}">
-                    <div class="pull-right text-center stats">
-                        <h2><fmt:message key="user.stats.match"/></h2>
-                        <p style="margin-top: 30px">No stats recorded</p>
-                    </div>
-                </c:when>
-            </c:choose>
-        </div>
-        <div class="col-md-2">
-            <c:choose>
-                <c:when test="${profileuser.statistics.wins != 0 && profileuser.statistics.defeats != 0}">    
-                    <div class="pull-right text-center stats">
-                        <h2><fmt:message key="user.stats.goal"/></h2>
-                        <canvas id="goals" width="200" height="150"></canvas>
-                    </div>
-                </c:when>
-                <c:when test="${profileuser.statistics.goal_difference == 0 && profileuser.statistics.goals == 0}">
-                    <div class="pull-right text-center stats">
-                        <h2><fmt:message key="user.stats.goal"/></h2>
-                        <p style="margin-top: 30px">No stats recorded</p>
-                    </div>
-                </c:when>
-            </c:choose>   
-        </div>
+    <div class="col-md-2 col-md-offset-5">
+        <c:choose>
+            <c:when test="${profileuser.statistics.goal_difference != 0 && profileuser.statistics.goals != 0}">    
+                <div class="pull-right text-center stats">
+                    <h2><fmt:message key="user.stats.match"/></h2>
+                    <canvas id="matches" width="200" height="150"></canvas>
+                </div>
+            </c:when>
+            <c:when test="${profileuser.statistics.goal_difference == 0 && profileuser.statistics.goals == 0}">
+                <div class="text-center stats">
+                    <h2><fmt:message key="user.stats.match"/></h2>
+                    <p style="margin-top: 30px">No stats recorded</p>
+                </div>
+            </c:when>
+        </c:choose>
     </div>
+    <div class="col-md-2">
+        <c:choose>
+            <c:when test="${profileuser.statistics.wins != 0 && profileuser.statistics.defeats != 0}">    
+                <div class="pull-right text-center stats">
+                    <h2><fmt:message key="user.stats.goal"/></h2>
+                    <canvas id="goals" width="200" height="150"></canvas>
+                </div>
+            </c:when>
+            <c:when test="${profileuser.statistics.goal_difference == 0 && profileuser.statistics.goals == 0}">
+                <div class="pull-right text-center stats">
+                    <h2><fmt:message key="user.stats.goal"/></h2>
+                    <p style="margin-top: 30px">No stats recorded</p>
+                </div>
+            </c:when>
+        </c:choose>   
+    </div>
+</div>
 
 
 <div class="row">

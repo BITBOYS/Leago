@@ -8,33 +8,7 @@ For more info and more free Bootstrap 3 HTML themes, visit http://startbootstrap
 
 /* Global Styles */
 
-body, html {
-   margin:0;
-   padding:0;
-   height:100%;
-}
 
-.body {
-   padding-bottom: 200px;   /* Height of the footer */
-  padding-top: 70px; /* body padding for fixed top nav */
-}
-
-.wrapper {
-   min-height:100%;
-   position:relative;
-}
-
-/* Footer Styles */
-footer {
-    position: absolute;
-    border-top: 1px solid #dddddd;
-    background-color: #FFFFFF;
-    padding: 35px 0;
-    bottom: 0;
-    width: 100%;
-    font-family: LeagoFlat;
-    font-size: 15px;
-}
 
 .img-home-portfolio,
 .img-customer,

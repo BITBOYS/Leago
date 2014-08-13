@@ -13,6 +13,7 @@
     <!-- Bootstrap core CSS -->
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/modern-business.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/leago.css" rel="stylesheet">
 
     <!-- Custom Google Web Font -->
     <link href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">

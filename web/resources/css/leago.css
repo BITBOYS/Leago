@@ -1,0 +1,128 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 13.08.2014, 09:13:56
+    Author     : v094702
+*/
+
+/*--- L E A G O  F O O T E R ---*/
+
+.body {
+    padding-bottom: 200px;   /* Height of the footer */
+    padding-top: 70px; /* body padding for fixed top nav */
+}
+
+.wrapper {
+   min-height:100%;
+   position:relative;
+}
+
+/* Footer Styles */
+footer {
+    position: absolute;
+    border-top: 1px solid #dddddd;
+    background-color: #FFFFFF;
+    padding: 35px 0;
+    bottom: 0;
+    width: 100%;
+    font-size: 15px;
+}
+
+/*--- L E A G O  B U T T O N S ---*/
+
+.btn-leago {
+    font-weight:bold;
+    color: #68C999;
+    background-color: #fff;
+    border: 1px solid;
+    border-color: #68C999;
+}
+.btn-leago-circle {
+    font-weight:bold;
+    color: #68C999;
+    background-color: transparent;
+    border: 0px;
+    border-radius: 15px;
+}
+.btn-leago:hover{
+    color: white;
+    background-color: #68C999;
+    border-color: #68C999;
+}
+.btn-leago-circle:hover{
+    color: #68C999;
+    border-color: #68C999;
+}
+
+.input-group-leago {
+    position: relative;
+    display: table;
+    border-collapse: separate;
+    background: transparent;
+}
+
+/*--------------------------*/
+
+.nav-pills > li > a {
+    font-family: LeagoFlat;
+    font-size: 20px;
+}
+
+/*--- L E A G O  P A N E L ---*/
+
+.panel-leago {
+    border: none;
+}
+.panel-leago > .panel-heading {
+    color: #ffffff;
+    background-color: #68C999;
+    border-color: #68C999;
+    font-family: LeagoFlat;
+    font-size: 25px;
+    border-radius: 0;
+}
+
+.panel-leago-small {
+    border-color: #68C999;
+}
+
+.panel-leago-small > .panel-heading {
+    color: #ffffff;
+    background-color: #68C999;
+    border-color: #68C999;
+    font-family: LeagoFlat;
+    font-size: 18px;
+}
+
+.panel-leago > .panel-heading + .panel-collapse .panel-body {
+    border-top-color: #68C999;
+}
+.panel-leago > .panel-footer + .panel-collapse .panel-body {
+    border-bottom-color: #68C999;
+}
+/*--------------------------*/
+
+
+/*--- L E A G O  F O N T S # A N D # C O L O R S ---*/
+
+/*LEAGO FARBEN
+
+LEAGO ALT: #6BBC86
+LEAGO NEU: #68C999
+*/
+
+.leago-background {
+    background-color: #68C999;
+}
+
+.leago-color {
+   color: #68C999;
+}
+
+@font-face {
+    font-family: LeagoFlat;
+    src: url('../fonts/segoe-ui-light.ttf') format("truetype");
+}

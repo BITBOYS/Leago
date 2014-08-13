@@ -6,12 +6,6 @@
 
 /* Global Styles */
 
-html,
-body {
-    width: 100%;
-    height: 100%;
-}
-
 .text-vertical-center {
     color: #fff;
     display: table-cell;
@@ -24,34 +18,6 @@ body {
     padding: 0;
     font-size: 4.5em;
     font-weight: 700;
-}
-
-/* Custom Button Styles */
-
-.btn-dark {
-    border-radius: 0;
-    color: #fff;
-    background-color: rgba(0,0,0,0.4);
-}
-
-.btn-dark:hover,
-.btn-dark:focus,
-.btn-dark:active {
-    color: #fff;
-    background-color: rgba(0,0,0,0.7);
-}
-
-.btn-light {
-    border-radius: 0;
-    color: #333;
-    background-color: rgb(255,255,255);
-}
-
-.btn-light:hover,
-.btn-light:focus,
-.btn-light:active {
-    color: #333;
-    background-color: rgba(255,255,255,0.8);
 }
 
 
@@ -104,40 +70,45 @@ body {
     background-size: cover;
     -o-background-size: cover;
 }
-/*
- Portfolio 
-
-.portfolio {
-    padding: 50px 0;
-}
-
-.portfolio-item {
-    margin-bottom: 30px;
-}
-
-.img-portfolio {
-    margin: 0 auto;
-}
-
-.img-portfolio:hover {
-    opacity: 0.8;
-}
-
-
- Map 
-
-.map {
-    height: 500px;
-}
-
-@media(max-width:768px) {
-    .map {
-        height: 75%;
-    }
-}*/
 
 /* Footer */
 
 footer {
-    padding: 100px 0;
+    border-top: 1px solid #dddddd;
+    background-color: #FFFFFF;
+    padding: 35px 0;
+    bottom: 0;
+    width: 100%;
+    font-size: 15px;
+}
+
+.btn-leago {
+    font-weight:bold;
+    color: #68C999;
+    background-color: #fff;
+    border: 1px solid;
+    border-color: #68C999;
+}
+
+.btn-leago:hover{
+    color: white;
+    background-color: #68C999;
+    border-color: #68C999;
+}
+
+.btn-leago-index {
+    color: #fff;
+    background-color: #68C999;
+    border: 1px solid;
+    border-color: #fff;
+}
+
+.btn-leago-index:hover{
+    color: #68C999;
+    background-color: #fff;
+    border-color: #fff;
+}
+
+.leago-color {
+   color: #68C999;
 }
