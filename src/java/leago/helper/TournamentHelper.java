@@ -456,6 +456,25 @@ public class TournamentHelper {
         }
     }
 
+    public void inviteTeam(String teamname, Tournament tournament) throws TournamentUpdateException, DatabaseConnectionException {
+        TeamHelper teamHelper = new TeamHelper();
+        
+        try {
+            if(teamHelper.isTeamExisting(teamname)) {
+                Connection con = DatabaseHelper.connect();
+                Statement statement = con.createStatement();
+
+                statement.execute("INSERT INTO team_tournament (team, tournament) VALUES ('" + teamname + "','" + tournament.getName() + "')");
+            } else {
+                throw new TournamentUpdateException("A team with this name couldn't be found", MyException.ERROR);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(TeamHelper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new TournamentUpdateException("Team update failed unexpectedly with an SQL error " + ex.getSQLState(), MyException.ERROR);
+        }
+    }
+    
     public void kickTeam(Team team, Tournament tournament) throws DatabaseConnectionException, TournamentUpdateException {
 
         try {

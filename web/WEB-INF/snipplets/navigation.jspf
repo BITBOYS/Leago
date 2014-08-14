@@ -36,7 +36,7 @@
                             <ul class="dropdown-menu">
                                 <li role="presentation" class="dropdown-header">Create:</li>
                                 <li role="presentation" class="divider"></li>
-                                <li><a href="${pageContext.request.contextPath}/new/tournament"><i class="fa fa-sitemap"></i> <fmt:message key="navi.create.tournament"/></a></li> 
+                                <li><a href="${pageContext.request.contextPath}/new/tournament"><i class="fa fa-trophy"></i> <fmt:message key="navi.create.tournament"/></a></li> 
                                 <li><a href="${pageContext.request.contextPath}/new/team"><i class="fa fa-users"></i> <fmt:message key="navi.create.team"/></a></li> 
                             </ul>
                         </li>
