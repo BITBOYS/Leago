@@ -190,6 +190,8 @@ public class TournamentServlet extends HttpServlet {
 
                 case "teams":
                     page = "tournament/update_teams";
+                    if(request.getParameter("action") != null && request.getParameter("action").equals("invite"))
+                        inviteTeam();
                     if(request.getParameter("action") != null && request.getParameter("action").equals("kick"))
                         kickTeam();
                     break;
@@ -333,6 +335,26 @@ public class TournamentServlet extends HttpServlet {
             result = false;
         
         return result;
+    }
+    
+     private void inviteTeam() throws DatabaseConnectionException {
+
+        // P A R A M E T E R S
+        String new_team = request.getParameter("new_team");
+        
+        // O P E R A T I O N
+        TournamentHelper tournamentHelper = new TournamentHelper();
+        
+        try {
+            tournamentHelper.inviteTeam(new_team, tournament);
+            tournament = tournamentHelper.getTournament(tournament.getName());
+            request.setAttribute("message", new MyException("Team invited successfully", MyException.SUCCESS));
+            request.setAttribute("tournament", tournament);
+            
+        } catch (TournamentUpdateException | TournamentNotExistingException ex) {
+            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("message", ex);
+        }
     }
     
     private void kickTeam() throws DatabaseConnectionException {
