@@ -6,21 +6,24 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-        <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/img/favicon.ico">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta name="HandheldFriendly" content="true" />
-        <title>Leago</title>
-
-        <!-- Bootstrap core CSS -->
-        <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
         
+        <title>Leago</title>
+        
+        <!-- favicon -->
+        <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/img/leago3.ico">
+               
+        <!-- CSS -->
+        <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/css/animate.css"  rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/css/landing-page.css" rel="stylesheet">
+
         <!-- Custom Google Web Font -->
         <link href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
         <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
-        <!-- Add custom CSS here -->
-        <link href="${pageContext.request.contextPath}/resources/css/landing-page.css" rel="stylesheet">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/animate.css">
-
+        
+        <!-- JS -->
         <script src="${pageContext.request.contextPath}/resources/js/wow.min.js"></script>
         <script>
             new WOW().init();
@@ -39,8 +42,8 @@
                 <h1>Leago</h1>
                 <h3><fmt:message key="index.h3.info"/></h3>
                 <br>
-                <section class="wow swing" data-wow-delay="1s"> 
-                    <a href="#about" class="btn btn-default">Find Out More</a>
+                <section class="wow bounceInUp" data-wow-delay="1s"> 
+                    <a href="#about" class="btn-lg btn-default">Find Out More</a>
                 </section>
             </div>
         </div>
@@ -50,37 +53,37 @@
         <section id="about" class="about">
             <div class="container">
                 <div class="row">
-                        
-                        <div class="col-lg-6 text-center col-lg-offset-3"> 
-                            <div class="col-md-4 col-sm-6">
-                                <div class="service-item">
-                                    <section class="wow zoomIn" data-wow-offset="100"> 
-                                        <i class="fa fa-mobile fa-5x"></i>
-                                    </section>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-4 col-sm-6">
-                                <div class="service-item">
-                                    <section class="wow zoomIn" data-wow-offset="100"> 
-                                        <i class="fa fa-tablet fa-5x"></i>
-                                    </section>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-4 col-sm-6">
-                                <div class="service-item">
-                                    <section class="wow zoomIn" data-wow-offset="100"> 
-                                        <i class="fa fa-laptop fa-5x"></i>
-                                    </section>
-                                </div>
+
+                    <div class="col-lg-6 text-center col-lg-offset-3"> 
+                        <div class="col-md-4 col-sm-6">
+                            <div class="service-item">
+                                <section class="wow zoomIn" data-wow-offset="100"> 
+                                    <i class="fa fa-mobile fa-5x"></i>
+                                </section>
                             </div>
                         </div>
-                    
+
+                        <div class="col-md-4 col-sm-6">
+                            <div class="service-item">
+                                <section class="wow zoomIn" data-wow-offset="100"> 
+                                    <i class="fa fa-tablet fa-5x"></i>
+                                </section>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6">
+                            <div class="service-item">
+                                <section class="wow zoomIn" data-wow-offset="100"> 
+                                    <i class="fa fa-laptop fa-5x"></i>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="col-lg-10 text-center col-lg-offset-1">    
                         <h2>Leago ist das perfekte Werkzeug für dein n&auml;chstes Turnier!</h2>
                         <p style="font-size: 20px;">Greife von &uuml;berall, egal ob vom Smartphone, deinem Tablet oder dem Computer, auf
-                        dein Turnier zu.</p>
+                            dein Turnier zu.</p>
                     </div>
                 </div>
                 <!-- /.row -->
@@ -154,9 +157,24 @@
         <!-- JavaScript -->
         <script src="resources/js/jquery-1.10.2.js"></script>
         <script src="resources/js/bootstrap.js"></script>
-        <script src="resources/js/offline.js"></script>
 
-       
+        <script>
+            $(function() {
+                $('a[href*=#]:not([href=#])').click(function() {
+                    if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+                        var target = $(this.hash);
+                        target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                        if (target.length) {
+                            $('html,body').animate({
+                                scrollTop: target.offset().top
+                            }, 1000);
+                            return false;
+                        }
+                    }
+                });
+            });
+        </script>
+
     </body>
 
 </html>

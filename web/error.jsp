@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html lang="${language}">
 
-    <head>        
+    <head>           
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta name="HandheldFriendly" content="true" />
-        <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/img/favicon.ico">
+
         <title>Leago - Error</title>
 
-        <!-- Bootstrap core CSS -->
+        <!-- favicon -->
+        <link href="${pageContext.request.contextPath}/resources/img/leago3.ico"  rel="shortcut icon"> 
+
+        <!-- CSS -->
         <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/css/landing-page.css" rel="stylesheet">
+
         <!-- Custom Google Web Font -->
         <link href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
         <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
-        <!-- Add custom CSS here -->
-        <link href="${pageContext.request.contextPath}/resources/css/landing-page.css" rel="stylesheet">
     </head>
+
 
     <header>
         <%@include file="WEB-INF/snipplets/navigation.jspf" %>
@@ -54,15 +58,18 @@
                     </c:choose>
 
                     <p>Das tut uns leid! Hast du das hier gesucht:</p>
-                    <ul>
-                        <li><a href="${pageContext.request.contextPath}">Home</a></li>
-                        <li><a href="${pageContext.request.contextPath}/login">Login</a></li>
-                        <li><a href="${pageContext.request.contextPath}/register">Sign Up</a></li>
-                        <li><a href="${pageContext.request.contextPath}/about.jsp">About Us</a></li>
-                        <li><a href="${pageContext.request.contextPath}/terms.jsp">Terms of use</a></li>
-                        <li><a href="${pageContext.request.contextPath}/contact.jsp">Contact</a></li>
-                        <li><a href="${pageContext.request.contextPath}/faq.jsp">FAQ</a></li>
-                    </ul>
+                    
+                    <div class="links effect-1">
+                        <ul>
+                            <li><a href="${pageContext.request.contextPath}">Home</a></li>
+                            <li><a href="${pageContext.request.contextPath}/login">Login</a></li>
+                            <li><a href="${pageContext.request.contextPath}/register">Sign Up</a></li>
+                            <li><a href="${pageContext.request.contextPath}/about.jsp">About Us</a></li>
+                            <li><a href="${pageContext.request.contextPath}/terms.jsp">Terms of use</a></li>
+                            <li><a href="${pageContext.request.contextPath}/contact.jsp">Contact</a></li>
+                            <li><a href="${pageContext.request.contextPath}/faq.jsp">FAQ</a></li>
+                        </ul>
+                    </div>
                 </div>
 
             </div>

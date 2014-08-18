@@ -8,16 +8,19 @@
         <meta name="author" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta name="HandheldFriendly" content="true" />
-        <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/img/favicon.ico">
+
         <title>Leago - About Us</title>
 
-        <!-- Bootstrap core CSS -->
+        <!-- favicon -->
+        <link href="${pageContext.request.contextPath}/resources/img/leago3.ico"  rel="shortcut icon"> 
+
+        <!-- CSS -->
         <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/css/landing-page.css" rel="stylesheet">
+
         <!-- Custom Google Web Font -->
         <link href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
         <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
-        <!-- Add custom CSS here -->
-        <link href="${pageContext.request.contextPath}/resources/css/landing-page.css" rel="stylesheet">
     </head>
 
     <header>
@@ -36,9 +39,11 @@
                     <img class="img-responsive img-rounded" src="${pageContext.request.contextPath}/resources/img/team.jpg">
                 </div>
                 <div class="col-md-6">
-                    <h2>Welcome to Leago</h2>
-                    <p>Wir sind ein junges Developer Team aus Hamburg und haben unglaublich viel Spa&szlig; am Kickern. Deshalb haben wir erkannt, dass die Welt ein Kicker-Tool braucht.</p>
-                    <p>Und genau hier kommt Leago ins Spiel. Aus einer scherzhaften Idee wurde ein Konzept. Leago ist in unserer Freizeit entstanden und dient keinen kommerziellen Zwecken. Wer uns trotzdem etwas Gutes tun möchte, kann uns gerne mal einen Kaffee ausgeben.</p>
+                    <blockquote>
+                        <h2>Welcome to Leago</h2>
+                        <p>Wir sind ein junges Developer Team aus Hamburg und haben unglaublich viel Spa&szlig; am Kickern. Deshalb haben wir erkannt, dass die Welt ein Kicker-Tool braucht.</p>
+                        <p>Und genau hier kommt Leago ins Spiel. Aus einer scherzhaften Idee wurde ein Konzept. Leago ist in unserer Freizeit entstanden und dient keinen kommerziellen Zwecken. Wer uns trotzdem etwas Gutes tun möchte, kann uns gerne mal einen Kaffee ausgeben.</p>
+                    </blockquote>
                 </div>
 
             </div>

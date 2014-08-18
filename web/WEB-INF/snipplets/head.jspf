@@ -5,12 +5,13 @@
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="HandheldFriendly" content="true" />
-    
-    <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/img/favicon.ico">
-    
+
     <title>Leago</title>
 
-    <!-- Bootstrap core CSS -->
+    <!-- favicon -->
+    <link href="${pageContext.request.contextPath}/resources/img/leago3.ico"  rel="shortcut icon"> 
+
+    <!-- CSS -->
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/modern-business.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/leago.css" rel="stylesheet">
@@ -23,5 +24,4 @@
     <script src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/Chart.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/offline.js"></script>
 </head>
