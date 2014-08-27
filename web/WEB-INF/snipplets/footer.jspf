@@ -2,13 +2,13 @@
     <div class="row">
         <div class="col-md-12 text-center">
             <ul class="list-inline">
-                <li><a href="${pageContext.request.contextPath}"><i class="fa fa-facebook fa-2x"></i></a></li>
+                <li><a target="_blank" href="https://www.facebook.com/LeagoTournaments"><i class="fa fa-facebook fa-2x"></i></a></li>
                 <li class="footer-menu-divider"></li>
-                <li><a href="https://plus.google.com/110655655037221087199/"><i class="fa fa-2x fa-google-plus"></i></a></li>
+                <li><a target="_blank" href="https://plus.google.com/110655655037221087199/"><i class="fa fa-2x fa-google-plus"></i></a></li>
                 <li class="footer-menu-divider"></li>
-                <li><a href="${pageContext.request.contextPath}"><i class="fa fa-2x fa-twitter"></i></a></li>
+                <li><a target="_blank" href="${pageContext.request.contextPath}"><i class="fa fa-2x fa-twitter"></i></a></li>
                 <li class="footer-menu-divider"></li>
-                <li><a href="https://github.com/BITBOYS/Leago"><i class="fa fa-2x fa-github"></i></a></li>
+                <li><a target="_blank" href="https://github.com/BITBOYS/Leago"><i class="fa fa-2x fa-github"></i></a></li>
             </ul>
             <ul class="list-inline links effect-1">
                 <li><a href="${pageContext.request.contextPath}"><fmt:message key="footer.link.home"/></a></li>
