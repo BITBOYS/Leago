@@ -6,6 +6,7 @@
 package leago.helper;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -39,6 +40,13 @@ public class UserHelper {
 
         try {
             Connection con = DatabaseHelper.connect();
+
+//            String query = "DELETE FROM user_team WHERE user = ? AND team = ? ";
+//
+//            PreparedStatement pstmt = con.prepareStatement(query);
+//            pstmt.setString(1, user.getName());
+//            pstmt.setString(2, team.getName());
+//            pstmt.executeQuery();
             Statement statement = con.createStatement();
 
             statement.execute("DELETE FROM user_team WHERE user = '" + user.getName() + "' AND team = '" + team.getName() + "'");
@@ -63,9 +71,16 @@ public class UserHelper {
                         String hashpw = BCrypt.createHash(password, salt);
 
                         Connection con = DatabaseHelper.connect();
+
+//                        String query = "INSERT INTO user (username, password, email) VALUES ( ? ,'" + hashpw + "', ? )";
+//
+//                        PreparedStatement pstmt = con.prepareStatement(query);
+//                        pstmt.setString(1, name);
+//                        pstmt.setString(2, email);
+//                        result = pstmt.executeUpdate();
                         Statement statement = con.createStatement();
 
-                        result = statement.executeUpdate("insert into user"
+                        result = statement.executeUpdate("INSERT INTO user"
                                 + " (username, password, email)"
                                 + " VALUES ('" + name + "','" + hashpw + "','" + email + "')");
 
@@ -96,8 +111,14 @@ public class UserHelper {
 
         try {
             Connection con = DatabaseHelper.connect();
+
+//            String query = "SELECT COUNT(*) AS count FROM user WHERE username = ? ";
+//
+//            PreparedStatement pstmt = con.prepareStatement(query);
+//            pstmt.setString(1, name);
+//            ResultSet resultSet = pstmt.executeQuery();
             Statement statement = con.createStatement();
-            ResultSet resultSet = statement.executeQuery("select COUNT(*) as count from user WHERE username = '" + name + "'");
+            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS count FROM user WHERE username = '" + name + "' ");
 
             resultSet.first();
 
@@ -116,10 +137,17 @@ public class UserHelper {
 
         try {
             Connection con = DatabaseHelper.connect();
+
+//            String query = "SELECT * FROM user WHERE email = ? ";
+//
+//            PreparedStatement pstmt = con.prepareStatement(query);
+//            pstmt.setString(1, email);
+//            ResultSet resultSet = pstmt.executeQuery();
+            
             Statement statement = con.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM user WHERE email = '" + email + "'");
 
-            if(resultSet.isBeforeFirst()) {
+            if (resultSet.isBeforeFirst()) {
                 alreadyTaken = true;
             }
         } catch (SQLException ex) {
@@ -135,8 +163,16 @@ public class UserHelper {
 
         try {
             Connection con = DatabaseHelper.connect();
+            
+            String query = "SELECT * FROM user WHERE (email= ? OR username= ?)";
+//
+//            PreparedStatement pstmt = con.prepareStatement(query);
+//            pstmt.setString(1, id);
+//            pstmt.setString(2, id);
+//            ResultSet resultSet = pstmt.executeQuery();
+
             Statement statement = con.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * "
+            ResultSet resultSet = statement.executeQuery("SELECT * "
                     + " FROM user"
                     + " WHERE (email='" + id + "' OR username='" + id + "')");
 
@@ -170,8 +206,16 @@ public class UserHelper {
 
         try {
             Connection con = DatabaseHelper.connect();
+
+//            String query = "SELECT * FROM user WHERE username= ? OR email= ? ";
+//
+//            PreparedStatement pstmt = con.prepareStatement(query);
+//            pstmt.setString(1, id);
+//            pstmt.setString(2, id);
+//            ResultSet resultSet = pstmt.executeQuery();
+            
             Statement statement = con.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from user where username='" + id + "' OR email='" + id + "'");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM user WHERE username='" + id + "' OR email='" + id + "'");
 
             if (!resultSet.isBeforeFirst()) {
                 throw new UserNotExistingException("There is no user with this name", MyException.INFO);
@@ -214,6 +258,17 @@ public class UserHelper {
 
         try {
             Connection con = DatabaseHelper.connect();
+
+//            String query = "SELECT name, tag, create_date, leader, team.wins, team.defeats,"
+//                    + " team.goals, team.goals_conceded, team.tournament_wins, team.tournament_participations"
+//                    + " FROM  team, user_team"
+//                    + " WHERE user = ? "
+//                    + " AND team = name";
+//
+//            PreparedStatement pstmt = con.prepareStatement(query);
+//            pstmt.setString(1, username);
+//            ResultSet resultSet = pstmt.executeQuery();
+            
             Statement statement = con.createStatement();
 
             ResultSet resultSet = statement.executeQuery("SELECT name, tag, create_date, leader, team.wins, team.defeats, "
@@ -221,6 +276,7 @@ public class UserHelper {
                     + " FROM  team, user_team"
                     + " WHERE user = '" + username + "'"
                     + "   AND team = name");
+
             while (resultSet.next()) {
                 Team team = new Team();
                 team.setName(resultSet.getString("name"));
@@ -247,9 +303,25 @@ public class UserHelper {
 
         try {
             Connection con = DatabaseHelper.connect();
+
+//            String query = "SELECT distinct tou.name, tou.leader"
+//                    + " FROM  tournament tou, team_tournament teto, team te, user_team ut, user u"
+//                    + " WHERE (tou.name = teto.tournament"
+//                    + "   AND teto.team = te.name"
+//                    + "   AND te.name = ut.team"
+//                    + "   AND ut.user = u.username"
+//                    + "   AND username = ? )"
+//                    + "   OR  tou.leader = ? "
+//                    + " ORDER BY tou.name, tou.start_date";
+//
+//            PreparedStatement pstmt = con.prepareStatement(query);
+//            pstmt.setString(1, username);
+//            pstmt.setString(2, username);
+//            ResultSet resultSet = pstmt.executeQuery();
+            
             Statement statement = con.createStatement();
 
-            ResultSet resultSet = statement.executeQuery("SELECT distinct tou.name, tou.leader"
+            ResultSet resultSet = statement.executeQuery("SELECT DISTINCT tou.name, tou.leader"
                     + " FROM  tournament tou, team_tournament teto, team te, user_team ut, user u"
                     + " WHERE (tou.name = teto.tournament"
                     + "   AND teto.team = te.name"
@@ -280,8 +352,16 @@ public class UserHelper {
             if (name1.equals(name2)) {
                 if (!isUserExisting(name1)) {
                     Connection con = DatabaseHelper.connect();
+
+//                    String query = "UPDATE user SET username= ? WHERE username = ? ";
+//
+//                    PreparedStatement pstmt = con.prepareStatement(query);
+//                    pstmt.setString(1, name1);
+//                    pstmt.setString(2, user);
+//                    result = pstmt.executeUpdate();
+                    
                     Statement statement = con.createStatement();
-                    result = statement.executeUpdate("update user set username='" + name1 + "' where username = '" + user + "'");
+                    result = statement.executeUpdate("UPDATE user SET username='" + name1 + "' WHERE username = '" + user + "'");
 
                     if (result < 1) {
                         throw new UserUpdateException("An error occured while updating the username", MyException.ERROR);
@@ -304,8 +384,16 @@ public class UserHelper {
             if (email1.equals(email2)) {
                 if (isEmailAlreadyTaken(email1)) {
                     Connection con = DatabaseHelper.connect();
+
+//                    String query = "UPDATE user SET email= ? WHERE username = ? ";
+//
+//                    PreparedStatement pstmt = con.prepareStatement(query);
+//                    pstmt.setString(1, email1);
+//                    pstmt.setString(2, user);
+//                    result = pstmt.executeUpdate();
                     Statement statement = con.createStatement();
-                    result = statement.executeUpdate("update user set email='" + email1 + "' where username = '" + user + "'");
+                    
+                    result = statement.executeUpdate("UPDATE user SET email='" + email1 + "' WHERE username = '" + user + "'");
 
                     if (result < 1) {
                         throw new UserUpdateException("An error occured while updating the email address", MyException.ERROR);
@@ -325,13 +413,25 @@ public class UserHelper {
     public void updatePassword(User user, String password1, String password2, String passwordOld) throws DatabaseConnectionException, UserUpdateException {
         try {
             int result;
+            
 
-            if (user.getPassword().equals(passwordOld)) {
+            if (BCrypt.checkPassword(passwordOld, user.getPassword())) {
 
                 if (password1.equals(password2)) {
                     Connection con = DatabaseHelper.connect();
+
+//                    String query = "UPDATE user SET password= ? WHERE username = ? ";
+//
+//                    PreparedStatement pstmt = con.prepareStatement(query);
+//                    pstmt.setString(1, password1);
+//                    pstmt.setString(2, user.getName());
+//                    result = pstmt.executeUpdate();
+                    
+                    String salt = BCrypt.gensalt(10);
+                    String hashpw = BCrypt.createHash(password1, salt);
+                    
                     Statement statement = con.createStatement();
-                    result = statement.executeUpdate("update user set password='" + password1 + "' where username = '" + user.getName() + "'");
+                    result = statement.executeUpdate("UPDATE user SET password='" + hashpw + "' WHERE username = '" + user.getName() + "'");
 
                     if (result < 1) {
                         throw new UserUpdateException("An error occured while updating the password", MyException.ERROR);
@@ -368,15 +468,22 @@ public class UserHelper {
                 tempPW = buffer.toString();
 
                 //send mailo with temporary password
-                mailer.sendMail("malte110392@gmail.com", tempPW);
+                mailer.sendMail(email, tempPW);
 
-                System.err.println(tempPW);
-                String salt = "";
-                salt = BCrypt.gensalt(10);
+                String salt = BCrypt.gensalt(10);
                 tempPW = BCrypt.createHash(tempPW, salt);
+
                 Connection con = DatabaseHelper.connect();
+
+//                String query = "UPDATE user SET password= ? WHERE email = ?";
+//
+//                    PreparedStatement pstmt = con.prepareStatement(query);
+//                    pstmt.setString(1, tempPW);
+//                    pstmt.setString(2, email);
+//                    result = pstmt.executeUpdate();
+                
                 Statement statement = con.createStatement();
-                result = statement.executeUpdate("update user set password='" + tempPW + "' where email = '" + email + "'");
+                result = statement.executeUpdate("UPDATE user SET password='" + tempPW + "' WHERE email = '" + email + "'");
             }
 
             if (result < 1) {
@@ -393,6 +500,13 @@ public class UserHelper {
             int result;
 
             Connection con = DatabaseHelper.connect();
+
+//                String query = "DELETE FROM user WHERE username = ?";
+//
+//                PreparedStatement pstmt = con.prepareStatement(query);
+//                pstmt.setString(1, user.getName());
+//                result = pstmt.executeUpdate();
+            
             Statement statement = con.createStatement();
             result = statement.executeUpdate("DELETE FROM user WHERE username = '" + user.getName() + "'");
 
