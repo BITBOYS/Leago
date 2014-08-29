@@ -35,6 +35,13 @@ public class TeamHelper {
             int result;
 
             Connection con = DatabaseHelper.connect();
+            
+//            String query = "DELETE FROM team WHERE name = ? ";
+//
+//                        PreparedStatement pstmt = con.prepareStatement(query);
+//                        pstmt.setString(1, team.getName());
+//                        result = pstmt.executeUpdate();
+            
             Statement statement = con.createStatement();
             result = statement.executeUpdate("DELETE FROM team WHERE name = '" + team.getName() + "'"); 
 
@@ -53,8 +60,15 @@ public class TeamHelper {
         try {
             int result;
             Connection con = DatabaseHelper.connect();
-            Statement statement = con.createStatement();
             
+//            String query = "INSERT INTO user_team (user, team) VALUES ( ? , ? )";
+//
+//                        PreparedStatement pstmt = con.prepareStatement(query);
+//                        pstmt.setString(1, user.getName());
+//                        pstmt.setString(2, teamname);
+//                        result = pstmt.executeUpdate();
+            
+            Statement statement = con.createStatement();
             result = statement.executeUpdate("INSERT INTO user_team"
                     + " (user, team)"
                     + " VALUES ('" + user.getName() + "','" + teamname + "')");
@@ -78,14 +92,22 @@ public class TeamHelper {
             
             if(!isTeamExisting(name)) {
                 Connection con = DatabaseHelper.connect();
+                
+//            String query = "INSERT INTO team (name, tag, leader) VALUES ( ? , ? , ? )";
+//
+//                        PreparedStatement pstmt = con.prepareStatement(query);
+//                        pstmt.setString(1, name);
+//                        pstmt.setString(2, tag);
+//                        pstmt.setString(3, leader.getName());
+//                        result = pstmt.executeUpdate();
+                
                 Statement statement = con.createStatement();
-
                 result = statement.executeUpdate("insert into team"
                         + " (name, tag, leader)"
                         + " VALUES ('" + name + "','" + tag + "','" + leader.getName() + "')");
 
                 if(result < 1) {
-                    throw new TeamCreationException("Team team creation failed!", MyException.ERROR);
+                    throw new TeamCreationException("Team team creation failed", MyException.ERROR);
                 }
             } else {
                 throw new TeamCreationException("The name is already taken", MyException.ERROR);
@@ -105,6 +127,13 @@ public class TeamHelper {
         
         try {
             Connection con = DatabaseHelper.connect();
+            
+//            String query = "SELECT * FROM team WHERE name= ?";
+//
+//                        PreparedStatement pstmt = con.prepareStatement(query);
+//                        pstmt.setString(1, id);
+//                        ResultSet resultSet = pstmt.executeUpdate();
+            
             Statement statement = con.createStatement();
             ResultSet resultSet = statement.executeQuery("select * from team where name='" + id + "'");
             
@@ -137,6 +166,13 @@ public class TeamHelper {
         
         try {
             Connection con = DatabaseHelper.connect();
+            
+//            String query = "SELECT username FROM  user, user_team WHERE team = ? AND username = user";
+//
+//                        PreparedStatement pstmt = con.prepareStatement(query);
+//                        pstmt.setString(1, teamname);
+//                        ResultSet resultSet = pstmt.executeUpdate();
+            
             Statement statement = con.createStatement();
             
             ResultSet resultSet = statement.executeQuery("SELECT username"
@@ -163,6 +199,13 @@ public class TeamHelper {
         
         try {
             Connection con = DatabaseHelper.connect();
+            
+//            String query = "SELECT name, description, leader, start_date, end_date, create_date FROM tournament, team_tournament WHERE team = ? AND tournament = name ORDER BY name";
+//
+//                        PreparedStatement pstmt = con.prepareStatement(query);
+//                        pstmt.setString(1, teamname);
+//                        ResultSet resultSet = pstmt.executeUpdate();
+            
             Statement statement = con.createStatement();
             
             ResultSet resultSet = statement.executeQuery("SELECT name, description, leader, start_date, end_date, create_date" +
@@ -193,6 +236,13 @@ public class TeamHelper {
         
         try {
             Connection con = DatabaseHelper.connect();
+            
+//            String query = "SELECT COUNT(*) AS count FROM team WHERE name= ?";
+//
+//                        PreparedStatement pstmt = con.prepareStatement(query);
+//                        pstmt.setString(1, name);
+//                        ResultSet resultSet = pstmt.executeUpdate();
+            
             Statement statement = con.createStatement();
             ResultSet resultSet = statement.executeQuery("select COUNT(*) as count from team where name='" + name + "'");
             resultSet.first();
@@ -211,6 +261,14 @@ public class TeamHelper {
         
         try {
             Connection con = DatabaseHelper.connect();
+            
+//            String query = "SELECT COUNT(*) AS count FROM team, user_team WHERE name= ? AND user = ?";
+//
+//                        PreparedStatement pstmt = con.prepareStatement(query);
+//                        pstmt.setString(1, team);
+//                        pstmt.setString(2, user);
+//                        ResultSet resultSet = pstmt.executeUpdate();
+            
             Statement statement = con.createStatement();
             ResultSet resultSet = statement.executeQuery("select COUNT(*) as count from team, user_team where name='" + team + "' AND user ='" + user + "'");
             resultSet.first();
@@ -233,6 +291,14 @@ public class TeamHelper {
             if(name1.equals(name2)) {
                 if(!isTeamExisting(name1)) {
                     Connection con = DatabaseHelper.connect();
+                    
+//            String query = "select COUNT(*) as count from team, user_team where name= ? AND user = ?";
+//
+//                        PreparedStatement pstmt = con.prepareStatement(query);
+//                        pstmt.setString(1, team);
+//                        pstmt.setString(2, user);
+//                        result = pstmt.executeUpdate();
+                    
                     Statement statement = con.createStatement();
                     result = statement.executeUpdate("update team set name='" + name1 + "' where name = '" + team.getName() + "'"); 
 
@@ -257,6 +323,14 @@ public class TeamHelper {
             
             if(tag1.equals(tag2)) {
                 Connection con = DatabaseHelper.connect();
+                
+//            String query = "UPDATE team SET tag= ? WHERE name = ?";
+//
+//                        PreparedStatement pstmt = con.prepareStatement(query);
+//                        pstmt.setString(1, tag1);
+//                        pstmt.setString(2, team.getName());
+//                        result = pstmt.executeUpdate();
+                
                 Statement statement = con.createStatement();
                 result = statement.executeUpdate("update team set tag='" + tag1 + "' where name = '" + team.getName() + "'"); 
 
@@ -277,6 +351,14 @@ public class TeamHelper {
             int result;
             
             Connection con = DatabaseHelper.connect();
+            
+//            String query = "UPDATE team SET leader= ? WHERE name = ?";
+//
+//                        PreparedStatement pstmt = con.prepareStatement(query);
+//                        pstmt.setString(1, leader);
+//                        pstmt.setString(2, team);
+//                        result = pstmt.executeUpdate();
+            
             Statement statement = con.createStatement();
             result = statement.executeUpdate("update team set leader='" + leader + "' where name = '" + team + "'"); 
 
@@ -293,6 +375,14 @@ public class TeamHelper {
         
         try {
             Connection con = DatabaseHelper.connect();
+            
+//            String query = "DELETE FROM user_team WHERE user = ? AND team = ?;
+//
+//                        PreparedStatement pstmt = con.prepareStatement(query);
+//                        pstmt.setString(1, user.getName());
+//                        pstmt.setString(2, team.getName());
+//                        pstmt.executeUpdate();
+            
             Statement statement = con.createStatement();
             
             statement.execute("DELETE FROM user_team WHERE user = '" + user.getName() + "' AND team = '" + team.getName() + "'");
@@ -309,6 +399,14 @@ public class TeamHelper {
         try {
             if(userHelper.isUserExisting(username)) {
                 Connection con = DatabaseHelper.connect();
+                
+//            String query = "INSERT INTO user_team (user, team) VALUES (?,?)";
+//
+//                        PreparedStatement pstmt = con.prepareStatement(query);
+//                        pstmt.setString(1, username);
+//                        pstmt.setString(2, team.getName());
+//                        pstmt.executeUpdate();
+                
                 Statement statement = con.createStatement();
 
                 statement.execute("INSERT INTO user_team (user, team) VALUES ('" + username + "','" + team.getName() + "')");
