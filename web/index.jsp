@@ -43,7 +43,7 @@
                 <h3><fmt:message key="index.h3.info"/></h3>
                 <br>
                 <section class="wow bounceInUp" data-wow-delay="1s"> 
-                    <a href="#about" class="btn-lg btn-default">Find Out More</a>
+                    <a href="#about" class="btn-lg btn-default"><fmt:message key="index.button.start"/></a>
                 </section>
             </div>
         </div>
@@ -81,9 +81,8 @@
                     </div>
 
                     <div class="col-lg-10 text-center col-lg-offset-1">    
-                        <h2>Leago ist das perfekte Werkzeug für dein n&auml;chstes Turnier!</h2>
-                        <p style="font-size: 20px;">Greife von &uuml;berall, egal ob vom Smartphone, deinem Tablet oder dem Computer, auf
-                            dein Turnier zu.</p>
+                        <h2><fmt:message key="index.h2.info"/></h2>
+                        <p style="font-size: 20px;"><fmt:message key="index.p.info"/></p>
                     </div>
                 </div>
                 <!-- /.row -->
@@ -106,9 +105,9 @@
                                         </span>
                                     </section>
                                     <h4>
-                                        <strong style="font-size: 26px">${amount_tournaments}</strong> <br> erstellte Turniere
+                                        <strong style="font-size: 26px">${amount_tournaments}</strong> <br> <fmt:message key="index.text.tournament"/>
                                     </h4>
-                                    <a class="btn btn-leago-index" href="${pageContext.request.contextPath}/new/tournament">Lege sofort los!</a>
+                                    <a class="btn btn-leago-index" href="${pageContext.request.contextPath}/new/tournament"><fmt:message key="index.link.tournament"/></a>
                                 </div>
                             </div>
                             <div class="col-md-4 col-sm-6">
@@ -120,9 +119,9 @@
                                         </span>
                                     </section>
                                     <h4>
-                                        <strong style="font-size: 26px">${amount_teams}</strong> <br> gegründete Teams
+                                        <strong style="font-size: 26px">${amount_teams}</strong> <br> <fmt:message key="index.text.team"/>
                                     </h4>
-                                    <a class="btn btn-leago-index" href="${pageContext.request.contextPath}/new/team">Gr&uuml;nde Dein eigenes!</a>
+                                    <a class="btn btn-leago-index" href="${pageContext.request.contextPath}/new/team"><fmt:message key="index.link.team"/></a>
                                 </div>
                             </div>
                             <div class="col-md-4 col-sm-6">
@@ -134,9 +133,9 @@
                                         </span>
                                     </section>
                                     <h4>
-                                        <strong style="font-size: 26px">${amount_user}</strong> <br> aktive Spieler
+                                        <strong style="font-size: 26px">${amount_user}</strong> <br> <fmt:message key="index.text.user"/>
                                     </h4>
-                                    <a class="btn btn-leago-index" href="${pageContext.request.contextPath}/register">Registriere Dich jetzt!</a>
+                                    <a class="btn btn-leago-index" href="${pageContext.request.contextPath}/register"><fmt:message key="index.link.user"/></a>
                                 </div>
                             </div>
                         </div>

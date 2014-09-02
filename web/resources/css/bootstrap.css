@@ -7332,9 +7332,9 @@ a:hover .full-caption {
     color: rgba(0,0,0,0.4);
     text-shadow: none;
     text-transform: none;
-    font-style: italic;
-    font-size: 0.75em;
-    font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
+    font-style: normal;
+    font-size: 2em;
+    font-family: LeagoFlat;
     opacity: 0;
     -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
     -moz-transition: -moz-transform 0.3s, opacity 0.3s;

@@ -8,4 +8,9 @@
         <function-class>leago.helper.TLDHelper</function-class>
         <function-signature>boolean isUserInTeam(leago.models.Team, java.util.List)</function-signature>
     </function>
+    <function>
+        <name>isUserInTournament</name>
+        <function-class>leago.helper.TLDHelper</function-class>
+        <function-signature>boolean isUserInTournament(leago.models.Tournament, java.util.List)</function-signature>
+    </function>
 </taglib>

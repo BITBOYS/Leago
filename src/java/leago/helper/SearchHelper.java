@@ -35,7 +35,8 @@ public class SearchHelper {
             
             ResultSet resultSet = statement.executeQuery("SELECT username"
                                                       + " FROM  user"
-                                                      + " WHERE username LIKE '%" + id + "%'");
+                                                      + " WHERE username LIKE '%" + id + "%'"
+                                                      + " ORDER BY username");
             
             while(resultSet.next()) {
                 user.add(new User(resultSet.getString("username")));
@@ -58,7 +59,8 @@ public class SearchHelper {
             
             ResultSet resultSet = statement.executeQuery("SELECT name"
                                                       + " FROM  team"
-                                                      + " WHERE name LIKE '%" + id + "%'");
+                                                      + " WHERE name LIKE '%" + id + "%'"
+                                                      + " ORDER BY name");
             
             while(resultSet.next()) {
                 team.add(new Team(resultSet.getString("name")));
@@ -81,7 +83,8 @@ public class SearchHelper {
             
             ResultSet resultSet = statement.executeQuery("SELECT name"
                                                       + " FROM  tournament"
-                                                      + " WHERE name LIKE '%" + id + "%'");
+                                                      + " WHERE name LIKE '%" + id + "%'"
+                                                      + " ORDER BY name");
             
             while(resultSet.next()) {
                 tournament.add(new Tournament(resultSet.getString("name")));

@@ -1,12 +1,14 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="/WEB-INF/tlds/custom_functions.tld" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setBundle basename="leago.i18n.bundle" />
 
 <div id="googlemaps" class="collapse">
     <div class="row">
         <div class="col-md-12">
             <div style="width: 100%; height: 400px;" id="map-canvas"></div>      
 <!--<iframe width="100%" height="400dpx" frameborder="0" scrollwheel="false" marginheight="0" marginwidth="0" src="http://maps.google.de/maps?hl=de&q=${tournament.venue}+(${tournament.venue})&ie=UTF8&t=&z=12&iwloc=B&output=embed"></iframe>-->
-            <a href="#googlemaps" data-toggle="collapse"><i class="glyphicon glyphicon-collapse-up"></i>Einklappen</a>
+            <a href="#googlemaps" data-toggle="collapse"><i class="glyphicon glyphicon-collapse-up"></i><fmt:message key="tournament.generally.toggle"/></a>
         </div>
     </div>
 </div>
@@ -21,9 +23,9 @@
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
         <ul class="nav nav-pills nav-justified">
-            <li class="active"><a href="#info" data-toggle="tab">Allgemein</a></li>
-            <li><a href="#schedule" data-toggle="tab">Spielplan</a></li>
-            <li><a href="#table" data-toggle="tab">Tabelle</a></li>
+            <li class="active"><a href="#info" data-toggle="tab"><fmt:message key="tournament.show.head1"/></a></li>
+            <li><a href="#schedule" data-toggle="tab"><fmt:message key="tournament.show.head2"/></a></li>
+            <li><a href="#table" data-toggle="tab"><fmt:message key="tournament.show.head3"/></a></li>
         </ul>
     </div>
 </div>
@@ -44,69 +46,75 @@
                         <table class="table table-hover">
                             <tbody>  
                                 <tr>  
-                                    <td>Leader</td> 
+                                    <td><fmt:message key="tournament.generally.leader"/></td> 
                                     <td><i class="fa fa-star-o"></i><b><a href="${pageContext.request.contextPath}/user/${tournament.leader.name}"> ${tournament.leader.name} </a></b></td>                                        
                                 </tr>  
                                 <tr>  
-                                    <td>Zeitraum</td> 
+                                    <td><fmt:message key="tournament.generally.period"/></td> 
                                     <td>
                                         <c:choose>
                                             <c:when test="${tournament.start_date != null && tournament.end_date != null}">
                                                 <b>${tournament.start_date_web}</b> bis <b>${tournament.end_date_web}</b>
                                             </c:when>
-                                            <c:otherwise><b>Keine Angabe</b></c:otherwise>
+                                            <c:otherwise><b><fmt:message key="tournament.generally.noInfo"/></b></c:otherwise>
                                         </c:choose>
                                     </td>                                        
                                 </tr>  
                                 <tr>  
-                                    <td>Anmeldefrist</td> 
+                                    <td><fmt:message key="tournament.generally.term"/></td> 
                                     <td>
                                         <c:choose>
                                             <c:when test="${tournament.deadline != null}"> 
                                                 <b>${tournament.deadline_web}</b>, <b>${tournament.countdown}</b>
                                             </c:when>
-                                            <c:otherwise><b>Keine Anmeldefrist</b></c:otherwise>
+                                            <c:otherwise><b><fmt:message key="tournament.generally.noTerm"/></b></c:otherwise>
                                         </c:choose> 
                                     </td>                                        
                                 </tr>  
                                 <tr>  
-                                    <td>Spieltage</td> 
-                                    <td><b>${tournament.rounds}</b></td>                                        
-                                </tr>  
-                                <tr>  
-                                    <td>Wetter</td> 
-                                    <td><b><div id="weather"></div></b></td>                                        
-                                </tr>  
-                                <tr>  
-                                    <td>Austragungsort</td> 
-                                    <td> 
-                                        <c:choose>
-                                            <c:when test="${tournament.venue != null}">
-                                                <div id="googlelink"><b><a href="#googlemaps" data-toggle="collapse">${tournament.venue}</a></b></div>
+                                    <td><fmt:message key="tournament.generally.matchday"/></td> 
+                            <b><td>${tournament.rounds}</td></b>                                        
+                            </tr>  
+                            <tr>  
+                                <td><fmt:message key="tournament.generally.weather"/></td> 
+                            <b><td><div id="weather"></div></td></b>                                        
+                            </tr>  
+                            <tr>  
+                                <td><fmt:message key="tournament.generally.venue"/></td> 
+                                <td> 
+                                    <c:choose>
+                                        <c:when test="${tournament.venue != null}">
+                                            <div id="googlelink"><b><a href="#googlemaps" data-toggle="collapse">${tournament.venue}</a></b></div>
 <!--                                                https://maps.google.com/maps?q=${tournament.venue}&hl=de&sll=28.149503,-71.71875&sspn=88.855059,173.144531&hnear=${tournament.venue}&t=m&z=10-->
-                                            </c:when>
-                                            <c:otherwise><b>Keine Angabe</b></c:otherwise>
-                                        </c:choose> 
-                                    </td>                                        
-                                </tr> 
-                                <c:choose>
-                                    <c:when test="${tournament.leader.name == user.name}">  
-                                        <tr>  
-                                            <td>Adminbereich</td> 
-                                            <td><b><a href="${pageContext.request.contextPath}/tournament/${tournament.name}/settings/profile"><i class="fa fa-pencil"></i> Turnier bearbeiten</a></b></td>                                        
-                                        </tr>    
-                                    </c:when>
-                                </c:choose>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <b><fmt:message key="tournament.generally.noInfo"/></b>
+                                        </c:otherwise>
+                                    </c:choose> 
+                                </td>                                        
+                            </tr> 
+                            <c:choose>
+                                <c:when test="${tournament.leader.name == user.name}">  
+                                    <tr>  
+                                        <td><fmt:message key="tournament.generally.admin"/></td> 
+                                        <td>
+                                            <b><a href="${pageContext.request.contextPath}/tournament/${tournament.name}/settings/profile"><i class="fa fa-pencil"></i> <fmt:message key="tournament.generally.edit"/> </a></b>
+                                        </td>                                        
+                                    </tr>    
+                                </c:when>
+                            </c:choose>
                             </tbody>  
                         </table>  
-                    </div>
+                    </div><!-- /.table -->  
                 </div><!-- /.panel -->  
-            </div>
+            </div><!-- /.col -->  
         </div><!-- /.row -->
+        
+        <hr>
 
         <div class="row">
             <div class="col-md-8 col-md-offset-2 text-center" style="padding:0">
-                <h2>Teilnehmende Teams</h2>
+                <h2><fmt:message key="tournament.generally.teams"/></h2>
                 <c:forEach var="team" items="${tournament.teams}" varStatus="idx">
                     <div class="col-md-6 text-center no-margin" style="margin: 0px;">
                         <a href="${pageContext.request.contextPath}/team/${team.name}">
@@ -115,7 +123,16 @@
                     </div> 
                 </c:forEach>   
                 <c:if test="${empty tournament.teams}">
-                    Es sind noch keine Teams angemeldet.
+                    <c:choose>
+                        <c:when test="${tournament.leader.name == user.name}">
+                            <div class="list-inline links effect-9 col-md-4 col-md-offset-4">
+                                <h4><a href="#"><span><fmt:message key="tournament.generally.noTeam"/></span><span>Invite</span></a></h4>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <h4><fmt:message key="tournament.generally.noTeam"/></h4>
+                        </c:otherwise>
+                    </c:choose> 
                 </c:if>
             </div>
         </div>
@@ -133,7 +150,7 @@
                     <div class="col-md-8 col-md-offset-2">
                         <div class="panel panel-leago">
                             <!-- Default panel contents -->
-                            <div class="panel-heading"><i class="fa fa-gamepad"></i> Spielplan</div>
+                            <div class="panel-heading"><i class="fa fa-gamepad"></i> <fmt:message key="tournament.show.head2"/></div>
 
                             <!-- Table -->
                             <div class="tab-content">
@@ -148,7 +165,7 @@
                                             </c:choose>
                                             <table class="table table-hover">
                                                 <tbody>
-                                                    <tr class="text-center"><td colspan="3"><b>Runde ${round.round}</b></td></tr>
+                                                    <tr class="text-center"><td colspan="3"><b><fmt:message key="tournament.schedule.round"/> ${round.round}</b></td></tr>
                                                     <c:forEach items="${round.matches}" var="match">
                                                         <c:choose>
                                                             <c:when test="${tournament.leader.name == user.name}">
@@ -210,7 +227,7 @@
                 <c:otherwise>
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2 text-center" style="margin-top: 100px">
-                            <h2>F&uuml;r dieses Turnier wurde noch kein Spielplan erstellt.</h2>
+                            <h2><fmt:message key="tournament.schedule.noSchedule"/></h2>
                         </div>
                     </div>
                 </c:otherwise>
@@ -224,22 +241,22 @@
                 <div class="col-sm-10 col-md-offset-1">
                     <div class="panel panel-leago">
                         <!-- Default panel contents -->
-                        <div class="panel-heading"><i class="fa fa-table"></i> Tabelle</div>
+                        <div class="panel-heading"><i class="fa fa-table"></i> <fmt:message key="tournament.show.head3"/></div>
 
                         <!-- Table -->
                         <div class="table-responsive">                                               
                             <table class="table table-hover">  
                                 <thead>  
                                     <tr>   
-                                        <th><a href="#" data-toggle="tooltip" data-placement="top" title="Platz" class="label label-default">Platz</a></th> 
-                                        <th><a href="#" data-toggle="tooltip" data-placement="top" title="Teamname" class="label label-default">Teamname</a></th> 
-                                        <th><a href="#" data-toggle="tooltip" data-placement="top" title="Spiele" class="label label-default">Spiele</a></th> 
-                                        <th><a href="#" data-toggle="tooltip" data-placement="top" title="Win-Rate in %" class="label label-primary">Win-Rate in %</a></th> 
-                                        <th><a href="#" data-toggle="tooltip" data-placement="top" title="Siege" class="label label-success">Siege</a></th> 
-                                        <th><a href="#" data-toggle="tooltip" data-placement="top" title="Niederlagen" class="label label-danger">Niederlagen</a></th> 
-                                        <th><a href="#" data-toggle="tooltip" data-placement="top" title="Tore" class="label label-success">Tore</a></th> 
-                                        <th><a href="#" data-toggle="tooltip" data-placement="top" title="Gegentore" class="label label-warning">Gegentore</a></th> 
-                                        <th><a href="#" data-toggle="tooltip" data-placement="top" title="Tordifferenz" class="label label-default">Tordifferenz</a></th> 
+                                        <th><a href="#" data-toggle="tooltip" data-placement="top" title="Platz" class="label label-default"><fmt:message key="tournament.table.placement"/></a></th> 
+                                        <th><a href="#" data-toggle="tooltip" data-placement="top" title="Teamname" class="label label-default"><fmt:message key="tournament.table.team"/></a></th> 
+                                        <th><a href="#" data-toggle="tooltip" data-placement="top" title="Spiele" class="label label-default"><fmt:message key="tournament.table.games"/></a></th> 
+                                        <th><a href="#" data-toggle="tooltip" data-placement="top" title="Win-Rate in %" class="label label-primary"><fmt:message key="tournament.table.rate"/></a></th> 
+                                        <th><a href="#" data-toggle="tooltip" data-placement="top" title="Siege" class="label label-success"><fmt:message key="tournament.table.wins"/></a></th> 
+                                        <th><a href="#" data-toggle="tooltip" data-placement="top" title="Niederlagen" class="label label-danger"><fmt:message key="tournament.table.defeats"/></a></th> 
+                                        <th><a href="#" data-toggle="tooltip" data-placement="top" title="Tore" class="label label-success"><fmt:message key="tournament.table.goals"/></a></th> 
+                                        <th><a href="#" data-toggle="tooltip" data-placement="top" title="Gegentore" class="label label-warning"><fmt:message key="tournament.table.conceded"/></a></th> 
+                                        <th><a href="#" data-toggle="tooltip" data-placement="top" title="Tordifferenz" class="label label-default"><fmt:message key="tournament.table.difference"/></a></th> 
                                     </tr>  
                                 </thead>  
                                 <tbody>  
