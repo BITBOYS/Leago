@@ -3,7 +3,7 @@
 <div class="row">
     <%@include file="link_list.jsp" %>
                 
-    <c:if test="${tournament.schedule == null}">
+    <c:if test="${tournament.schedule == null && !empty tournament.teams}">
         <div class="col-md-8">
             <div class=" alert alert-info">
             Dieses Turnier hat noch keinen Spielplan. Wenn du einen generieren m&ouml;chtest, klicke <a href="${pageContext.request.contextPath}/tournament/${tournament.name}/settings/schedule">hier</a>

@@ -109,7 +109,7 @@
                 </div><!-- /.panel -->  
             </div><!-- /.col -->  
         </div><!-- /.row -->
-        
+
         <hr>
 
         <div class="row">
@@ -126,7 +126,7 @@
                     <c:choose>
                         <c:when test="${tournament.leader.name == user.name}">
                             <div class="list-inline links effect-9 col-md-4 col-md-offset-4">
-                                <h4><a href="#"><span><fmt:message key="tournament.generally.noTeam"/></span><span>Invite</span></a></h4>
+                                <h4><a href="${pageContext.request.contextPath}/tournament/${tournament.name}/settings/teams"><span><fmt:message key="tournament.generally.noTeam"/></span><span>Invite</span></a></h4>
                             </div>
                         </c:when>
                         <c:otherwise>
@@ -224,10 +224,20 @@
                     </div>
 
                 </c:when>
+                <c:when test="${empty tournament.teams && tournament.schedule == null}">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2 text-center" style="margin-top: 100px">
+                            <h2><fmt:message key="tournament.schedule.noTeams"/></h2>
+                        </div>
+                    </div>
+                </c:when>
                 <c:otherwise>
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2 text-center" style="margin-top: 100px">
                             <h2><fmt:message key="tournament.schedule.noSchedule"/></h2>
+                            <div class="list-inline links effect-9 col-md-4 col-md-offset-4">
+                                <h4><a href="${pageContext.request.contextPath}/tournament/${tournament.name}/settings/schedule"><span></span><span>Create</span></a></h4>
+                            </div>
                         </div>
                     </div>
                 </c:otherwise>
@@ -240,42 +250,52 @@
             <div class="row">  
                 <div class="col-sm-10 col-md-offset-1">
                     <div class="panel panel-leago">
-                        <!-- Default panel contents -->
-                        <div class="panel-heading"><i class="fa fa-table"></i> <fmt:message key="tournament.show.head3"/></div>
 
-                        <!-- Table -->
-                        <div class="table-responsive">                                               
-                            <table class="table table-hover">  
-                                <thead>  
-                                    <tr>   
-                                        <th><a href="#" data-toggle="tooltip" data-placement="top" title="Platz" class="label label-default"><fmt:message key="tournament.table.placement"/></a></th> 
-                                        <th><a href="#" data-toggle="tooltip" data-placement="top" title="Teamname" class="label label-default"><fmt:message key="tournament.table.team"/></a></th> 
-                                        <th><a href="#" data-toggle="tooltip" data-placement="top" title="Spiele" class="label label-default"><fmt:message key="tournament.table.games"/></a></th> 
-                                        <th><a href="#" data-toggle="tooltip" data-placement="top" title="Win-Rate in %" class="label label-primary"><fmt:message key="tournament.table.rate"/></a></th> 
-                                        <th><a href="#" data-toggle="tooltip" data-placement="top" title="Siege" class="label label-success"><fmt:message key="tournament.table.wins"/></a></th> 
-                                        <th><a href="#" data-toggle="tooltip" data-placement="top" title="Niederlagen" class="label label-danger"><fmt:message key="tournament.table.defeats"/></a></th> 
-                                        <th><a href="#" data-toggle="tooltip" data-placement="top" title="Tore" class="label label-success"><fmt:message key="tournament.table.goals"/></a></th> 
-                                        <th><a href="#" data-toggle="tooltip" data-placement="top" title="Gegentore" class="label label-warning"><fmt:message key="tournament.table.conceded"/></a></th> 
-                                        <th><a href="#" data-toggle="tooltip" data-placement="top" title="Tordifferenz" class="label label-default"><fmt:message key="tournament.table.difference"/></a></th> 
-                                    </tr>  
-                                </thead>  
-                                <tbody>  
-                                    <c:forEach items="${tournament.table}" var="placement" varStatus="status">
-                                        <tr>  
-                                            <td># <c:out value="${status.count}" /></td> 
-                                            <td><a href="${pageContext.request.contextPath}/team/${placement.team.name}" <c:if test="${fn:isUserInTeam(placement.team, user.teams)}"> style="font-weight: bold;"</c:if>>${placement.team.name}</a></td>  
-                                            <td>${placement.amount_matches}</td>  
-                                            <td>${placement.winrate}</td>  
-                                            <td>${placement.wins}</td>  
-                                            <td>${placement.defeats}</td>  
-                                            <td>${placement.goals}</td> 
-                                            <td>${placement.goals_conceded}</td> 
-                                            <td>${placement.goal_difference}</td>                                         
-                                        </tr>  
-                                    </c:forEach>
-                                </tbody>  
-                            </table>  
-                        </div>
+                        <c:choose>
+                            <c:when test="${!empty tournament.teams}">
+                                <!-- Default panel contents -->
+                                <div class="panel-heading"><i class="fa fa-table"></i> <fmt:message key="tournament.show.head3"/></div>
+                                <!-- Table -->
+                                <div class="table-responsive">                                               
+                                    <table class="table table-hover">  
+                                        <thead>  
+                                            <tr>   
+                                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Platz" class="label label-default"><fmt:message key="tournament.table.placement"/></a></th> 
+                                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Teamname" class="label label-default"><fmt:message key="tournament.table.team"/></a></th> 
+                                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Spiele" class="label label-default"><fmt:message key="tournament.table.games"/></a></th> 
+                                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Win-Rate in %" class="label label-primary"><fmt:message key="tournament.table.rate"/></a></th> 
+                                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Siege" class="label label-success"><fmt:message key="tournament.table.wins"/></a></th> 
+                                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Niederlagen" class="label label-danger"><fmt:message key="tournament.table.defeats"/></a></th> 
+                                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Tore" class="label label-success"><fmt:message key="tournament.table.goals"/></a></th> 
+                                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Gegentore" class="label label-warning"><fmt:message key="tournament.table.conceded"/></a></th> 
+                                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Tordifferenz" class="label label-default"><fmt:message key="tournament.table.difference"/></a></th> 
+                                            </tr>  
+                                        </thead>  
+                                        <tbody>  
+                                            <c:forEach items="${tournament.table}" var="placement" varStatus="status">
+                                                <tr>  
+                                                    <td># <c:out value="${status.count}" /></td> 
+                                                    <td><a href="${pageContext.request.contextPath}/team/${placement.team.name}" <c:if test="${fn:isUserInTeam(placement.team, user.teams)}"> style="font-weight: bold;"</c:if>>${placement.team.name}</a></td>  
+                                                    <td>${placement.amount_matches}</td>  
+                                                    <td>${placement.winrate}</td>  
+                                                    <td>${placement.wins}</td>  
+                                                    <td>${placement.defeats}</td>  
+                                                    <td>${placement.goals}</td> 
+                                                    <td>${placement.goals_conceded}</td> 
+                                                    <td>${placement.goal_difference}</td>                                         
+                                                </tr>  
+                                            </c:forEach>
+                                        </tbody>  
+                                    </table>  
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="col-md-8 col-md-offset-2 text-center" style="margin-top: 100px">
+                                    <h2><fmt:message key="tournament.generally.noTeam"/></h2>
+                                </div>
+                            </c:otherwise>
+                        </c:choose> 
+
                     </div><!-- /.panel -->  
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -302,10 +322,9 @@
     <!-- Weather -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.simpleWeather/3.0.2/jquery.simpleWeather.min.js"></script>
     <script>
-// Docs at http://simpleweatherjs.com
-        $(document).ready(function() {
-            $.simpleWeather({
-                location: '${tournament.venue}',
+        // Docs at http://simpleweatherjs.com         $(document).ready(function() {
+        $.simpleWeather({
+        location: '${tournament.venue}',
                 unit: 'c',
                 success: function(weather) {
                     html = '<a target="_blank" href="' + weather.link + '">' + weather.temp + '&deg;' + weather.units.temp + '</a><img height="25" src="' + weather.thumbnail + '"></img>';
@@ -315,9 +334,8 @@
                 error: function(error) {
                     $("#weather").html('Keine Angabe');
                 }
-            });
         });
-    </script>
+        });</script>
 
     <!-- Google maps -->
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
@@ -350,11 +368,11 @@
                     var pos = new google.maps.LatLng(position.coords.latitude,
                             position.coords.longitude);
 
-//                    var infowindow = new google.maps.InfoWindow({
-//                        map: map,
-//                        position: pos,
-//                        content: 'Du bist hier.'
-//                    });
+                    //                    var infowindow = new google.maps.InfoWindow({
+                    //                        map: map,
+                    //                        position: pos,
+                    //                        content: 'Du bist hier.'
+                    //                    });
 
                     calcRoute(pos);
 

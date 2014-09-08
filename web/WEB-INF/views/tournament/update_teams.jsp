@@ -4,6 +4,28 @@
 <div class="row">
     <%@include file="link_list.jsp" %>
 
+    <div class="col-md-8 ">
+        <!-- Default panel contents -->
+        <div class="panel panel-default">
+            <div class="panel-heading"><span class="glyphicon glyphicon-plus"></span> Teams ins Turnier einladen</div>
+            <div class="panel-body">
+
+                <p>Lade ein Team ein, Mitglied in deinem Turnier zu werden. Der Leader wird im Anschluss benachrichtigt und kann die Einladung akzeptieren.</p> 
+
+                <form role="form" name="invite_${tournament.name}" action="${pageContext.request.contextPath}/tournament/${tournament.name}/settings/teams" method="POST">
+                    <input type="hidden" name="action" value="invite">
+
+                    <div class="form-group">
+                        <label>Team</label>
+                        <input type="text" class="form-control" name="new_team" required>
+                    </div>
+
+                    <button class="btn btn-primary btn-leago" type="submit">Team einladen</button>
+                </form>
+            </div>
+        </div> <!-- /.panel--> 
+    </div> <!-- /.grid 8 -->
+
     <c:choose>
         <c:when test="${empty tournament.teams}">
             <div class="col-md-8 ">
@@ -35,27 +57,5 @@
 
         </c:otherwise>
     </c:choose>
-    
-    <div class="col-md-8 ">
-        <!-- Default panel contents -->
-        <div class="panel panel-default">
-            <div class="panel-heading"><span class="glyphicon glyphicon-plus"></span> Teams ins Turnier einladen</div>
-            <div class="panel-body">
 
-                <p>Lade ein Team ein, Mitglied in deinem Turnier zu werden. Der Leader wird im Anschluss benachrichtigt und kann die Einladung akzeptieren.</p> 
-
-                <form role="form" name="invite_${tournament.name}" action="${pageContext.request.contextPath}/tournament/${tournament.name}/settings/teams" method="POST">
-                    <input type="hidden" name="action" value="invite">
-                    
-                    <div class="form-group">
-                        <label>Team</label>
-                        <input type="text" class="form-control" name="new_team" required>
-                    </div>
-                    
-                    <button class="btn btn-primary btn-leago" type="submit">Team einladen</button>
-                </form>
-            </div>
-        </div> <!-- /.panel--> 
-    </div> <!-- /.grid 8 -->
-    
 </div>
