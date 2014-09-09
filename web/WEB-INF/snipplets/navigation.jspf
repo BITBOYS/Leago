@@ -1,10 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session"/>
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="leago.i18n.bundle" />
 
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <c:out value="${language}" />
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -32,7 +33,7 @@
                     <c:when test="${user != null}">
                         <li><a class="text-center" href="${pageContext.request.contextPath}/user/${user.name}">${user.name}</a></li>  
                         <li class="dropdown">
-                            <a class="text-center" href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-plus"></i><b class="caret"></b></a>
+                            <a class="text-center dropdown-toggle" href="#" data-toggle="dropdown"><i class="fa fa-plus"></i><b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li role="presentation" class="dropdown-header">Create:</li>
                                 <li role="presentation" class="divider"></li>
@@ -40,16 +41,63 @@
                                 <li><a href="${pageContext.request.contextPath}/new/team"><i class="fa fa-users"></i> <fmt:message key="navi.create.team"/></a></li> 
                             </ul>
                         </li>
-                        
+
                         <li><a class="text-center" href="${pageContext.request.contextPath}/settings/profile"><i class="fa fa-wrench"></i></a></li> 
                         <li><a class="text-center" href="${pageContext.request.contextPath}/logout"><i class="glyphicon glyphicon-log-out"></i></a></li>
-                    </c:when>
-                    <c:when test="${user == null}">
-                            <li><form action="${pageContext.request.contextPath}/login" method="post"><input style="width: 100%" type="submit" value="<fmt:message key="navi.link.signin"/>" class="btn btn-leago navbar-btn"/></form></li>
-                            <li><a class="text-center" href="${pageContext.request.contextPath}/register"><fmt:message key="navi.link.signup"/></a></li>
-                    </c:when>
-                </c:choose>
+                            </c:when>
+                            <c:when test="${user == null}">
+                        <li><form action="${pageContext.request.contextPath}/login" method="post"><input style="width: 100%" type="submit" value="<fmt:message key="navi.link.signin"/>" class="btn btn-leago navbar-btn"/></form></li>
+                        <li><a class="text-center" href="${pageContext.request.contextPath}/register"><fmt:message key="navi.link.signup"/></a></li>
+                        </c:when>
+                    </c:choose>
+                <li class="dropdown">
+                    <a class="text-center dropdown-toggle" href="#" data-toggle="dropdown"><i class="fa fa-flag"></i><b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li role="presentation" class="dropdown-header"><fmt:message key="navi.lang"/></li>
+                        <li role="presentation" class="divider"></li>
+                        <li <c:if test="${language == 'de_DE'}">class="disabled"</c:if>><a href="" onclick="changeLang('de');"><fmt:message key="navi.lang.german"/><c:if test="${language == 'de_DE'}"> <i class="fa fa-check"></i></c:if></a></li> 
+                        <li <c:if test="${language == 'en_EN'}">class="disabled"</c:if>><a href="" onclick="changeLang('en');"><fmt:message key="navi.lang.english"/><c:if test="${language == 'en_EN'}"> <i class="fa fa-check"></i></c:if></a></li> 
+                        <li <c:if test="${language == 'fr_FR'}">class="disabled"</c:if>><a href="" onclick="changeLang('fr');"><fmt:message key="navi.lang.frensh"/><c:if test="${language == 'fr_FR'}"> <i class="fa fa-check"></i></c:if></a></li> 
+                        <li <c:if test="${language == 'es_ES'}">class="disabled"</c:if>><a href="" onclick="changeLang('es');"><fmt:message key="navi.lang.spanish"/><c:if test="${language == 'es_ES'}"> <i class="fa fa-check"></i></c:if></a></li> 
+                        </ul>
+                    </li>
+                    <!--                    <li>
+                                             TEST 
+                                            <form role="form">
+                                                <div class="form-group">
+                                                    <select class="form-control" id="language" name="language" onchange="submit()">
+                                                    <option value="en_EN" ${language == 'en_ED' ? 'selected' : ''}><fmt:message key="navi.lang.english"/> </option>
+                                                    <option value="de_DE" ${language == 'de_DE' ? 'selected' : ''}><fmt:message key="navi.lang.german"/></option>
+                                                    <option value="es_ES" ${language == 'fr_FR' ? 'selected' : ''}><fmt:message key="navi.lang.frensh"/></option>
+                                                    <option value="es_ES" ${language == 'es_ES' ? 'selected' : ''}><fmt:message key="navi.lang.spanish"/></option>
+                                                </select>
+                                            </div>
+                                        </form>
+                                    </li>-->
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container -->
 </nav>
+
+<script>
+    function changeLang(key) {
+    <%--<c:remove var="language"/>--%>
+
+        switch (key) {
+            case "de":
+    <c:set var="language" value="de_DE" scope="session"/>
+                break;
+            case "en":
+    <c:set var="language" value="en_EN" scope="session"/>
+                break;
+            case "fr":
+    <c:set var="language" value="fr_FR" scope="session"/>
+                break;
+            case "es":
+    <c:set var="language" value="es_ES" scope="session"/>
+                break;
+        }
+
+        window.location.reload();
+    }
+</script>

@@ -41,7 +41,7 @@
             <div class="row">
 
                 <div class="col-md-12">
-                    <h1 class="page-header">About Us <small> The Team</small></h1>
+                    <h1 class="page-header">About Us</h1>
                 </div>
 
                 <div class="col-md-6">
@@ -93,8 +93,8 @@
                         <li class="tooltip-social linkedin-link"><a href="https://de.linkedin.com/in/mdammann" target="_blank" data-toggle="tooltip" data-placement="bottom" title="LinkedIn"><i class="fa fa-linkedin-square fa-2x"></i></a></li>
                         <li class="tooltip-social facebook-link"><a href="https://www.facebook.com/malte.da.3" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Facebook"><i class="fa fa-facebook-square fa-2x"></i></a></li>
                         <li class="tooltip-social google-plus-link"><a href="https://google.com/+MalteDa" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Google+"><i class="fa fa-google-plus-square fa-2x"></i></a></li>
-                        <li class="tooltip-social"><a href="https://github.com/malte005" target="blank" data-toggle="tooltip" data-placement="bottom" title="GitHub"><i class="fa fa-github fa-2x"></i></i></a></li>
-                    </ul>
+                        <li class="tooltip-social"><a href="https://github.com/malte005" target="blank" data-toggle="tooltip" data-placement="bottom" title="GitHub"><i class="fa fa-github fa-2x"></i></a></li>
+                     </ul>
                 </div>
 
                 <div class="col-sm-4 text-center">

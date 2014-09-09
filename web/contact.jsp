@@ -41,9 +41,9 @@
                 </div>
 
             </div><!-- /.row -->
-            
+
             <hr>
-            
+
             <div class="row">
 
                 <div class="col-sm-8">
@@ -91,9 +91,10 @@
                     <p><i class="fa fa-envelope-o"></i> <abbr title="Email">E</abbr>: <a href="mailto:maik.schmaddebeck@generali.de">leago@bitboys.com</a></p>
                     <p><i class="fa fa-clock-o"></i> <abbr title="Hours">H</abbr>: Samstag - Sonntag: 10:00 bis 15:00 Uhr</p>
                     <ul class="list-unstyled list-inline list-social-icons">
-                        <li class="tooltip-social facebook-link"><a target="_blank" href="#facebook-page" data-toggle="tooltip" data-placement="bottom" title="Facebook"><i class="fa fa-facebook-square fa-2x"></i></a></li>
-                        <li class="tooltip-social google-plus-link"><a target="_blank" href="#google-plus-page" data-toggle="tooltip" data-placement="bottom" title="Google+"><i class="fa fa-google-plus-square fa-2x"></i></a></li>
-                        <li class="tooltip-social"><a target="_blank" href="https://github.com/BITBOYS" data-toggle="tooltip" data-placement="bottom" title="GitHub"><i class="fa fa-github fa-2x"></i></a></li>
+                        <li class="tooltip-social facebook-link"><a target="_blank" href="https://www.facebook.com/LeagoTournaments" data-toggle="tooltip" data-placement="bottom" title="Facebook"><i class="fa fa-facebook-square fa-2x"></i></a></li>
+                        <li class="tooltip-social google-plus-link"><a target="_blank" href="https://plus.google.com/110655655037221087199/" data-toggle="tooltip" data-placement="bottom" title="Google+"><i class="fa fa-google-plus-square fa-2x"></i></a></li>
+                        <li class="tooltip-social"><a target="_blank" href="https://github.com/BITBOYS" data-toggle="tooltip" data-placement="bottom" title="GitHub"><i class="fa fa-github-square fa-2x"></i></a></li>
+                        <li class="tooltip-social"><a target="_blank" href="${pageContext.request.contextPath}" data-toggle="tooltip" data-placement="bottom" title="Twitter"><i class="fa fa-2x fa-twitter-square"></i></a></li>
                     </ul>
                 </div>
 
