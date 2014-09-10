@@ -14,6 +14,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
@@ -438,9 +439,9 @@ public class TournamentHelper {
             if (tournament.getStart_date() == null || new_deadline.before(tournament.getStart_date())) {
                 Connection con = DatabaseHelper.connect();
                 Statement statement = con.createStatement();
-                result = statement.executeUpdate("UPDATE tournament "
-                        + "SET deadline = '" + new_deadline + "' "
-                        + "WHERE name = '" + tournament.getName() + "'");
+                result = statement.executeUpdate("UPDATE tournament"
+                        + " SET deadline = '" + new_deadline + "' "
+                        + " WHERE name = '" + tournament.getName() + "'");
 
                 if (result < 1) {
                     throw new TournamentUpdateException("An error occured while updating the deadline", MyException.ERROR);
@@ -529,7 +530,7 @@ public class TournamentHelper {
         try {
             int result;
 
-            if (new_end_date.after(tournament.getStart_date())) {
+            if (tournament.getStart_date() == null || new_end_date.after(tournament.getStart_date())) {
                 Connection con = DatabaseHelper.connect();
                 Statement statement = con.createStatement();
                 result = statement.executeUpdate("UPDATE tournament "
@@ -801,6 +802,8 @@ public class TournamentHelper {
             if (deadline != null && !deadline.equals("")) {
                 dateDeadline = FORMATTER_DATE.parse(deadline);
             }
+            
+            System.out.println("DEADLINE create: " + deadline);
 
             venue = venue.equals("") ? null : "'" + venue + "'";;
             start_date = (start_date != null && start_date.equals("")) ? null : "'" + start_date + "'";
@@ -808,9 +811,10 @@ public class TournamentHelper {
             deadline = (deadline != null && deadline.equals("")) ? null : "'" + deadline + "'";
             description = (description != null && description.equals("")) ? null : "'" + description + "'";
 
+
             if (!isTournamentExisting(name)) {
-                if (dateEnd.after(dateStart) || dateEnd.equals(dateStart)) {
-                    if (dateDeadline.before(dateStart) || dateDeadline.equals(dateStart)) {
+                if (end_date == null || dateEnd.after(dateStart) || dateEnd.equals(dateStart)) {
+                    if (start_date == null || dateDeadline.before(dateStart) || dateDeadline.equals(dateStart)) {
                         Connection con = DatabaseHelper.connect();
                         Statement statement = con.createStatement();
 
@@ -853,4 +857,5 @@ public class TournamentHelper {
 
         return result;
     }
+    
 }

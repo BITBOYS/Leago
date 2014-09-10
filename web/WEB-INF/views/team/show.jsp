@@ -3,14 +3,16 @@
 <fmt:setBundle basename="leago.i18n.bundle" />
 
 <div class="row">
-    <div class="col-md-3 text-center">
+    <div class="col-md-4 col-md-offset-4 text-center">
         <h2><b>${team.name}</b></h2>
         <p><fmt:message key="team.info.member_since"/> ${team.create_date_web}</p>
-        <img src="http://placehold.it/250x150">
+        <img class="img-circle" src="http://placehold.it/250x250">
         <hr>
     </div>
+</div>
 
-    <div class="col-md-3 text-center">
+        <div class="row">
+    <div class="col-md-4 text-center">
         <h2><fmt:message key="team.stats.match"/></h2>
         <c:choose>
             <c:when test="${team.statistics.goal_difference != 0 && team.statistics.goals != 0}">   
@@ -28,7 +30,7 @@
         <hr>
     </div>
 
-    <div class="col-md-3 text-center">
+    <div class="col-md-4 text-center">
         <h2><fmt:message key="team.stats.goal"/></h2>
         <c:choose>
             <c:when test="${team.statistics.wins != 0 && team.statistics.defeats != 0}"> 
@@ -46,7 +48,7 @@
         <hr>
     </div>
 
-    <div class="col-md-3 text-center">
+    <div class="col-md-4 text-center">
         <h2><fmt:message key="team.stats.tournament"/></h2>
         <c:choose>
             <c:when test="${team.statistics.tournament_wins != 0 && team.statistics.tournament_participations != 0}">    
@@ -132,13 +134,14 @@
 <script>
     // pie chart data
     var matchesData = [
-        {value: ${team.statistics.matches}, color: "#6B69E0", label: "Matches"},
+        {value: ${team.statistics.matches}, color: "#2271BB", label: "Matches"},
         {value: ${team.statistics.wins}, color: "#68C999", label: "Wins"},
         {value: ${team.statistics.defeats}, color: "#D66464", label: "Defeats"}
     ];
     // pie chart options
     var matchesOptions = {
-        segmentShowStroke: false,
+        segmentShowStroke: true,
+        animationSteps : 150,
         animateScale: true
     }
     // get pie chart canvas
@@ -150,14 +153,15 @@
 <script>
     // pie chart data
     var goalsData = [
-        {value: ${team.statistics.goal_difference}, color: "#6B69E0", label: "Goal difference"},
+        {value: ${team.statistics.goal_difference}, color: "#2271BB", label: "Goal difference"},
         {value: ${team.statistics.goals}, color: "#68C999", label: "Goals"},
         {value: ${team.statistics.goals_conceded}, color: "#D66464", label: "Goals conceded"}
     ];
 
     // pie chart options
     var goalsOptions = {
-        segmentShowStroke: false,
+        segmentShowStroke: true,
+        animationSteps : 150,
         animateScale: true
     }
     // get pie chart canvas
@@ -169,13 +173,14 @@
 <script>
     // pie chart data
     var tournamentData = [
-        {value: ${team.statistics.tournament_participations}, color: "#6B69E0", label: "Participations"},
-        {value: ${team.statistics.tournament_wins}, color: "#568C999", label: "Wins"}
+        {value: ${team.statistics.tournament_participations}, color: "#2271BB", label: "Participations"},
+        {value: ${team.statistics.tournament_wins}, color: "#68C999", label: "Wins"}
     ];
 
     // pie chart options
     var tournamentOptions = {
-        segmentShowStroke: false,
+        segmentShowStroke: true,
+        animationSteps : 150,
         animateScale: true
     }
     // get pie chart canvas

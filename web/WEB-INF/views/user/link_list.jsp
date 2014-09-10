@@ -14,7 +14,7 @@
             <p class="list-group-item-text"><fmt:message key="user_settings.info.teams"/></p>
         </a>
         <a href="${pageContext.request.contextPath}/settings/tournaments" class="list-group-item <c:if test="${settings_action == 'tournaments'}">active</c:if>"> 
-            <h4 class="list-group-item-heading"><span class="fa fa-sitemap"></span> <fmt:message key="user_settings.link.tournaments"/></h4> 
+            <h4 class="list-group-item-heading"><span class="fa fa-trophy"></span> <fmt:message key="user_settings.link.tournaments"/></h4> 
             <p class="list-group-item-text"><fmt:message key="user_settings.info.tournaments"/></p>
         </a>
         

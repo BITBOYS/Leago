@@ -5,7 +5,7 @@
 <fmt:setBundle basename="leago.i18n.bundle" />
 
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <c:out value="${language}" />
+    <%--<c:out value="${language}" />--%>
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -57,18 +57,15 @@
                         <li role="presentation" class="divider"></li>
                         <li <c:if test="${language == 'de_DE'}">class="disabled"</c:if>><a href="" onclick="changeLang('de');"><fmt:message key="navi.lang.german"/><c:if test="${language == 'de_DE'}"> <i class="fa fa-check"></i></c:if></a></li> 
                         <li <c:if test="${language == 'en_EN'}">class="disabled"</c:if>><a href="" onclick="changeLang('en');"><fmt:message key="navi.lang.english"/><c:if test="${language == 'en_EN'}"> <i class="fa fa-check"></i></c:if></a></li> 
-                        <li <c:if test="${language == 'fr_FR'}">class="disabled"</c:if>><a href="" onclick="changeLang('fr');"><fmt:message key="navi.lang.frensh"/><c:if test="${language == 'fr_FR'}"> <i class="fa fa-check"></i></c:if></a></li> 
-                        <li <c:if test="${language == 'es_ES'}">class="disabled"</c:if>><a href="" onclick="changeLang('es');"><fmt:message key="navi.lang.spanish"/><c:if test="${language == 'es_ES'}"> <i class="fa fa-check"></i></c:if></a></li> 
-                        </ul>
-                    </li>
-                    <!--                    <li>
-                                             TEST 
+                    </ul>
+                </li>
+<!--                                       <li>
                                             <form role="form">
                                                 <div class="form-group">
                                                     <select class="form-control" id="language" name="language" onchange="submit()">
                                                     <option value="en_EN" ${language == 'en_ED' ? 'selected' : ''}><fmt:message key="navi.lang.english"/> </option>
                                                     <option value="de_DE" ${language == 'de_DE' ? 'selected' : ''}><fmt:message key="navi.lang.german"/></option>
-                                                    <option value="es_ES" ${language == 'fr_FR' ? 'selected' : ''}><fmt:message key="navi.lang.frensh"/></option>
+                                                    <option value="fr_FR" ${language == 'fr_FR' ? 'selected' : ''}><fmt:message key="navi.lang.frensh"/></option>
                                                     <option value="es_ES" ${language == 'es_ES' ? 'selected' : ''}><fmt:message key="navi.lang.spanish"/></option>
                                                 </select>
                                             </div>
@@ -79,25 +76,20 @@
     </div><!-- /.container -->
 </nav>
 
-<script>
+<!--<script>
     function changeLang(key) {
-    <%--<c:remove var="language"/>--%>
-
+    <c:remove var="language" scope="session"/>
         switch (key) {
             case "de":
     <c:set var="language" value="de_DE" scope="session"/>
+alert("Lang: " + '${language}');
                 break;
             case "en":
     <c:set var="language" value="en_EN" scope="session"/>
-                break;
-            case "fr":
-    <c:set var="language" value="fr_FR" scope="session"/>
-                break;
-            case "es":
-    <c:set var="language" value="es_ES" scope="session"/>
+                alert("Lang: " + '${language}');
                 break;
         }
 
         window.location.reload();
     }
-</script>
+</script>-->

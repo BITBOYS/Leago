@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setBundle basename="leago.i18n.bundle" />
 
@@ -12,15 +13,15 @@
             <div class="panel-body">
                 <div class="col-xs-8">
                     <form role="form" name="name_form" action="${pageContext.request.contextPath}/settings/profile" method="POST">
-
+                        <c:out value="${team.name}"/>
                         <div class="form-group">
                             <label><fmt:message key="user_settings.label.name"/></label>
-                            <input type="text" class="form-control" name="input_name_new1" required>
+                            <input type="text" class="form-control" name="input_name_new1" placeholder="${team.name}" required>
                         </div>
 
                         <div class="form-group">
                             <label><fmt:message key="user_settings.label.reenter_name"/></label>
-                            <input type="text" class="form-control" name="input_name_new2" required>
+                            <input type="text" class="form-control" name="input_name_new2" placeholder="${team.name}" required>
                         </div>
 
                         <button class="btn btn-primary btn-leago" type="submit"><fmt:message key="user_settings.submit.name"/></button>

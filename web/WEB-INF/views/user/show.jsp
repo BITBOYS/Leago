@@ -4,14 +4,16 @@
 
 
 <div class="row">
-    <div class="col-md-4 text-center">
+    <div class="col-md-4 col-md-offset-4 text-center">
         <h2><b>${profileuser.name}</b></h2>
         <p><fmt:message key="user.info.member_since"/> ${profileuser.create_date_web}</p>
-        <img src="http://placehold.it/250x150">
+        <img class="img img-circle" src="http://placehold.it/250x250">
         <hr>
     </div>
-
-    <div class="col-md-4 text-center">
+</div>
+        
+<div class="row">
+    <div class="col-md-6 text-center">
         <h2><fmt:message key="user.stats.match"/></h2>
         <c:choose>
             <c:when test="${profileuser.statistics.goal_difference != 0 && profileuser.statistics.goals != 0}">    
@@ -27,7 +29,7 @@
         <hr>
     </div>
 
-    <div class="col-md-4 text-center">
+    <div class="col-md-6 text-center">
         <h2><fmt:message key="user.stats.goal"/></h2>
         <c:choose>
             <c:when test="${profileuser.statistics.wins != 0 && profileuser.statistics.defeats != 0}">    
@@ -102,7 +104,8 @@
     ];
     // pie chart options
     var matchesOptions = {
-        segmentShowStroke: false,
+        segmentShowStroke: true,
+        animationSteps : 150,
         animateScale: true
     }
     // get pie chart canvas
@@ -121,7 +124,8 @@
 
     // pie chart options
     var goalsOptions = {
-        segmentShowStroke: false,
+        segmentShowStroke: true,
+        animationSteps : 150,
         animateScale: true
     }
     // get pie chart canvas

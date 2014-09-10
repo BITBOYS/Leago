@@ -414,7 +414,7 @@ public class TournamentServlet extends HttpServlet {
         } else if (validInput(start_date)) {
             updateStart(start_date);
         } else if (validInput(end_date)) {
-            updateEnd_date(end_date);
+            updateEnd(end_date);
         } else if (validInput(deadline)) {
             updateDeadline(deadline);
         }
@@ -427,7 +427,8 @@ public class TournamentServlet extends HttpServlet {
         try {
             tournamentHelper.editTournamentName(tournament.getName(), input_name_new, input_name_new2);
             tournament = tournamentHelper.getTournament(input_name_new);
-            redirect = true;
+            request.setAttribute("message", new MyException("The name was updated successfully", MyException.SUCCESS));
+            
         } catch (TournamentUpdateException | TournamentNotExistingException ex) {
             request.setAttribute("value_name1", input_name_new);
             request.setAttribute("value_name2", input_name_new2);
@@ -501,16 +502,11 @@ public class TournamentServlet extends HttpServlet {
 
         // O P E R A T I O N
         TournamentHelper tournamentHelper = new TournamentHelper();
-        
         try {
-
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-            java.util.Date dateStr = formatter.parse(input_startdate_new);
-            java.sql.Date dateDB = new java.sql.Date(dateStr.getTime());
-            
-            tournamentHelper.editTournamentStart(tournament, dateDB);
-            tournament.setStart_date(dateDB);
-            request.setAttribute("message", new MyException("The start date was updated successfully", MyException.SUCCESS));
+            Date dateStart = FORMATTER_DATE.parse(input_startdate_new.replace('T', ' '));
+            tournamentHelper.editTournamentStart(tournament, dateStart);
+            tournament.setStart_date(dateStart);
+            request.setAttribute("message", new MyException("The start time was updated successfully", MyException.SUCCESS));
         } catch (TournamentUpdateException | ParseException ex) {
             request.setAttribute("value_start_date", input_startdate_new);
             Logger.getLogger(TournamentServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -518,15 +514,16 @@ public class TournamentServlet extends HttpServlet {
         }
     }
 
-    private void updateEnd_date(String input_enddate_new) throws DatabaseConnectionException {
+    private void updateEnd(String input_enddate_new) throws DatabaseConnectionException {
 
         // O P E R A T I O N
         TournamentHelper tournamentHelper = new TournamentHelper();
         try {
             Date dateEnd = FORMATTER_DATE.parse(input_enddate_new.replace('T', ' '));
+            
             tournamentHelper.editTournamentEnd(tournament, dateEnd);
             tournament.setEnd_date(dateEnd);
-            request.setAttribute("message", new MyException("The end date was updated successfully", MyException.SUCCESS));
+            request.setAttribute("message", new MyException("The end time was updated successfully", MyException.SUCCESS));
         } catch (TournamentUpdateException | ParseException ex) {
             request.setAttribute("value_end_date", input_enddate_new);
             Logger.getLogger(TournamentServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -540,9 +537,10 @@ public class TournamentServlet extends HttpServlet {
         TournamentHelper tournamentHelper = new TournamentHelper();
         try {
             Date dateDeadline = FORMATTER_DATE.parse(input_deadline_new.replace('T', ' '));
+            
             tournamentHelper.editTournamentDeadline(tournament, dateDeadline);
             tournament.setDeadline(dateDeadline);
-            request.setAttribute("message", new MyException("The dateline was updated successfully", MyException.SUCCESS));
+            request.setAttribute("message", new MyException("The deadline of registration was updated successfully", MyException.SUCCESS));
         } catch (TournamentUpdateException | ParseException ex) {
             request.setAttribute("value_deadline", input_deadline_new);
             Logger.getLogger(TournamentServlet.class.getName()).log(Level.SEVERE, null, ex);
