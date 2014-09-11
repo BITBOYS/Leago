@@ -170,8 +170,8 @@
                                                         <c:choose>
                                                             <c:when test="${tournament.leader.name == user.name}">
                                                                 <tr>
-                                                                    <td class="text-right"><a href="${pageContext.request.contextPath}/team/${match.team1.name}" <c:if test="${fn:isUserInTeam(match.team1, user.teams)}"> style="font-weight: bold;"</c:if>>${match.team1.name}</a></td>
-                                                                        <td class="text-center">
+                                                                    <td class="text-right" style="vertical-align: middle"><img class="img-circle pull-left" src="http://placehold.it/30x30"><a href="${pageContext.request.contextPath}/team/${match.team1.name}" <c:if test="${fn:isUserInTeam(match.team1, user.teams)}"> style="font-weight: bold;"</c:if>>${match.team1.name}</a></td>
+                                                                        <td class="text-center" style="vertical-align: middle">
                                                                             <form id="match${match.id}" action="${pageContext.request.contextPath}/tournament/${tournament.name}/match/${match.id}" method="POST">
                                                                             <c:choose>
                                                                                 <c:when test="${match.played != null}">
@@ -187,14 +187,14 @@
                                                                                     return false;"><i class="fa fa-arrow-circle-right"></i></a>
                                                                             </form>
                                                                         </td>
-                                                                        <td><a href="${pageContext.request.contextPath}/team/${match.team2.name}" <c:if test="${fn:isUserInTeam(match.team2, user.teams)}"> style="font-weight: bold;"</c:if>>${match.team2.name}</a></td>
+                                                                        <td style="vertical-align: middle"><a href="${pageContext.request.contextPath}/team/${match.team2.name}" <c:if test="${fn:isUserInTeam(match.team2, user.teams)}"> style="font-weight: bold;"</c:if>>${match.team2.name}</a><img class="img-circle pull-right" src="http://placehold.it/30x30"></td>
                                                                     </tr>
                                                             </c:when>
                                                             <c:otherwise>
                                                                 <tr>
-                                                                    <td class="text-right"><a href="${pageContext.request.contextPath}/team/${match.team1.name}" <c:if test="${fn:isUserInTeam(match.team1, user.teams)}"> style="font-weight: bold;"</c:if>>${match.team1.name}</a></td>
-                                                                    <td class="text-center">${match.points1} : ${match.points2}</td>
-                                                                    <td><a href="${pageContext.request.contextPath}/team/${match.team2.name}" <c:if test="${fn:isUserInTeam(match.team2, user.teams)}"> style="font-weight: bold;"</c:if>>${match.team2.name}</a></td>
+                                                                    <td class="text-right" style="vertical-align: middle"><img class="img-circle pull-left" src="http://placehold.it/30x30"><a href="${pageContext.request.contextPath}/team/${match.team1.name}" <c:if test="${fn:isUserInTeam(match.team1, user.teams)}"> style="font-weight: bold;"</c:if>>${match.team1.name}</a></td>
+                                                                    <td class="text-center" style="vertical-align: middle">${match.points1} : ${match.points2}</td>
+                                                                    <td style="vertical-align: middle"><a href="${pageContext.request.contextPath}/team/${match.team2.name}" <c:if test="${fn:isUserInTeam(match.team2, user.teams)}"> style="font-weight: bold;"</c:if>>${match.team2.name}</a><img class="img-circle pull-right" src="http://placehold.it/30x30"></td>
                                                                     </tr>
                                                             </c:otherwise>
                                                         </c:choose>

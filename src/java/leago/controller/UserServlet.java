@@ -155,7 +155,7 @@ public class UserServlet extends HttpServlet {
             }
         } else {
             page = "/user/create";
-            request.setAttribute("message", new MyException("Please give us your real Mail address", MyException.SUCCESS));
+            request.setAttribute("message", new MyException("Please give us your real Mail address", MyException.INFO));
         }
 
         forward();
